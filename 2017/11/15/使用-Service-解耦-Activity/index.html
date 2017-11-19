@@ -102,23 +102,22 @@
 
 
 
-<meta name="description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
+<meta name="description" content="需求 高耦合 Activity 搞定需求 解耦 Activity 搞定需求 问题在第一个 Activity（A）中启动第二个 Activity（B）后，未调用 finish()，所以在启动 B 后，A、B 是共存的，B 盖在 A 上面，用户可见的是 B。当用户点击【上传】后，需立刻显示 A，并进行上传，此时有几种选择：  直接杀掉 B，显示 A。该方式上传不能进行。 将图片通过 intent 或内">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pixel XL 刷机">
-<meta property="og:url" content="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/index.html">
+<meta property="og:title" content="使用 Service 解耦 Activity">
+<meta property="og:url" content="http://www.weichao.io/2017/11/15/使用-Service-解耦-Activity/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
+<meta property="og:description" content="需求 高耦合 Activity 搞定需求 解耦 Activity 搞定需求 问题在第一个 Activity（A）中启动第二个 Activity（B）后，未调用 finish()，所以在启动 B 后，A、B 是共存的，B 盖在 A 上面，用户可见的是 B。当用户点击【上传】后，需立刻显示 A，并进行上传，此时有几种选择：  直接杀掉 B，显示 A。该方式上传不能进行。 将图片通过 intent 或内">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png">
-<meta property="og:updated_time" content="2017-10-23T14:21:04.157Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_1.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_2.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_3.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_4.png">
+<meta property="og:updated_time" content="2017-11-19T05:47:03.936Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pixel XL 刷机">
-<meta name="twitter:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
+<meta name="twitter:title" content="使用 Service 解耦 Activity">
+<meta name="twitter:description" content="需求 高耦合 Activity 搞定需求 解耦 Activity 搞定需求 问题在第一个 Activity（A）中启动第二个 Activity（B）后，未调用 finish()，所以在启动 B 后，A、B 是共存的，B 盖在 A 上面，用户可见的是 B。当用户点击【上传】后，需立刻显示 A，并进行上传，此时有几种选择：  直接杀掉 B，显示 A。该方式上传不能进行。 将图片通过 intent 或内">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_1.png">
 
 
 
@@ -146,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/"/>
+  <link rel="canonical" href="http://www.weichao.io/2017/11/15/使用-Service-解耦-Activity/"/>
 
 
 
 
 
-  <title>Pixel XL 刷机 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>使用 Service 解耦 Activity | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -273,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2017/11/15/使用-Service-解耦-Activity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -290,7 +289,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Pixel XL 刷机</h2>
+          <h2 class="post-title" itemprop="name headline">使用 Service 解耦 Activity</h2>
         
 
         <div class="post-meta">
@@ -302,8 +301,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:49:25+08:00">
-                2017-10-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-15T21:23:49+08:00">
+                2017-11-15
               </time>
             
 
@@ -333,7 +332,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  197 字
+                  664 字
                 </span>
               
 
@@ -349,7 +348,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -357,7 +356,7 @@
 
           
           
-             <span id="/2017/10/11/Pixel-XL-刷机/" class="leancloud_visitors" data-flag-title="Pixel XL 刷机">
+             <span id="/2017/11/15/使用-Service-解耦-Activity/" class="leancloud_visitors" data-flag-title="使用 Service 解耦 Activity">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -382,36 +381,156 @@
       
 
       
-        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
-<li><a href="https://sspai.com/post/38319" title="https://sspai.com/post/38319" target="_blank" rel="external">从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记</a></li>
-</ul>
-<hr>
-<h1 id="手动刷入工厂镜像"><a href="#手动刷入工厂镜像" class="headerlink" title="手动刷入工厂镜像"></a><strong>手动刷入工厂镜像</strong></h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a><strong>操作步骤</strong></h2><h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a><strong>下载文件</strong></h3><ol>
-<li><p>从<a href="https://developers.google.cn/android/images" title="https://developers.google.cn/android/images" target="_blank" rel="external">工厂镜像官网</a>下载对应版本的 zip 文件</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png" alt=""></p>
-</li>
+        <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_1.png" alt=""></p>
+<h1 id="高耦合-Activity-搞定需求"><a href="#高耦合-Activity-搞定需求" class="headerlink" title="高耦合 Activity 搞定需求"></a><strong>高耦合 Activity 搞定需求</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_2.png" alt=""></p>
+<h1 id="解耦-Activity-搞定需求"><a href="#解耦-Activity-搞定需求" class="headerlink" title="解耦 Activity 搞定需求"></a><strong>解耦 Activity 搞定需求</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_3.png" alt=""></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a><strong>问题</strong></h2><p>在第一个 Activity（A）中启动第二个 Activity（B）后，未调用 finish()，所以在启动 B 后，A、B 是共存的，B 盖在 A 上面，用户可见的是 B。当用户点击【上传】后，需立刻显示 A，并进行上传，此时有几种选择：</p>
+<ol>
+<li>直接杀掉 B，显示 A。该方式上传不能进行。</li>
+<li>将图片通过 intent 或内置存储传递，在 A 上传。该方式受 intent 传递大小小于 1 MB 限制，通过内置存储传递写入、再读取的时间损失比较大。</li>
+<li>等待上传完成，再杀掉 B。该方式不能立刻显示 A。</li>
+<li>直接杀掉 A，在 B 中启动第一个 Activity（A’），等待上传完成，再杀掉 B，上传结果通过 BroadcastReceiver 告诉 A’。该方式可行，但是第一个 Activity 需要再初始化一次，且上传过程不易控（因为上传是在 B，现在切换到 A’ 了，而 A’ 和 B 交互比较麻烦）。</li>
+<li>使用 Service。</li>
 </ol>
-<h3 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a><strong>刷机</strong></h3><ol>
-<li><p>解压 zip 文件</p>
-<p> 比如将 zip 文件解压到 f 盘根目录。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png" alt=""></p>
-</li>
-<li><p>修改文件，用于刷机时保留系统数据</p>
-<p> 使用文本编辑器修改 <code>flash-all.bat</code> 中的 <code>fastboot -w update image-marlin-opr3.170623.008.zip</code> 为 <code>fastboot update image-marlin-opr3.170623.008.zip</code>，即去掉 <code>-w</code>。</p>
-</li>
-<li><p>通过 USB 线连接手机和 PC</p>
-</li>
-<li><p>让手机进入 fastboot 模式</p>
-<p> 在命令行中执行<code>adb reboot bootloader</code>。</p>
-</li>
-<li><p>进入 <code>flash-all.bat</code> 所在目录</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png" alt=""></p>
-</li>
-<li><p>执行 <code>flash-all.bat</code>，等待刷机完成</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png" alt=""></p>
-<p> 重启后进入<code>设置</code>-&gt;<code>系统</code>可以看到系统版本。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png" alt=""></p>
-</li>
+<h2 id="使用-Service-解决问题"><a href="#使用-Service-解决问题" class="headerlink" title="使用 Service 解决问题"></a><strong>使用 Service 解决问题</strong></h2><p><img src="http://otkw6sse5.bkt.clouddn.com/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity_4.png" alt=""></p>
+<p>A 绑定 Service，并设置上传成功和失败的回调，当用户点击【上传】后，B 绑定 Service，将图片通过 Service 上传，并直接关闭 B。</p>
+<ol>
+<li><p>用于上传的 Service（以存到内置存储中为例）</p>
+<pre><code>public class MyService extends Service {
+    private static String TAG = &quot;MyService&quot;;
+
+    private MyBinder mMyBinder = new MyBinder();
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mMyBinder;
+    }
+
+    public class MyBinder extends Binder {
+        private MyListener mMyListener;
+
+        public void setListener(MyListener myListener) {
+            mMyListener = myListener;
+        }
+
+        public void submit(final Bitmap bitmap) {
+            if (bitmap != null) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        FileOutputStream out = null;
+                        try {
+                            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + &quot;temp.jpg&quot;;
+                            File file = new File(filePath);
+                            file.createNewFile();
+                            out = new FileOutputStream(filePath);
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                            out.flush();
+                            if (mMyListener != null) {
+                                mMyListener.onSuccess();
+                            }
+                        } catch (Exception e) {
+                            if (mMyListener != null) {
+                                mMyListener.onFailed(e.getMessage());
+                            }
+                        } finally {
+                            if (out != null) {
+                                try {
+                                    out.close();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                }).start();
+            }
+        }
+    }
+
+    public interface MyListener {
+        void onSuccess();
+
+        void onFailed(String msg);
+    }
+}
+</code></pre></li>
+<li><p>A 绑定 Service，并设置上传成功和失败的回调</p>
+<pre><code>private ServiceConnection mServiceConnection = new ServiceConnection() {
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        mMyBinder = (MyService.MyBinder) service;
+        mMyBinder.setListener(MainActivity.this);
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        mMyBinder.setListener(null);
+    }
+};
+
+private void bindService() {
+    Intent intent = new Intent(this, MyService.class);
+    bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+}
+
+private void unbindService() {
+    if (mServiceConnection != null) {
+        unbindService(mServiceConnection);
+    }
+}
+
+@Override
+public void onSuccess() {
+    runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(MainActivity.this, &quot;success!&quot;, Toast.LENGTH_SHORT).show();
+        }
+    });
+}
+
+@Override
+public void onFailed(final String msg) {
+    runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            Toast.makeText(MainActivity.this, &quot;failed!&quot; + msg, Toast.LENGTH_SHORT).show();
+        }
+    });
+}
+</code></pre></li>
+<li><p>当用户点击【上传】后，B 绑定 Service，将图片通过 Service 上传，并直接关闭 B</p>
+<pre><code>private ServiceConnection mServiceConnection;
+
+private void bindService() {
+    Intent intent = new Intent(this, MyService.class);
+    bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+}
+
+private void unbindService() {
+    if (mServiceConnection != null) {
+        unbindService(mServiceConnection);
+    }
+}
+
+public void submit(final Bitmap bitmap) {
+    mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mMyBinder = (MyService.MyBinder) service;
+            mMyBinder.submit(bitmap);
+            CameraActivity.this.finish();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    };
+
+    bindService();
+}
+</code></pre></li>
 </ol>
 <hr>
 
@@ -428,12 +547,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2017/10/11/Pixel-XL-刷机/">Pixel XL 刷机</a></p>
+  <p><span>本文标题:</span><a href="/2017/11/15/使用-Service-解耦-Activity/">使用 Service 解耦 Activity</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2017年10月11日 - 20:10</p>
-  <p><span>最后更新:</span>2017年10月23日 - 22:10</p>
-  <p><span>原始链接:</span><a href="/2017/10/11/Pixel-XL-刷机/" title="Pixel XL 刷机">http://www.weichao.io/2017/10/11/Pixel-XL-刷机/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2017年11月15日 - 21:11</p>
+  <p><span>最后更新:</span>2017年11月19日 - 13:11</p>
+  <p><span>原始链接:</span><a href="/2017/11/15/使用-Service-解耦-Activity/" title="使用 Service 解耦 Activity">http://www.weichao.io/2017/11/15/使用-Service-解耦-Activity/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2017/11/15/使用-Service-解耦-Activity/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -497,8 +616,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/Pixel-XL-解锁/" rel="next" title="Pixel XL 解锁">
-                <i class="fa fa-chevron-left"></i> Pixel XL 解锁
+              <a href="/2017/10/22/相机的分辨率/" rel="next" title="相机的分辨率">
+                <i class="fa fa-chevron-left"></i> 相机的分辨率
               </a>
             
           </div>
@@ -506,10 +625,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/15/编译、运行源码/" rel="prev" title="编译、运行源码">
-                编译、运行源码 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -663,7 +778,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#手动刷入工厂镜像"><span class="nav-number">2.</span> <span class="nav-text">手动刷入工厂镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作步骤"><span class="nav-number">2.1.</span> <span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载文件"><span class="nav-number">2.1.1.</span> <span class="nav-text">下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷机"><span class="nav-number">2.1.2.</span> <span class="nav-text">刷机</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高耦合-Activity-搞定需求"><span class="nav-number">2.</span> <span class="nav-text">高耦合 Activity 搞定需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解耦-Activity-搞定需求"><span class="nav-number">3.</span> <span class="nav-text">解耦 Activity 搞定需求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">3.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Service-解决问题"><span class="nav-number">3.2.</span> <span class="nav-text">使用 Service 解决问题</span></a></li></ol></li></ol></div>
             
 
           </div>
