@@ -110,7 +110,7 @@
 <meta property="og:description" content="逻辑 App启动后显示NormalFragment，在NormalFragment中有一个原生的对话框，通过按返回键会对退出App做二次确认，且默认为不退出，同时NormalFragment中有一个按钮，点击后可以跳转到WebWrapperFragment，在WebWrapperFragment中有一个WebView，WebView中有对话框，通过按返回键会对跳转到NormalFragment做二">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hybrid-App-%E8%BF%94%E5%9B%9E%E9%94%AE%E5%A4%84%E7%90%86QQ%E6%88%AA%E5%9B%BE20180124000230.png">
-<meta property="og:updated_time" content="2018-01-23T17:35:58.685Z">
+<meta property="og:updated_time" content="2018-01-30T14:36:08.253Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hybrid App 返回键处理">
 <meta name="twitter:description" content="逻辑 App启动后显示NormalFragment，在NormalFragment中有一个原生的对话框，通过按返回键会对退出App做二次确认，且默认为不退出，同时NormalFragment中有一个按钮，点击后可以跳转到WebWrapperFragment，在WebWrapperFragment中有一个WebView，WebView中有对话框，通过按返回键会对跳转到NormalFragment做二">
@@ -329,7 +329,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,073 字
+                  1,080 字
                 </span>
               
 
@@ -382,188 +382,30 @@
 <p>App启动后显示NormalFragment，在NormalFragment中有一个原生的对话框，通过按返回键会对退出App做二次确认，且默认为不退出，同时NormalFragment中有一个按钮，点击后可以跳转到WebWrapperFragment，在WebWrapperFragment中有一个WebView，WebView中有对话框，通过按返回键会对跳转到NormalFragment做二次确认，且默认为不退出。</p>
 <hr>
 <h1 id="NormalFragment"><a href="#NormalFragment" class="headerlink" title="NormalFragment"></a><strong>NormalFragment</strong></h1><h2 id="布局文件"><a href="#布局文件" class="headerlink" title="布局文件"></a><strong>布局文件</strong></h2><p>仅包含一个表示当前Fragment为NormalFragment的TextView和一个用于点击后跳转的按钮。</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;&gt;
-
-    &lt;TextView
-        android:id=&quot;@+id/tv_normal_fragment&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:text=&quot;@string/normal_fragment&quot; /&gt;
-
-    &lt;Button
-        android:id=&quot;@+id/btn_change2WebWrapperFragment&quot;
-        android:layout_width=&quot;wrap_content&quot;
-        android:layout_height=&quot;wrap_content&quot;
-        android:layout_below=&quot;@id/tv_normal_fragment&quot;
-        android:text=&quot;@string/change2WebWrapperFragment&quot; /&gt;
-&lt;/RelativeLayout&gt;
-</code></pre><h2 id="点击按钮跳转到WebWrapperFragment"><a href="#点击按钮跳转到WebWrapperFragment" class="headerlink" title="点击按钮跳转到WebWrapperFragment"></a><strong>点击按钮跳转到WebWrapperFragment</strong></h2><p>在NormalFragment中设置按钮的点击监听。</p>
-<pre><code>mChange2WebWrapperFragmentBtn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if (mMainActivity != null) {
-            mMainActivity.change2WebWrapperFragment();
-        } else {
-            Log.e(TAG, &quot;mMainActivity == null&quot;);
-        }
-    }
-});
-</code></pre><p>在MainActivity中跳转到WebWrapperFragment。</p>
-<pre><code>public void change2WebWrapperFragment() {
-    WebWrapperFragment fragment = (WebWrapperFragment) getSupportFragmentManager().findFragmentByTag(&quot;WebWrapperFragment&quot;);
-    if (fragment == null) {
-        fragment = WebWrapperFragment.newInstance();
-        FragmentUtil.addFragment(getSupportFragmentManager(), R.id.fragment, mFragment, fragment, &quot;WebWrapperFragment&quot;);
-    } else {
-        if (mFragment != fragment) {
-            FragmentUtil.showFragment(getSupportFragmentManager(), mFragment, fragment);
-        }
-    }
-}
-</code></pre><hr>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/tv_normal_fragment"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"@string/normal_fragment"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/btn_change2WebWrapperFragment"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@id/tv_normal_fragment"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"@string/change2WebWrapperFragment"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="点击按钮跳转到WebWrapperFragment"><a href="#点击按钮跳转到WebWrapperFragment" class="headerlink" title="点击按钮跳转到WebWrapperFragment"></a><strong>点击按钮跳转到WebWrapperFragment</strong></h2><p>在NormalFragment中设置按钮的点击监听。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mChange2WebWrapperFragmentBtn.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mMainActivity != <span class="keyword">null</span>) &#123;</div><div class="line">            mMainActivity.change2WebWrapperFragment();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            Log.e(TAG, <span class="string">"mMainActivity == null"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在MainActivity中跳转到WebWrapperFragment。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">change2WebWrapperFragment</span><span class="params">()</span> </span>&#123;</div><div class="line">    WebWrapperFragment fragment = (WebWrapperFragment) getSupportFragmentManager().findFragmentByTag(<span class="string">"WebWrapperFragment"</span>);</div><div class="line">    <span class="keyword">if</span> (fragment == <span class="keyword">null</span>) &#123;</div><div class="line">        fragment = WebWrapperFragment.newInstance();</div><div class="line">        FragmentUtil.addFragment(getSupportFragmentManager(), R.id.fragment, mFragment, fragment, <span class="string">"WebWrapperFragment"</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">if</span> (mFragment != fragment) &#123;</div><div class="line">            FragmentUtil.showFragment(getSupportFragmentManager(), mFragment, fragment);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
 <h1 id="WebWrapperFragment"><a href="#WebWrapperFragment" class="headerlink" title="WebWrapperFragment"></a><strong>WebWrapperFragment</strong></h1><h2 id="布局文件-1"><a href="#布局文件-1" class="headerlink" title="布局文件"></a><strong>布局文件</strong></h2><p>仅包含WebView。</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
-    android:layout_width=&quot;match_parent&quot;
-    android:layout_height=&quot;match_parent&quot;&gt;
-
-    &lt;WebView
-        android:id=&quot;@+id/webView&quot;
-        android:layout_width=&quot;match_parent&quot;
-        android:layout_height=&quot;match_parent&quot; /&gt;
-&lt;/RelativeLayout&gt;
-</code></pre><h2 id="加载html文件"><a href="#加载html文件" class="headerlink" title="加载html文件"></a><strong>加载html文件</strong></h2><p>此处以放在assets中的html文件为例。</p>
-<pre><code>WebSettings webSettings = mWebView.getSettings();
-// 解决在用户调整手机字体大小/用户调整浏览器字体大小后，布局错乱问题。
-webSettings.setTextZoom(100);
-// 设置 Java 可调用 JS 方法
-webSettings.setJavaScriptEnabled(true);
-// 打开本地缓存
-webSettings.setDomStorageEnabled(true);
-
-webSettings.setAppCacheEnabled(true);
-webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-// 设置可以访问文件
-webSettings.setAllowFileAccess(true);
-webSettings.setAllowContentAccess(true);
-webSettings.setAllowFileAccessFromFileURLs(true);
-
-webSettings.setDatabaseEnabled(true);
-
-mWebView.setWebChromeClient(new WebChromeClientWithFullLog());
-mWebView.setWebViewClient(new WebViewClientWithFullLog());
-// 设置 JS 可调用 Java 方法
-mWebView.addJavascriptInterface(new WebWrapperJsInteration(this), WebWrapperJsInteration.JAVA_INTERFACE);
-
-mWebView.loadUrl(&quot;file:///android_asset/demo.html&quot;);
-
-mWebView.requestFocus();
-</code></pre><h3 id="demo-js"><a href="#demo-js" class="headerlink" title="demo.js"></a><strong>demo.js</strong></h3><p>clickBack为Java调用JS的方法，传入参数为str，当str是”web_wrapper”，会触发id是”web_wrapper_back”的点击事件。<br>back为JS调用Java的方法，传入参数为”web_wrapper”，当该JS文件被html引用时，会触发back方法。</p>
-<pre><code>window.clickBack = function (str) {
-    if(str != null &amp;&amp; typeof str == &quot;string&quot;) {
-        if(str == &quot;web_wrapper&quot;) {
-            document.getElementById(&apos;web_wrapper_back&apos;).click();
-        }
-    }
-};
-window.javaInterface.back(&quot;web_wrapper&quot;);
-</code></pre><h3 id="demo-html"><a href="#demo-html" class="headerlink" title="demo.html"></a><strong>demo.html</strong></h3><p>仅包含表示当前Fragment为WebWrapperFragment的文字和一个用于点击后跳转的按钮。<br>该html引用了demo.js。<br>按钮的id是”web_wrapper_back”，当点击后会显示对话框，如果点击对话框中的确认会调用Java的exit方法，如果点击对话框中的取消会调用Java的back方法并传入参数”web_wrapper”，按返回键会默认触发取消。</p>
-<pre><code>&lt;html&gt;
-&lt;head&gt;
-    &lt;script type=&quot;text/javascript&quot; src=&quot;demo.js&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        function exitConfirm(){
-            window.javaInterface.removeBack(&quot;web_wrapper&quot;);
-            var r = confirm(&quot;是否退出？&quot;);
-            if (r == true) {
-    //          if(window.javaInterface &amp;&amp; window.javaInterface.resetBack){
-                    window.javaInterface.exit();
-    //          }
-            } else {
-    //          if(window.javaInterface &amp;&amp; window.javaInterface.back){
-                    window.javaInterface.back(&quot;web_wrapper&quot;);
-    //          }
-            }
-        }
-    &lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-这是 WebWrapper Fragment 页面&lt;br/&gt;
-&lt;input type=&quot;button&quot; id=&quot;web_wrapper_back&quot; onclick=&quot;exitConfirm()&quot; value=&quot;后退到 Normal Fragment 页面&quot;/&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><h3 id="WebWrapperJsInteration-java"><a href="#WebWrapperJsInteration-java" class="headerlink" title="WebWrapperJsInteration.java"></a><strong>WebWrapperJsInteration.java</strong></h3><p>添加Java方法供JS调用。</p>
-<pre><code>public static final String JAVA_INTERFACE = &quot;javaInterface&quot;;
-
-@JavascriptInterface
-public void back(String str) {
-    Log.d(TAG, &quot;back(&quot; + str + &quot;)&quot;);
-    mView.showToast(&quot;back(&quot; + str + &quot;)&quot;);
-    mView.addBackStack(str);
-}
-
-@JavascriptInterface
-public void removeBack(String str) {
-    Log.d(TAG, &quot;removeBack(&quot; + str + &quot;)&quot;);
-    mView.showToast(&quot;removeBack(&quot; + str + &quot;)&quot;);
-    mView.removeBackStack(str);
-}
-
-@JavascriptInterface
-public void exit() {
-    Log.d(TAG, &quot;exit()&quot;);
-    mView.showToast(&quot;exit()&quot;);
-    mView.onBackPressed();
-}
-</code></pre><hr>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">WebView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/webView"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="加载html文件"><a href="#加载html文件" class="headerlink" title="加载html文件"></a><strong>加载html文件</strong></h2><p>此处以放在assets中的html文件为例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">WebSettings webSettings = mWebView.getSettings();</div><div class="line"><span class="comment">// 解决在用户调整手机字体大小/用户调整浏览器字体大小后，布局错乱问题。</span></div><div class="line">webSettings.setTextZoom(<span class="number">100</span>);</div><div class="line"><span class="comment">// 设置 Java 可调用 JS 方法</span></div><div class="line">webSettings.setJavaScriptEnabled(<span class="keyword">true</span>);</div><div class="line"><span class="comment">// 打开本地缓存</span></div><div class="line">webSettings.setDomStorageEnabled(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">webSettings.setAppCacheEnabled(<span class="keyword">true</span>);</div><div class="line">webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);</div><div class="line"><span class="comment">// 设置可以访问文件</span></div><div class="line">webSettings.setAllowFileAccess(<span class="keyword">true</span>);</div><div class="line">webSettings.setAllowContentAccess(<span class="keyword">true</span>);</div><div class="line">webSettings.setAllowFileAccessFromFileURLs(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">webSettings.setDatabaseEnabled(<span class="keyword">true</span>);</div><div class="line"></div><div class="line">mWebView.setWebChromeClient(<span class="keyword">new</span> WebChromeClientWithFullLog());</div><div class="line">mWebView.setWebViewClient(<span class="keyword">new</span> WebViewClientWithFullLog());</div><div class="line"><span class="comment">// 设置 JS 可调用 Java 方法</span></div><div class="line">mWebView.addJavascriptInterface(<span class="keyword">new</span> WebWrapperJsInteration(<span class="keyword">this</span>), WebWrapperJsInteration.JAVA_INTERFACE);</div><div class="line"></div><div class="line">mWebView.loadUrl(<span class="string">"file:///android_asset/demo.html"</span>);</div><div class="line"></div><div class="line">mWebView.requestFocus();</div></pre></td></tr></table></figure>
+<h3 id="demo-js"><a href="#demo-js" class="headerlink" title="demo.js"></a><strong>demo.js</strong></h3><p>clickBack为Java调用JS的方法，传入参数为str，当str是”web_wrapper”，会触发id是”web_wrapper_back”的点击事件。<br>back为JS调用Java的方法，传入参数为”web_wrapper”，当该JS文件被html引用时，会触发back方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.clickBack = <span class="function"><span class="keyword">function</span> (<span class="params">str</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(str != <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> str == <span class="string">"string"</span>) &#123;</div><div class="line">        <span class="keyword">if</span>(str == <span class="string">"web_wrapper"</span>) &#123;</div><div class="line">	        <span class="built_in">document</span>.getElementById(<span class="string">'web_wrapper_back'</span>).click();</div><div class="line">	    &#125;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"><span class="built_in">window</span>.javaInterface.back(<span class="string">"web_wrapper"</span>);</div></pre></td></tr></table></figure>
+<h3 id="demo-html"><a href="#demo-html" class="headerlink" title="demo.html"></a><strong>demo.html</strong></h3><p>仅包含表示当前Fragment为WebWrapperFragment的文字和一个用于点击后跳转的按钮。<br>该html引用了demo.js。<br>按钮的id是”web_wrapper_back”，当点击后会显示对话框，如果点击对话框中的确认会调用Java的exit方法，如果点击对话框中的取消会调用Java的back方法并传入参数”web_wrapper”，按返回键会默认触发取消。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"demo.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">exitConfirm</span>(<span class="params"></span>)</span>&#123;</span></div><div class="line"><span class="javascript">            <span class="built_in">window</span>.javaInterface.removeBack(<span class="string">"web_wrapper"</span>);</span></div><div class="line"><span class="javascript">            <span class="keyword">var</span> r = confirm(<span class="string">"是否退出？"</span>);</span></div><div class="line"><span class="javascript">            <span class="keyword">if</span> (r == <span class="literal">true</span>) &#123;</span></div><div class="line"><span class="javascript">    <span class="comment">//          if(window.javaInterface &amp;&amp; window.javaInterface.resetBack)&#123;</span></span></div><div class="line"><span class="javascript">                    <span class="built_in">window</span>.javaInterface.exit();</span></div><div class="line"><span class="javascript">    <span class="comment">//          &#125;</span></span></div><div class="line"><span class="javascript">            &#125; <span class="keyword">else</span> &#123;</span></div><div class="line"><span class="javascript">    <span class="comment">//          if(window.javaInterface &amp;&amp; window.javaInterface.back)&#123;</span></span></div><div class="line"><span class="javascript">                    <span class="built_in">window</span>.javaInterface.back(<span class="string">"web_wrapper"</span>);</span></div><div class="line"><span class="javascript">    <span class="comment">//          &#125;</span></span></div><div class="line"><span class="undefined">            &#125;</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">这是 WebWrapper Fragment 页面<span class="tag">&lt;<span class="name">br</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"web_wrapper_back"</span> <span class="attr">onclick</span>=<span class="string">"exitConfirm()"</span> <span class="attr">value</span>=<span class="string">"后退到 Normal Fragment 页面"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="WebWrapperJsInteration-java"><a href="#WebWrapperJsInteration-java" class="headerlink" title="WebWrapperJsInteration.java"></a><strong>WebWrapperJsInteration.java</strong></h3><p>添加Java方法供JS调用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String JAVA_INTERFACE = <span class="string">"javaInterface"</span>;</div><div class="line"></div><div class="line"><span class="meta">@JavascriptInterface</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">back</span><span class="params">(String str)</span> </span>&#123;</div><div class="line">    Log.d(TAG, <span class="string">"back("</span> + str + <span class="string">")"</span>);</div><div class="line">    mView.showToast(<span class="string">"back("</span> + str + <span class="string">")"</span>);</div><div class="line">    mView.addBackStack(str);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@JavascriptInterface</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">removeBack</span><span class="params">(String str)</span> </span>&#123;</div><div class="line">    Log.d(TAG, <span class="string">"removeBack("</span> + str + <span class="string">")"</span>);</div><div class="line">    mView.showToast(<span class="string">"removeBack("</span> + str + <span class="string">")"</span>);</div><div class="line">    mView.removeBackStack(str);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@JavascriptInterface</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exit</span><span class="params">()</span> </span>&#123;</div><div class="line">    Log.d(TAG, <span class="string">"exit()"</span>);</div><div class="line">    mView.showToast(<span class="string">"exit()"</span>);</div><div class="line">    mView.onBackPressed();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
 <h1 id="返回键逻辑实现"><a href="#返回键逻辑实现" class="headerlink" title="返回键逻辑实现"></a><strong>返回键逻辑实现</strong></h1><p>重写MainActivity的onBackPressed方法。</p>
-<pre><code>if (mFragment instanceof NormalFragment) {
-    NormalFragment fragment = (NormalFragment) mFragment;
-    if (fragment.isDialogShown()) {
-        finish();
-    } else {
-        fragment.showDialog();
-    }
-} else if (mFragment instanceof WebWrapperFragment) {
-    WebWrapperFragment fragment = (WebWrapperFragment) mFragment;
-    if (fragment.isBackStackEmpty()) {
-        change2NormalFragment();
-    } else {
-        fragment.goBackStack();
-    }
-}
-</code></pre><h2 id="显示NormalFragment的对话框"><a href="#显示NormalFragment的对话框" class="headerlink" title="显示NormalFragment的对话框"></a><strong>显示NormalFragment的对话框</strong></h2><p>当取消时将用于判断对话框是否为显示状态的标志置为false，按返回键会默认触发取消。</p>
-<pre><code>AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-builder.setMessage(&quot;是否退出？&quot;)
-        .setPositiveButton(&quot;确定&quot;, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if (mMainActivity != null) {
-                    mMainActivity.onBackPressed();
-                } else {
-                    Log.e(TAG, &quot;mMainActivity == null&quot;);
-                }
-            }
-        })
-        .setNegativeButton(&quot;取消&quot;, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        })
-        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                mDialogShown = false;
-            }
-        })
-        .show();
-</code></pre><h2 id="WebWrapperFragment中后退栈的维护"><a href="#WebWrapperFragment中后退栈的维护" class="headerlink" title="WebWrapperFragment中后退栈的维护"></a><strong>WebWrapperFragment中后退栈的维护</strong></h2><ol>
-<li>WebView加载html时，JS会调用Java的back(“web_wrapper”)，则此时后退栈添加元素”web_wrapper”。</li>
-<li>按返回键会先判断后退栈中是否有元素，因为有”web_wrapper”，然后Java会调用JS的clickBack(“web_wrapper”)，clickBack(“web_wrapper”)对应于html中按钮的点击事件，即会弹出对话框，同时JS会调用Java的removeBack(“web_wrapper”)，删除后退栈中的元素”web_wrapper”。</li>
-<li>再次点击返回键会直接触发对话框的取消，同时JS会调用Java的back(“web_wrapper”)，则此时后退栈添加元素”web_wrapper”，又回到最初加载时的状态。</li>
-</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (mFragment <span class="keyword">instanceof</span> NormalFragment) &#123;</div><div class="line">    NormalFragment fragment = (NormalFragment) mFragment;</div><div class="line">    <span class="keyword">if</span> (fragment.isDialogShown()) &#123;</div><div class="line">        finish();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        fragment.showDialog();</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (mFragment <span class="keyword">instanceof</span> WebWrapperFragment) &#123;</div><div class="line">    WebWrapperFragment fragment = (WebWrapperFragment) mFragment;</div><div class="line">    <span class="keyword">if</span> (fragment.isBackStackEmpty()) &#123;</div><div class="line">        change2NormalFragment();</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        fragment.goBackStack();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="显示NormalFragment的对话框"><a href="#显示NormalFragment的对话框" class="headerlink" title="显示NormalFragment的对话框"></a><strong>显示NormalFragment的对话框</strong></h2><p>当取消时将用于判断对话框是否为显示状态的标志置为false，按返回键会默认触发取消。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">AlertDialog.Builder builder = <span class="keyword">new</span> AlertDialog.Builder(getActivity());</div><div class="line">builder.setMessage(<span class="string">"是否退出？"</span>)</div><div class="line">        .setPositiveButton(<span class="string">"确定"</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">                <span class="keyword">if</span> (mMainActivity != <span class="keyword">null</span>) &#123;</div><div class="line">                    mMainActivity.onBackPressed();</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    Log.e(TAG, <span class="string">"mMainActivity == null"</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .setNegativeButton(<span class="string">"取消"</span>, <span class="keyword">new</span> DialogInterface.OnClickListener() &#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(DialogInterface dialog, <span class="keyword">int</span> id)</span> </span>&#123;</div><div class="line">                dialog.cancel();</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .setOnCancelListener(<span class="keyword">new</span> DialogInterface.OnCancelListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCancel</span><span class="params">(DialogInterface dialog)</span> </span>&#123;</div><div class="line">                mDialogShown = <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        .show();</div></pre></td></tr></table></figure>
+<h2 id="WebWrapperFragment中后退栈的维护"><a href="#WebWrapperFragment中后退栈的维护" class="headerlink" title="WebWrapperFragment中后退栈的维护"></a><strong>WebWrapperFragment中后退栈的维护</strong></h2><p>1、WebView加载html时，JS会调用Java的back(“web_wrapper”)，则此时后退栈添加元素”web_wrapper”。</p>
+<p>2、按返回键会先判断后退栈中是否有元素，因为有”web_wrapper”，然后Java会调用JS的clickBack(“web_wrapper”)，clickBack(“web_wrapper”)对应于html中按钮的点击事件，即会弹出对话框，同时JS会调用Java的removeBack(“web_wrapper”)，删除后退栈中的元素”web_wrapper”。</p>
+<p>3、再次点击返回键会直接触发对话框的取消，同时JS会调用Java的back(“web_wrapper”)，则此时后退栈添加元素”web_wrapper”，又回到最初加载时的状态。</p>
 <hr>
 <h1 id="源码地址"><a href="#源码地址" class="headerlink" title="源码地址"></a><strong>源码地址</strong></h1><p><a href="https://github.com/weichao66666/Hybrid_App_Back_Demo" title="https://github.com/weichao66666/Hybrid_App_Back_Demo" target="_blank" rel="external">Hybrid_App_Back_Demo</a></p>
 <hr>
@@ -584,7 +426,7 @@ builder.setMessage(&quot;是否退出？&quot;)
   <p><span>本文标题:</span><a href="/2018/01/23/Hybrid-App-返回键处理/">Hybrid App 返回键处理</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2018年01月23日 - 23:01</p>
-  <p><span>最后更新:</span>2018年01月24日 - 01:01</p>
+  <p><span>最后更新:</span>2018年01月30日 - 22:01</p>
   <p><span>原始链接:</span><a href="/2018/01/23/Hybrid-App-返回键处理/" title="Hybrid App 返回键处理">http://www.weichao.io/2018/01/23/Hybrid-App-返回键处理/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/01/23/Hybrid-App-返回键处理/"  aria-label="复制成功！"></i></span>
   </p>
@@ -855,7 +697,7 @@ builder.setMessage(&quot;是否退出？&quot;)
 <!--网站底部字数统计-->
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">本站总字数 8.4k 字 </span>
+  <span class="post-count">本站总字数 8.5k 字 </span>
 </div>
 
 <!--
