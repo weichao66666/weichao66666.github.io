@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+  
+
+
+  <link rel="alternate" href="/atom.xml" title="『魏超』的 blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="AutoLayout 代码解读 Reference Android AutoLayout全新的适配方式 堪称适配终结者   AutoLayoutConifg该类的作用是获取屏幕宽高、AndroidManifest.xml中的design_width和design_width字段的值。 123456789101112131415161718192021222324252627282930313233">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AutoLayout 代码解读">
+<meta property="og:url" content="http://www.weichao.io/2018/02/16/AutoLayout-代码解读/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="AutoLayout 代码解读 Reference Android AutoLayout全新的适配方式 堪称适配终结者   AutoLayoutConifg该类的作用是获取屏幕宽高、AndroidManifest.xml中的design_width和design_width字段的值。 123456789101112131415161718192021222324252627282930313233">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-16T08:12:33.192Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AutoLayout 代码解读">
+<meta name="twitter:description" content="AutoLayout 代码解读 Reference Android AutoLayout全新的适配方式 堪称适配终结者   AutoLayoutConifg该类的作用是获取屏幕宽高、AndroidManifest.xml中的design_width和design_width字段的值。 123456789101112131415161718192021222324252627282930313233">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2018/02/16/AutoLayout-代码解读/"/>
+
+
+
+
+
+  <title>AutoLayout 代码解读 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/02/16/AutoLayout-代码解读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">AutoLayout 代码解读</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T16:09:11+08:00">
+                2018-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,528 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  14 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2018/02/16/AutoLayout-代码解读/" class="leancloud_visitors" data-flag-title="AutoLayout 代码解读">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="AutoLayout-代码解读"><a href="#AutoLayout-代码解读" class="headerlink" title="AutoLayout 代码解读"></a><center><strong>AutoLayout 代码解读</strong></center></h1><hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/49990941" title="http://blog.csdn.net/lmj623565791/article/details/49990941" target="_blank" rel="external">Android AutoLayout全新的适配方式 堪称适配终结者</a></li>
+</ul>
+<hr>
+<h1 id="AutoLayoutConifg"><a href="#AutoLayoutConifg" class="headerlink" title="AutoLayoutConifg"></a><strong>AutoLayoutConifg</strong></h1><p>该类的作用是获取屏幕宽高、<code>AndroidManifest.xml</code>中的<code>design_width</code>和<code>design_width</code>字段的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoLayoutConifg</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AutoLayoutConifg sIntance = <span class="keyword">new</span> AutoLayoutConifg();</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String KEY_DESIGN_WIDTH = <span class="string">"design_width"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String KEY_DESIGN_HEIGHT = <span class="string">"design_height"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mScreenWidth;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mScreenHeight;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mDesignWidth;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> mDesignHeight;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> useDeviceSize;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">AutoLayoutConifg</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AutoLayoutConifg <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> sIntance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        getMetaData(context);</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] screenSize = ScreenUtils.getScreenSize(context, useDeviceSize);</div><div class="line">        mScreenWidth = screenSize[<span class="number">0</span>];</div><div class="line">        mScreenHeight = screenSize[<span class="number">1</span>];</div><div class="line">        L.e(<span class="string">"screenWidth = "</span> + mScreenWidth + <span class="string">", screenHeight = "</span> + mScreenHeight);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getMetaData</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        PackageManager packageManager = context.getPackageManager();</div><div class="line">        ApplicationInfo applicationInfo;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            applicationInfo = packageManager.getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);</div><div class="line">            <span class="keyword">if</span> (applicationInfo != <span class="keyword">null</span> &amp;&amp; applicationInfo.metaData != <span class="keyword">null</span>) &#123;</div><div class="line">                mDesignWidth = (<span class="keyword">int</span>) applicationInfo.metaData.get(KEY_DESIGN_WIDTH);</div><div class="line">                mDesignHeight = (<span class="keyword">int</span>) applicationInfo.metaData.get(KEY_DESIGN_HEIGHT);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">catch</span> (PackageManager.NameNotFoundException e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"you must set "</span> + KEY_DESIGN_WIDTH + <span class="string">" and "</span> + KEY_DESIGN_HEIGHT + <span class="string">" in your manifest file."</span>, e);</div><div class="line">        &#125;</div><div class="line">        L.e(<span class="string">"designWidth = "</span> + mDesignWidth + <span class="string">", designHeight = "</span> + mDesignHeight);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">checkParams</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mDesignHeight &lt;= <span class="number">0</span> || mDesignWidth &lt;= <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"you must set "</span> + KEY_DESIGN_WIDTH + <span class="string">" and "</span> + KEY_DESIGN_HEIGHT + <span class="string">" in your manifest file."</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> AutoLayoutConifg <span class="title">useDeviceSize</span><span class="params">()</span> </span>&#123;</div><div class="line">        useDeviceSize = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getScreenWidth</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mScreenWidth;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getScreenHeight</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mScreenHeight;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDesignWidth</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mDesignWidth;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDesignHeight</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mDesignHeight;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="init-Context-context"><a href="#init-Context-context" class="headerlink" title="init(Context context)"></a><strong>init(Context context)</strong></h2><p>获取屏幕宽高。</p>
+<h2 id="getMetaData-Context-context"><a href="#getMetaData-Context-context" class="headerlink" title="getMetaData(Context context)"></a><strong>getMetaData(Context context)</strong></h2><p>获取<code>AndroidManifest.xml</code>中位于<code>application</code>节点下的<code>design_width</code>和<code>design_width</code>字段的值。</p>
+<hr>
+<h1 id="AutoLayoutHelper"><a href="#AutoLayoutHelper" class="headerlink" title="AutoLayoutHelper"></a><strong>AutoLayoutHelper</strong></h1><p>该类的作用是计算属性的值并保存到<code>AutoLayoutInfo</code>对象中，在需要的时候将<code>AutoLayoutInfo</code>对象中值替换给对应的属性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoLayoutHelper</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"AutoLayoutHelper"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ViewGroup mHost;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>[] LL = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;</div><div class="line">            android.R.attr.textSize,</div><div class="line">            android.R.attr.padding,</div><div class="line">            android.R.attr.paddingLeft,</div><div class="line">            android.R.attr.paddingTop,</div><div class="line">            android.R.attr.paddingRight,</div><div class="line">            android.R.attr.paddingBottom,</div><div class="line">            android.R.attr.layout_width,</div><div class="line">            android.R.attr.layout_height,</div><div class="line">            android.R.attr.layout_margin,</div><div class="line">            android.R.attr.layout_marginLeft,</div><div class="line">            android.R.attr.layout_marginTop,</div><div class="line">            android.R.attr.layout_marginRight,</div><div class="line">            android.R.attr.layout_marginBottom,</div><div class="line">            android.R.attr.maxWidth,</div><div class="line">            android.R.attr.maxHeight,</div><div class="line">            android.R.attr.minWidth,</div><div class="line">            android.R.attr.minHeight,</div><div class="line">            android.R.attr.layout_marginStart,</div><div class="line">            android.R.attr.layout_marginEnd,</div><div class="line">            android.R.attr.paddingStart,</div><div class="line">            android.R.attr.paddingEnd,</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_TEXT_SIZE = <span class="number">0</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_PADDING = <span class="number">1</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_PADDING_LEFT = <span class="number">2</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_PADDING_TOP = <span class="number">3</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_PADDING_RIGHT = <span class="number">4</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_PADDING_BOTTOM = <span class="number">5</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_WIDTH = <span class="number">6</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_HEIGHT = <span class="number">7</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MARGIN = <span class="number">8</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MARGIN_LEFT = <span class="number">9</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MARGIN_TOP = <span class="number">10</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MARGIN_RIGHT = <span class="number">11</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MARGIN_BOTTOM = <span class="number">12</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MAX_WIDTH = <span class="number">13</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MAX_HEIGHT = <span class="number">14</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MIN_WIDTH = <span class="number">15</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MIN_HEIGHT = <span class="number">16</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MARGIN_START = <span class="number">17</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_MARGIN_END = <span class="number">18</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_PADDING_START = <span class="number">19</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INDEX_PADDING_END = <span class="number">20</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AutoLayoutHelper</span><span class="params">(ViewGroup host)</span> </span>&#123;</div><div class="line">        mHost = host;</div><div class="line"></div><div class="line">        initAutoLayoutConfig(host);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initAutoLayoutConfig</span><span class="params">(ViewGroup host)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (host != <span class="keyword">null</span>) &#123;</div><div class="line">            AutoLayoutConifg autoLayoutConifg = AutoLayoutConifg.getInstance();</div><div class="line">            autoLayoutConifg.init(host.getContext());</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            Log.e(TAG, <span class="string">"host == null"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">adjustChildren</span><span class="params">()</span> </span>&#123;</div><div class="line">        AutoLayoutConifg.getInstance().checkParams();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, n = mHost.getChildCount(); i &lt; n; i++) &#123;</div><div class="line">            View view = mHost.getChildAt(i);</div><div class="line">            ViewGroup.LayoutParams params = view.getLayoutParams();</div><div class="line">            <span class="keyword">if</span> (params <span class="keyword">instanceof</span> AutoLayoutParams) &#123;</div><div class="line">                AutoLayoutInfo info = ((AutoLayoutParams) params).getAutoLayoutInfo();</div><div class="line">                <span class="keyword">if</span> (info != <span class="keyword">null</span>) &#123;</div><div class="line">                    info.fillAttrs(view);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AutoLayoutInfo <span class="title">getAutoLayoutInfo</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AutoLayout_Layout);</div><div class="line">        <span class="keyword">int</span> baseWidth = a.getInt(R.styleable.AutoLayout_Layout_layout_auto_basewidth, <span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> baseHeight = a.getInt(R.styleable.AutoLayout_Layout_layout_auto_baseheight, <span class="number">0</span>);</div><div class="line">        a.recycle();</div><div class="line"></div><div class="line">        AutoLayoutInfo info = <span class="keyword">new</span> AutoLayoutInfo();</div><div class="line">        TypedArray array = context.obtainStyledAttributes(attrs, LL);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, n = array.getIndexCount(); i &lt; n; i++) &#123;</div><div class="line">            <span class="keyword">int</span> index = array.getIndex(i);</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (!DimenUtils.isPxVal(array.peekValue(index))) &#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">int</span> pxVal;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                pxVal = array.getDimensionPixelOffset(index, <span class="number">0</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                e.printStackTrace();</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">switch</span> (index) &#123;</div><div class="line">                <span class="keyword">case</span> INDEX_TEXT_SIZE:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> TextSizeAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_PADDING:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> PaddingAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_PADDING_LEFT:</div><div class="line">                <span class="keyword">case</span> INDEX_PADDING_START:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> PaddingLeftAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_PADDING_TOP:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> PaddingTopAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_PADDING_RIGHT:</div><div class="line">                <span class="keyword">case</span> INDEX_PADDING_END:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> PaddingRightAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_PADDING_BOTTOM:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> PaddingBottomAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_WIDTH:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> WidthAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_HEIGHT:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> HeightAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MARGIN:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MarginAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MARGIN_LEFT:</div><div class="line">                <span class="keyword">case</span> INDEX_MARGIN_START:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MarginLeftAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MARGIN_TOP:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MarginTopAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MARGIN_RIGHT:</div><div class="line">                <span class="keyword">case</span> INDEX_MARGIN_END:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MarginRightAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MARGIN_BOTTOM:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MarginBottomAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MAX_WIDTH:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MaxWidthAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MAX_HEIGHT:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MaxHeightAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MIN_WIDTH:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MinWidthAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> INDEX_MIN_HEIGHT:</div><div class="line">                    info.addAttr(<span class="keyword">new</span> MinHeightAttr(pxVal, baseWidth, baseHeight));</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        array.recycle();</div><div class="line">        L.e(<span class="string">"getAutoLayoutInfo "</span> + info.toString());</div><div class="line">        <span class="keyword">return</span> info;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AutoLayoutParams</span> </span>&#123;</div><div class="line">        <span class="function">AutoLayoutInfo <span class="title">getAutoLayoutInfo</span><span class="params">()</span></span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="adjustChildren"><a href="#adjustChildren" class="headerlink" title="adjustChildren()"></a><strong>adjustChildren()</strong></h2><p>遍历子 View，如果其布局参数是<code>AutoLayoutParams</code>，则将计算后的属性的值替换给对应的属性。</p>
+<h2 id="getAutoLayoutInfo-Context-context-AttributeSet-attrs"><a href="#getAutoLayoutInfo-Context-context-AttributeSet-attrs" class="headerlink" title="getAutoLayoutInfo(Context context, AttributeSet attrs)"></a><strong>getAutoLayoutInfo(Context context, AttributeSet attrs)</strong></h2><p>遍历属性，重新计算属性的值后保存到<code>AutoLayoutInfo</code>对象中。</p>
+<hr>
+<h1 id="AutoLayoutInfo"><a href="#AutoLayoutInfo" class="headerlink" title="AutoLayoutInfo"></a><strong>AutoLayoutInfo</strong></h1><p>该类的作用是替换属性的值为计算后的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoLayoutInfo</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> List&lt;AutoAttr&gt; autoAttrs = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fillAttrs</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span> (AutoAttr autoAttr : autoAttrs) &#123;</div><div class="line">            autoAttr.apply(view);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AutoLayoutInfo <span class="title">getAttrFromView</span><span class="params">(View view, <span class="keyword">int</span> attrs, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        ViewGroup.LayoutParams params = view.getLayoutParams();</div><div class="line">        <span class="keyword">if</span> (params == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        AutoLayoutInfo autoLayoutInfo = <span class="keyword">new</span> AutoLayoutInfo();</div><div class="line"></div><div class="line">        <span class="comment">// width, height</span></div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.WIDTH) != <span class="number">0</span> &amp;&amp; params.width &gt; <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(WidthAttr.generate(params.width, base));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.HEIGHT) != <span class="number">0</span> &amp;&amp; params.height &gt; <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(HeightAttr.generate(params.height, base));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// margin</span></div><div class="line">        <span class="keyword">if</span> (params <span class="keyword">instanceof</span> ViewGroup.MarginLayoutParams) &#123;</div><div class="line">            <span class="keyword">if</span> ((attrs &amp; Attrs.MARGIN) != <span class="number">0</span>) &#123;</div><div class="line">                autoLayoutInfo.addAttr(MarginLeftAttr.generate(((ViewGroup.MarginLayoutParams) params).leftMargin, base));</div><div class="line">                autoLayoutInfo.addAttr(MarginTopAttr.generate(((ViewGroup.MarginLayoutParams) params).topMargin, base));</div><div class="line">                autoLayoutInfo.addAttr(MarginRightAttr.generate(((ViewGroup.MarginLayoutParams) params).rightMargin, base));</div><div class="line">                autoLayoutInfo.addAttr(MarginBottomAttr.generate(((ViewGroup.MarginLayoutParams) params).bottomMargin, base));</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> ((attrs &amp; Attrs.MARGIN_LEFT) != <span class="number">0</span>) &#123;</div><div class="line">                autoLayoutInfo.addAttr(MarginLeftAttr.generate(((ViewGroup.MarginLayoutParams) params).leftMargin, base));</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> ((attrs &amp; Attrs.MARGIN_TOP) != <span class="number">0</span>) &#123;</div><div class="line">                autoLayoutInfo.addAttr(MarginTopAttr.generate(((ViewGroup.MarginLayoutParams) params).topMargin, base));</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> ((attrs &amp; Attrs.MARGIN_RIGHT) != <span class="number">0</span>) &#123;</div><div class="line">                autoLayoutInfo.addAttr(MarginRightAttr.generate(((ViewGroup.MarginLayoutParams) params).rightMargin, base));</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> ((attrs &amp; Attrs.MARGIN_BOTTOM) != <span class="number">0</span>) &#123;</div><div class="line">                autoLayoutInfo.addAttr(MarginBottomAttr.generate(((ViewGroup.MarginLayoutParams) params).bottomMargin, base));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// padding</span></div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.PADDING) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(PaddingLeftAttr.generate(view.getPaddingLeft(), base));</div><div class="line">            autoLayoutInfo.addAttr(PaddingTopAttr.generate(view.getPaddingTop(), base));</div><div class="line">            autoLayoutInfo.addAttr(PaddingRightAttr.generate(view.getPaddingRight(), base));</div><div class="line">            autoLayoutInfo.addAttr(PaddingBottomAttr.generate(view.getPaddingBottom(), base));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.PADDING_LEFT) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MarginLeftAttr.generate(view.getPaddingLeft(), base));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.PADDING_TOP) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MarginTopAttr.generate(view.getPaddingTop(), base));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.PADDING_RIGHT) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MarginRightAttr.generate(view.getPaddingRight(), base));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.PADDING_BOTTOM) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MarginBottomAttr.generate(view.getPaddingBottom(), base));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// minWidth, maxWidth, minHeight, maxHeight</span></div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.MIN_WIDTH) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MinWidthAttr.generate(MinWidthAttr.getMinWidth(view), base));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.MAX_WIDTH) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MaxWidthAttr.generate(MaxWidthAttr.getMaxWidth(view), base));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.MIN_HEIGHT) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MinHeightAttr.generate(MinHeightAttr.getMinHeight(view), base));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ((attrs &amp; Attrs.MAX_HEIGHT) != <span class="number">0</span>) &#123;</div><div class="line">            autoLayoutInfo.addAttr(MaxHeightAttr.generate(MaxHeightAttr.getMaxHeight(view), base));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// textSize</span></div><div class="line">        <span class="keyword">if</span> (view <span class="keyword">instanceof</span> TextView) &#123;</div><div class="line">            <span class="keyword">if</span> ((attrs &amp; Attrs.TEXTSIZE) != <span class="number">0</span>) &#123;</div><div class="line">                autoLayoutInfo.addAttr(TextSizeAttr.generate((<span class="keyword">int</span>) ((TextView) view).getTextSize(), base));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> autoLayoutInfo;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAttr</span><span class="params">(AutoAttr autoAttr)</span> </span>&#123;</div><div class="line">        autoAttrs.add(autoAttr);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"AutoLayoutInfo &#123; autoAttrs = "</span> + autoAttrs + <span class="string">" &#125;"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="getAttrFromView-View-view-int-attrs-int-base"><a href="#getAttrFromView-View-view-int-attrs-int-base" class="headerlink" title="getAttrFromView(View view, int attrs, int base)"></a><strong>getAttrFromView(View view, int attrs, int base)</strong></h2><p>遍历属性，重新计算属性的值并保存。</p>
+<h2 id="fillAttrs-View-view"><a href="#fillAttrs-View-view" class="headerlink" title="fillAttrs(View view)"></a><strong>fillAttrs(View view)</strong></h2><p>遍历属性，将属性应用到给定的 View 上。</p>
+<hr>
+<h1 id="AutoUtils"><a href="#AutoUtils" class="headerlink" title="AutoUtils"></a><strong>AutoUtils</strong></h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoUtils</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 会直接将view的LayoutParams上设置的width，height直接进行百分比处理</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> view</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">auto</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        autoSize(view);</div><div class="line">        autoPadding(view);</div><div class="line">        autoMargin(view);</div><div class="line">        autoTextSize(view, AutoAttr.BASE_DEFAULT);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> view</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> attrs #Attrs.WIDTH|Attrs.HEIGHT</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> base  AutoAttr.BASE_WIDTH|AutoAttr.BASE_HEIGHT|AutoAttr.BASE_DEFAULT</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">auto</span><span class="params">(View view, <span class="keyword">int</span> attrs, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        AutoLayoutInfo autoLayoutInfo = AutoLayoutInfo.getAttrFromView(view, attrs, base);</div><div class="line">        <span class="keyword">if</span> (autoLayoutInfo != <span class="keyword">null</span>) &#123;</div><div class="line">            autoLayoutInfo.fillAttrs(view);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoTextSize</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.TEXTSIZE, AutoAttr.BASE_DEFAULT);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoTextSize</span><span class="params">(View view, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.TEXTSIZE, base);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoMargin</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.MARGIN, AutoAttr.BASE_DEFAULT);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoMargin</span><span class="params">(View view, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.MARGIN, base);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoPadding</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.PADDING, AutoAttr.BASE_DEFAULT);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoPadding</span><span class="params">(View view, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.PADDING, base);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoSize</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.WIDTH | Attrs.HEIGHT, AutoAttr.BASE_DEFAULT);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoSize</span><span class="params">(View view, <span class="keyword">int</span> base)</span> </span>&#123;</div><div class="line">        auto(view, Attrs.WIDTH | Attrs.HEIGHT, base);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">autoed</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        Object tag = view.getTag(R.id.id_tag_autolayout_size);</div><div class="line">        <span class="keyword">if</span> (tag != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        view.setTag(R.id.id_tag_autolayout_size, <span class="string">"Just Identify"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">getPercentWidth1px</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> screenWidth = AutoLayoutConifg.getInstance().getScreenWidth();</div><div class="line">        <span class="keyword">int</span> designWidth = AutoLayoutConifg.getInstance().getDesignWidth();</div><div class="line">        <span class="keyword">return</span> <span class="number">1.0f</span> * screenWidth / designWidth;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">float</span> <span class="title">getPercentHeight1px</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> screenHeight = AutoLayoutConifg.getInstance().getScreenHeight();</div><div class="line">        <span class="keyword">int</span> designHeight = AutoLayoutConifg.getInstance().getDesignHeight();</div><div class="line">        <span class="keyword">return</span> <span class="number">1.0f</span> * screenHeight / designHeight;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPercentWidthSize</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> screenWidth = AutoLayoutConifg.getInstance().getScreenWidth();</div><div class="line">        <span class="keyword">int</span> designWidth = AutoLayoutConifg.getInstance().getDesignWidth();</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) (val * <span class="number">1.0f</span> / designWidth * screenWidth);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPercentHeightSize</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> screenHeight = AutoLayoutConifg.getInstance().getScreenHeight();</div><div class="line">        <span class="keyword">int</span> designHeight = AutoLayoutConifg.getInstance().getDesignHeight();</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">int</span>) (val * <span class="number">1.0f</span> / designHeight * screenHeight);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPercentWidthSizeBigger</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> screenWidth = AutoLayoutConifg.getInstance().getScreenWidth();</div><div class="line">        <span class="keyword">int</span> designWidth = AutoLayoutConifg.getInstance().getDesignWidth();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = val * screenWidth;</div><div class="line">        <span class="keyword">if</span> (res % designWidth == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res / designWidth;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> res / designWidth + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getPercentHeightSizeBigger</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> screenHeight = AutoLayoutConifg.getInstance().getScreenHeight();</div><div class="line">        <span class="keyword">int</span> designHeight = AutoLayoutConifg.getInstance().getDesignHeight();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> res = val * screenHeight;</div><div class="line">        <span class="keyword">if</span> (res % designHeight == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> res / designHeight;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> res / designHeight + <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="getPercentWidth1px"><a href="#getPercentWidth1px" class="headerlink" title="getPercentWidth1px()"></a><strong>getPercentWidth1px()</strong></h2><p>获取设计图中的<code>1px</code>在当前设备上的宽度。</p>
+<h2 id="getPercentHeight1px"><a href="#getPercentHeight1px" class="headerlink" title="getPercentHeight1px()"></a><strong>getPercentHeight1px()</strong></h2><p>获取设计图中的<code>1px</code>在当前设备上的高度。</p>
+<h2 id="getPercentWidthSize-int-val"><a href="#getPercentWidthSize-int-val" class="headerlink" title="getPercentWidthSize(int val)"></a><strong>getPercentWidthSize(int val)</strong></h2><p>获取基于宽度计算的设计图中的指定的值在当前设备上的值。</p>
+<h2 id="getPercentHeightSize-int-val"><a href="#getPercentHeightSize-int-val" class="headerlink" title="getPercentHeightSize(int val)"></a><strong>getPercentHeightSize(int val)</strong></h2><p>获取基于高度计算的设计图中的指定的值在当前设备上的值。</p>
+<h2 id="getPercentWidthSizeBigger-int-val"><a href="#getPercentWidthSizeBigger-int-val" class="headerlink" title="getPercentWidthSizeBigger(int val)"></a><strong>getPercentWidthSizeBigger(int val)</strong></h2><p>获取基于宽度计算的设计图中的指定的值在当前设备上的值，当为<code>0</code>时，修改为<code>1</code>。</p>
+<h2 id="getPercentHeightSizeBigger-int-val"><a href="#getPercentHeightSizeBigger-int-val" class="headerlink" title="getPercentHeightSizeBigger(int val)"></a><strong>getPercentHeightSizeBigger(int val)</strong></h2><p>获取基于高度计算的设计图中的指定的值在当前设备上的值，当为<code>0</code>时，修改为<code>1</code>。</p>
+<hr>
+<h1 id="AutoAttr"><a href="#AutoAttr" class="headerlink" title="AutoAttr"></a><strong>AutoAttr</strong></h1><p>判断是否未设置<code>app:layout_auto_basewidth</code>或<code>app:layout_auto_baseheight</code>，如果未设置，则判断该属性是基于宽度还是基于高度计算，并进行相应的计算；如果设置了基于宽度或高度计算，则进行对应的计算。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoAttr</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BASE_WIDTH = <span class="number">1</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BASE_HEIGHT = <span class="number">2</span>;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BASE_DEFAULT = <span class="number">3</span>;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> pxVal;</div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> baseWidth;</div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> baseHeight;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AutoAttr</span><span class="params">(<span class="keyword">int</span> pxVal, <span class="keyword">int</span> baseWidth, <span class="keyword">int</span> baseHeight)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.pxVal = pxVal;</div><div class="line">        <span class="keyword">this</span>.baseWidth = baseWidth;</div><div class="line">        <span class="keyword">this</span>.baseHeight = baseHeight;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">apply</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        <span class="keyword">boolean</span> log = view.getTag() != <span class="keyword">null</span> &amp;&amp; view.getTag().toString().equals(<span class="string">"auto"</span>);</div><div class="line">        <span class="keyword">if</span> (log) &#123;</div><div class="line">            L.e(<span class="string">"pxVal = "</span> + pxVal + <span class="string">" ,"</span> + getClass().getSimpleName());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        <span class="keyword">if</span> (useDefault()) &#123;</div><div class="line">            val = defaultBaseWidth() ? getPercentWidthSize() : getPercentHeightSize();</div><div class="line">            <span class="keyword">if</span> (log) &#123;</div><div class="line">                L.e(<span class="string">"useDefault val = "</span> + val);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (baseWidth()) &#123;</div><div class="line">            val = getPercentWidthSize();</div><div class="line">            <span class="keyword">if</span> (log) &#123;</div><div class="line">                L.e(<span class="string">"baseWidth val = "</span> + val);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            val = getPercentHeightSize();</div><div class="line">            <span class="keyword">if</span> (log) &#123;</div><div class="line">                L.e(<span class="string">"baseHeight val = "</span> + val);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (val &gt; <span class="number">0</span>) &#123;</div><div class="line">            val = Math.max(val, <span class="number">1</span>);<span class="comment">// for very thin divider</span></div><div class="line">        &#125;</div><div class="line">        execute(view, val);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">useDefault</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> !contains(baseHeight, attrVal()) &amp;&amp; !contains(baseWidth, attrVal());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">baseWidth</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> contains(baseWidth, attrVal());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(<span class="keyword">int</span> baseVal, <span class="keyword">int</span> flag)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> (baseVal &amp; flag) != <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">getPercentWidthSize</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> AutoUtils.getPercentWidthSizeBigger(pxVal);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">getPercentHeightSize</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> AutoUtils.getPercentHeightSizeBigger(pxVal);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"AutoAttr&#123;"</span> +</div><div class="line">                <span class="string">"pxVal = "</span> + pxVal +</div><div class="line">                <span class="string">", baseWidth = "</span> + baseWidth() +</div><div class="line">                <span class="string">", defaultBaseWidth = "</span> + defaultBaseWidth() +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">attrVal</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">defaultBaseWidth</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(View view, <span class="keyword">int</span> val)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="attrVal"><a href="#attrVal" class="headerlink" title="attrVal()"></a><strong>attrVal()</strong></h2><p>该属性在<code>attrs.xml</code>中对应的值。</p>
+<h2 id="defaultBaseWidth"><a href="#defaultBaseWidth" class="headerlink" title="defaultBaseWidth()"></a><strong>defaultBaseWidth()</strong></h2><p>是否默认依赖于宽度进行百分比计算。</p>
+<h2 id="execute-View-view-int-val"><a href="#execute-View-view-int-val" class="headerlink" title="execute(View view, int val)"></a><strong>execute(View view, int val)</strong></h2><p>将属性修改后的值替换给对应的属性。</p>
+<h2 id="apply-View-view"><a href="#apply-View-view" class="headerlink" title="apply(View view)"></a><strong>apply(View view)</strong></h2><p>计算属性的值并将属性修改后的值替换给对应的属性。</p>
+<h3 id="useDefault"><a href="#useDefault" class="headerlink" title="useDefault()"></a><strong>useDefault()</strong></h3><p>判断是否未设置<code>app:layout_auto_basewidth</code>或<code>app:layout_auto_baseheight</code>。</p>
+<h3 id="baseWidth"><a href="#baseWidth" class="headerlink" title="baseWidth()"></a><strong>baseWidth()</strong></h3><p>判断是否设置了<code>app:layout_auto_basewidth</code>。</p>
+<h3 id="contains-int-baseVal-int-flag"><a href="#contains-int-baseVal-int-flag" class="headerlink" title="contains(int baseVal, int flag)"></a><strong>contains(int baseVal, int flag)</strong></h3><p>判断是否对应的标志位是否置为了<code>1</code>。</p>
+<h3 id="getPercentWidthSize"><a href="#getPercentWidthSize" class="headerlink" title="getPercentWidthSize()"></a><strong>getPercentWidthSize()</strong></h3><p>基于宽度计算百分比的值。</p>
+<h3 id="getPercentHeightSize"><a href="#getPercentHeightSize" class="headerlink" title="getPercentHeightSize()"></a><strong>getPercentHeightSize()</strong></h3><p>基于高度计算百分比的值。</p>
+<hr>
+<h1 id="AutoLayoutActivity"><a href="#AutoLayoutActivity" class="headerlink" title="AutoLayoutActivity"></a><strong>AutoLayoutActivity</strong></h1><p>继承<code>AutoLayoutActivity</code>的 Activity 可以使布局实现百分比化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoLayoutActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LAYOUT_LINEARLAYOUT = <span class="string">"LinearLayout"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LAYOUT_FRAMELAYOUT = <span class="string">"FrameLayout"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LAYOUT_RELATIVELAYOUT = <span class="string">"RelativeLayout"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(String name, Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        View view = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">switch</span> (name) &#123;</div><div class="line">            <span class="keyword">case</span> LAYOUT_FRAMELAYOUT:</div><div class="line">                view = <span class="keyword">new</span> AutoFrameLayout(context, attrs);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> LAYOUT_LINEARLAYOUT:</div><div class="line">                view = <span class="keyword">new</span> AutoLinearLayout(context, attrs);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> LAYOUT_RELATIVELAYOUT:</div><div class="line">                view = <span class="keyword">new</span> AutoRelativeLayout(context, attrs);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (view != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> view;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onCreateView(name, context, attrs);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="onCreateView-String-name-Context-context-AttributeSet-attrs"><a href="#onCreateView-String-name-Context-context-AttributeSet-attrs" class="headerlink" title="onCreateView(String name, Context context, AttributeSet attrs)"></a><strong>onCreateView(String name, Context context, AttributeSet attrs)</strong></h2><p>替换<code>LinearLayout</code>为<code>AutoLinearLayout</code>，替换<code>FrameLayout</code>为<code>AutoFrameLayout</code>，替换<code>RelativeLayout</code>为<code>AutoRelativeLayout</code>。</p>
+<hr>
+<h1 id="AutoRelativeLayout"><a href="#AutoRelativeLayout" class="headerlink" title="AutoRelativeLayout"></a><strong>AutoRelativeLayout</strong></h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoRelativeLayout</span> <span class="keyword">extends</span> <span class="title">RelativeLayout</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AutoLayoutHelper mHelper = <span class="keyword">new</span> AutoLayoutHelper(<span class="keyword">this</span>);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AutoRelativeLayout</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AutoRelativeLayout</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AutoRelativeLayout</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyle)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyle);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> LayoutParams <span class="title">generateLayoutParams</span><span class="params">(AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> LayoutParams(getContext(), attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!isInEditMode()) &#123;</div><div class="line">            mHelper.adjustChildren();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">LayoutParams</span> <span class="keyword">extends</span> <span class="title">RelativeLayout</span>.<span class="title">LayoutParams</span> <span class="keyword">implements</span> <span class="title">AutoLayoutHelper</span>.<span class="title">AutoLayoutParams</span> </span>&#123;</div><div class="line">        <span class="keyword">private</span> AutoLayoutInfo mAutoLayoutInfo;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">LayoutParams</span><span class="params">(Context c, AttributeSet attrs)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(c, attrs);</div><div class="line">            mAutoLayoutInfo = AutoLayoutHelper.getAutoLayoutInfo(c, attrs);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">LayoutParams</span><span class="params">(<span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(width, height);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">LayoutParams</span><span class="params">(ViewGroup.LayoutParams source)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(source);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">LayoutParams</span><span class="params">(MarginLayoutParams source)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(source);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> AutoLayoutInfo <span class="title">getAutoLayoutInfo</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> mAutoLayoutInfo;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="generateLayoutParams-AttributeSet-attrs"><a href="#generateLayoutParams-AttributeSet-attrs" class="headerlink" title="generateLayoutParams(AttributeSet attrs)"></a><strong>generateLayoutParams(AttributeSet attrs)</strong></h2><p>当父容器添加子 View 时调用。返回内部类<code>LayoutParams</code>的对象。</p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/02/16/AutoLayout-代码解读/">AutoLayout 代码解读</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2018年02月16日 - 16:02</p>
+  <p><span>最后更新:</span>2018年02月16日 - 16:02</p>
+  <p><span>原始链接:</span><a href="/2018/02/16/AutoLayout-代码解读/" title="AutoLayout 代码解读">http://www.weichao.io/2018/02/16/AutoLayout-代码解读/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/02/16/AutoLayout-代码解读/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/12/百分比布局方案对比/" rel="next" title="百分比布局方案对比">
+                <i class="fa fa-chevron-left"></i> 百分比布局方案对比
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoLayout-代码解读"><span class="nav-number">1.</span> <span class="nav-text">AutoLayout 代码解读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoLayoutConifg"><span class="nav-number">3.</span> <span class="nav-text">AutoLayoutConifg</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#init-Context-context"><span class="nav-number">3.1.</span> <span class="nav-text">init(Context context)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getMetaData-Context-context"><span class="nav-number">3.2.</span> <span class="nav-text">getMetaData(Context context)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoLayoutHelper"><span class="nav-number">4.</span> <span class="nav-text">AutoLayoutHelper</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#adjustChildren"><span class="nav-number">4.1.</span> <span class="nav-text">adjustChildren()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getAutoLayoutInfo-Context-context-AttributeSet-attrs"><span class="nav-number">4.2.</span> <span class="nav-text">getAutoLayoutInfo(Context context, AttributeSet attrs)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoLayoutInfo"><span class="nav-number">5.</span> <span class="nav-text">AutoLayoutInfo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#getAttrFromView-View-view-int-attrs-int-base"><span class="nav-number">5.1.</span> <span class="nav-text">getAttrFromView(View view, int attrs, int base)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fillAttrs-View-view"><span class="nav-number">5.2.</span> <span class="nav-text">fillAttrs(View view)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoUtils"><span class="nav-number">6.</span> <span class="nav-text">AutoUtils</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#getPercentWidth1px"><span class="nav-number">6.1.</span> <span class="nav-text">getPercentWidth1px()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getPercentHeight1px"><span class="nav-number">6.2.</span> <span class="nav-text">getPercentHeight1px()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getPercentWidthSize-int-val"><span class="nav-number">6.3.</span> <span class="nav-text">getPercentWidthSize(int val)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getPercentHeightSize-int-val"><span class="nav-number">6.4.</span> <span class="nav-text">getPercentHeightSize(int val)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getPercentWidthSizeBigger-int-val"><span class="nav-number">6.5.</span> <span class="nav-text">getPercentWidthSizeBigger(int val)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#getPercentHeightSizeBigger-int-val"><span class="nav-number">6.6.</span> <span class="nav-text">getPercentHeightSizeBigger(int val)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoAttr"><span class="nav-number">7.</span> <span class="nav-text">AutoAttr</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#attrVal"><span class="nav-number">7.1.</span> <span class="nav-text">attrVal()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defaultBaseWidth"><span class="nav-number">7.2.</span> <span class="nav-text">defaultBaseWidth()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#execute-View-view-int-val"><span class="nav-number">7.3.</span> <span class="nav-text">execute(View view, int val)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apply-View-view"><span class="nav-number">7.4.</span> <span class="nav-text">apply(View view)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#useDefault"><span class="nav-number">7.4.1.</span> <span class="nav-text">useDefault()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baseWidth"><span class="nav-number">7.4.2.</span> <span class="nav-text">baseWidth()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contains-int-baseVal-int-flag"><span class="nav-number">7.4.3.</span> <span class="nav-text">contains(int baseVal, int flag)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getPercentWidthSize"><span class="nav-number">7.4.4.</span> <span class="nav-text">getPercentWidthSize()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#getPercentHeightSize"><span class="nav-number">7.4.5.</span> <span class="nav-text">getPercentHeightSize()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoLayoutActivity"><span class="nav-number">8.</span> <span class="nav-text">AutoLayoutActivity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#onCreateView-String-name-Context-context-AttributeSet-attrs"><span class="nav-number">8.1.</span> <span class="nav-text">onCreateView(String name, Context context, AttributeSet attrs)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AutoRelativeLayout"><span class="nav-number">9.</span> <span class="nav-text">AutoRelativeLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#generateLayoutParams-AttributeSet-attrs"><span class="nav-number">9.1.</span> <span class="nav-text">generateLayoutParams(AttributeSet attrs)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 18.0k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
