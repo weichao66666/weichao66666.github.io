@@ -100,23 +100,30 @@
 
 
 
-<meta name="description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
+<meta name="description" content="Reference F4V/FLV file format spec v10.1 FLV 文件格式简析 FLV文件的第一个Tag: onMetaData H.264/AVC编码的FLV文件的第二个Tag: AVCDecoderConfigurationRecord  FLV 格式  FLV header 从 FLV 报文看 FLV header 数据结构    数据 数据位置的说明     0x4">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pixel XL 刷机">
-<meta property="og:url" content="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/index.html">
+<meta property="og:title" content="FLV 封装格式">
+<meta property="og:url" content="http://www.weichao.io/2018/02/28/FLV-封装格式/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
+<meta property="og:description" content="Reference F4V/FLV file format spec v10.1 FLV 文件格式简析 FLV文件的第一个Tag: onMetaData H.264/AVC编码的FLV文件的第二个Tag: AVCDecoderConfigurationRecord  FLV 格式  FLV header 从 FLV 报文看 FLV header 数据结构    数据 数据位置的说明     0x4">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png">
-<meta property="og:updated_time" content="2017-10-23T14:21:04.157Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F2.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F3.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8FQQ%E6%88%AA%E5%9B%BE20180228213618.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F6.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F7.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F8.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F9.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F10.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8FQQ%E6%88%AA%E5%9B%BE20180228213649.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F13.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8FQQ%E6%88%AA%E5%9B%BE20180228213710.png">
+<meta property="og:updated_time" content="2018-02-28T13:46:57.648Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pixel XL 刷机">
-<meta name="twitter:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
+<meta name="twitter:title" content="FLV 封装格式">
+<meta name="twitter:description" content="Reference F4V/FLV file format spec v10.1 FLV 文件格式简析 FLV文件的第一个Tag: onMetaData H.264/AVC编码的FLV文件的第二个Tag: AVCDecoderConfigurationRecord  FLV 格式  FLV header 从 FLV 报文看 FLV header 数据结构    数据 数据位置的说明     0x4">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png">
 
 
 
@@ -144,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/"/>
+  <link rel="canonical" href="http://www.weichao.io/2018/02/28/FLV-封装格式/"/>
 
 
 
 
 
-  <title>Pixel XL 刷机 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>FLV 封装格式 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -271,7 +278,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/02/28/FLV-封装格式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -288,7 +295,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Pixel XL 刷机</h2>
+          <h2 class="post-title" itemprop="name headline">FLV 封装格式</h2>
         
 
         <div class="post-meta">
@@ -300,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:49:25+08:00">
-                2017-10-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T21:25:09+08:00">
+                2018-02-28
               </time>
             
 
@@ -331,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  197 字
+                  514 字
                 </span>
               
 
@@ -347,7 +354,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -355,7 +362,7 @@
 
           
           
-             <span id="/2017/10/11/Pixel-XL-刷机/" class="leancloud_visitors" data-flag-title="Pixel XL 刷机">
+             <span id="/2018/02/28/FLV-封装格式/" class="leancloud_visitors" data-flag-title="FLV 封装格式">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -381,36 +388,85 @@
 
       
         <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
-<li><a href="https://sspai.com/post/38319" title="https://sspai.com/post/38319" target="_blank" rel="external">从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记</a></li>
+<li><a href="https://wwwimages2.adobe.com/content/dam/acom/en/devnet/flv/video_file_format_spec_v10_1.pdf" title="https://wwwimages2.adobe.com/content/dam/acom/en/devnet/flv/video_file_format_spec_v10_1.pdf" target="_blank" rel="external">F4V/FLV file format spec v10.1</a></li>
+<li><a href="https://www.jianshu.com/p/74a13250fa1b" title="https://www.jianshu.com/p/74a13250fa1b" target="_blank" rel="external">FLV 文件格式简析</a></li>
+<li><a href="https://www.jianshu.com/p/f2b31ddcf200" title="https://www.jianshu.com/p/f2b31ddcf200" target="_blank" rel="external">FLV文件的第一个Tag: onMetaData</a></li>
+<li><a href="https://www.jianshu.com/p/e1e417eee2e7" title="https://www.jianshu.com/p/e1e417eee2e7" target="_blank" rel="external">H.264/AVC编码的FLV文件的第二个Tag: AVCDecoderConfigurationRecord</a></li>
 </ul>
+<h1 id="FLV-格式"><a href="#FLV-格式" class="headerlink" title="FLV 格式"></a><strong>FLV 格式</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png" alt=""></p>
 <hr>
-<h1 id="手动刷入工厂镜像"><a href="#手动刷入工厂镜像" class="headerlink" title="手动刷入工厂镜像"></a><strong>手动刷入工厂镜像</strong></h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a><strong>操作步骤</strong></h2><h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a><strong>下载文件</strong></h3><ol>
-<li><p>从<a href="https://developers.google.cn/android/images" title="https://developers.google.cn/android/images" target="_blank" rel="external">工厂镜像官网</a>下载对应版本的 zip 文件</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png" alt=""></p>
-</li>
-</ol>
-<h3 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a><strong>刷机</strong></h3><ol>
-<li><p>解压 zip 文件</p>
-<p> 比如将 zip 文件解压到 f 盘根目录。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png" alt=""></p>
-</li>
-<li><p>修改文件，用于刷机时保留系统数据</p>
-<p> 使用文本编辑器修改 <code>flash-all.bat</code> 中的 <code>fastboot -w update image-marlin-opr3.170623.008.zip</code> 为 <code>fastboot update image-marlin-opr3.170623.008.zip</code>，即去掉 <code>-w</code>。</p>
-</li>
-<li><p>通过 USB 线连接手机和 PC</p>
-</li>
-<li><p>让手机进入 fastboot 模式</p>
-<p> 在命令行中执行<code>adb reboot bootloader</code>。</p>
-</li>
-<li><p>进入 <code>flash-all.bat</code> 所在目录</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png" alt=""></p>
-</li>
-<li><p>执行 <code>flash-all.bat</code>，等待刷机完成</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png" alt=""></p>
-<p> 重启后进入<code>设置</code>-&gt;<code>系统</code>可以看到系统版本。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png" alt=""></p>
-</li>
-</ol>
+<h1 id="FLV-header"><a href="#FLV-header" class="headerlink" title="FLV header"></a><strong>FLV header</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F2.png" alt=""></p>
+<h2 id="从-FLV-报文看-FLV-header-数据结构"><a href="#从-FLV-报文看-FLV-header-数据结构" class="headerlink" title="从 FLV 报文看 FLV header 数据结构"></a><strong>从 FLV 报文看 FLV header 数据结构</strong></h2><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F3.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>数据</th>
+<th>数据位置的说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x46 0x4c 0x56</td>
+<td>字符<code>FLV</code></td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>版本号</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>右起第 0 位和第 2 位分别表示 video 与 audio 存在的情况（1 表示存在，0 表示不存在）</td>
+</tr>
+<tr>
+<td>0x00 0x00 0x00 0x09</td>
+<td>报头数据长度</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="FLV-body"><a href="#FLV-body" class="headerlink" title="FLV body"></a><strong>FLV body</strong></h1><h2 id="FLV-TAG-header"><a href="#FLV-TAG-header" class="headerlink" title="FLV TAG header"></a><strong>FLV TAG header</strong></h2><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8FQQ%E6%88%AA%E5%9B%BE20180228213618.png" alt=""></p>
+<h2 id="第一个-TAG"><a href="#第一个-TAG" class="headerlink" title="第一个 TAG"></a><strong>第一个 TAG</strong></h2><p><code>onMetaData</code>和<code>header</code>之间存在 4 个空字节。</p>
+<h3 id="rtmp-中，FLV-body-的第一个-TAG-必须是-onMetaData"><a href="#rtmp-中，FLV-body-的第一个-TAG-必须是-onMetaData" class="headerlink" title="rtmp 中，FLV body 的第一个 TAG 必须是 onMetaData"></a><strong>rtmp 中，FLV body 的第一个 TAG 必须是 onMetaData</strong></h3><p>首先是 11 个字节的<code>FLV TAG header</code>，<code>TagType=0x12</code>。然后是<code>onMetaData</code>的<code>header</code>。最后是<code>onMetaData</code>的<code>body</code>。</p>
+<h4 id="onMetaData-的-header"><a href="#onMetaData-的-header" class="headerlink" title="onMetaData 的 header"></a><strong>onMetaData 的 header</strong></h4><p>1个字节的<code>2</code> + 12个字节的<code>onMetaData</code>字符串。</p>
+<h4 id="onMetaData-的-body"><a href="#onMetaData-的-body" class="headerlink" title="onMetaData 的 body"></a><strong>onMetaData 的 body</strong></h4><p>将数据按照写入规则排在<code>header</code>后面。</p>
+<p>参数包括：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F6.png" alt=""></p>
+<p>其中，<code>audiocodecid</code>范围：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F7.png" alt=""></p>
+<p><code>videocodecid</code>范围：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F8.png" alt=""></p>
+<p>参数写入规则根据数据类型而定。</p>
+<p>数据类型包括：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F9.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>参数写入规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>String</td>
+<td>1个字节的<code>2</code> + 2个字节的value长度 + value长度个字节的value</td>
+</tr>
+<tr>
+<td>ECMA array</td>
+<td>4个字节的<code>8</code> + 每个元素（key长度个字节的key + 1个字节的数据类型 + value长度个字节的value）</td>
+</tr>
+</tbody>
+</table>
+<p><code>onMetaData</code>结尾是 3 个字节的<code>0x00 0x00 0x09</code>。</p>
+<h2 id="第二个-TAG"><a href="#第二个-TAG" class="headerlink" title="第二个 TAG"></a><strong>第二个 TAG</strong></h2><p>第二个 TAG 和前面的<code>onMetaData</code>之间存在 4 个字节（用于表示<code>onMetaData</code>长度）。</p>
+<h3 id="如果有-AVC，rtmp-中，FLV-body-下一个-TAG-必须是-AVCDecoderConfigurationRecord"><a href="#如果有-AVC，rtmp-中，FLV-body-下一个-TAG-必须是-AVCDecoderConfigurationRecord" class="headerlink" title="如果有 AVC，rtmp 中，FLV body 下一个 TAG 必须是 AVCDecoderConfigurationRecord"></a><strong>如果有 AVC，rtmp 中，FLV body 下一个 TAG 必须是 AVCDecoderConfigurationRecord</strong></h3><p>首先是 11 个字节的<code>FLV TAG header</code>，<code>TagType=0x09</code>。然后是<code>AVC</code>编码格式的<code>header</code>，<code>AVCPacketType=0x00</code>。最后是<code>AVCDecoderConfigurationRecord</code>。</p>
+<hr>
+<h3 id="如果有-AAC，rtmp-中，FLV-body-下一个-TAG-必须是-AudioSpecificConfig"><a href="#如果有-AAC，rtmp-中，FLV-body-下一个-TAG-必须是-AudioSpecificConfig" class="headerlink" title="如果有 AAC，rtmp 中，FLV body 下一个 TAG 必须是 AudioSpecificConfig"></a><strong>如果有 AAC，rtmp 中，FLV body 下一个 TAG 必须是 AudioSpecificConfig</strong></h3><p>首先是 11 个字节的<code>FLV TAG header</code>，<code>TagType=0x08</code>。然后是<code>AAC</code>编码格式的<code>header</code>，<code>AACPacketType=0x00</code>。最后是<code>AudioSpecificConfig</code>。</p>
+<h2 id="后续-TAG"><a href="#后续-TAG" class="headerlink" title="后续 TAG"></a><strong>后续 TAG</strong></h2><p>每个 TAG 都和前面的 TAG 之间存在 4 个字节（用于表示前一个 TAG 长度）。</p>
+<p>首先是 11 个字节的<code>FLV TAG header</code>。然后是<code>AVC/AAC</code>编码格式的<code>header</code>，最后是<code>AVC/AAC</code>编码格式的<code>body</code>。</p>
+<h3 id="TAG-header"><a href="#TAG-header" class="headerlink" title="TAG header"></a><strong>TAG header</strong></h3><h4 id="AVC-编码格式的-header"><a href="#AVC-编码格式的-header" class="headerlink" title="AVC 编码格式的 header"></a><strong>AVC 编码格式的 header</strong></h4><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F10.png" alt=""></p>
+<h4 id="AAC-编码格式的-header"><a href="#AAC-编码格式的-header" class="headerlink" title="AAC 编码格式的 header"></a><strong>AAC 编码格式的 header</strong></h4><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8FQQ%E6%88%AA%E5%9B%BE20180228213649.png" alt=""></p>
+<h3 id="TAG-body"><a href="#TAG-body" class="headerlink" title="TAG body"></a><strong>TAG body</strong></h3><h4 id="AVC-编码格式的-body"><a href="#AVC-编码格式的-body" class="headerlink" title="AVC 编码格式的 body"></a><strong>AVC 编码格式的 body</strong></h4><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F13.png" alt=""></p>
+<h4 id="AAC-编码格式的-body"><a href="#AAC-编码格式的-body" class="headerlink" title="AAC 编码格式的 body"></a><strong>AAC 编码格式的 body</strong></h4><p><img src="http://otkw6sse5.bkt.clouddn.com/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8FQQ%E6%88%AA%E5%9B%BE20180228213710.png" alt=""></p>
 <hr>
 
       
@@ -426,12 +482,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2017/10/11/Pixel-XL-刷机/">Pixel XL 刷机</a></p>
+  <p><span>本文标题:</span><a href="/2018/02/28/FLV-封装格式/">FLV 封装格式</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2017年10月11日 - 20:10</p>
-  <p><span>最后更新:</span>2017年10月23日 - 22:10</p>
-  <p><span>原始链接:</span><a href="/2017/10/11/Pixel-XL-刷机/" title="Pixel XL 刷机">http://www.weichao.io/2017/10/11/Pixel-XL-刷机/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年02月28日 - 21:02</p>
+  <p><span>最后更新:</span>2018年02月28日 - 21:02</p>
+  <p><span>原始链接:</span><a href="/2018/02/28/FLV-封装格式/" title="FLV 封装格式">http://www.weichao.io/2018/02/28/FLV-封装格式/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/02/28/FLV-封装格式/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -495,8 +551,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/Pixel-XL-解锁/" rel="next" title="Pixel XL 解锁">
-                <i class="fa fa-chevron-left"></i> Pixel XL 解锁
+              <a href="/2018/02/27/ScreenRecorder-代码解读/" rel="next" title="ScreenRecorder 代码解读">
+                <i class="fa fa-chevron-left"></i> ScreenRecorder 代码解读
               </a>
             
           </div>
@@ -504,10 +560,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/15/编译、运行源码/" rel="prev" title="编译、运行源码">
-                编译、运行源码 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -663,7 +715,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#手动刷入工厂镜像"><span class="nav-number">2.</span> <span class="nav-text">手动刷入工厂镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作步骤"><span class="nav-number">2.1.</span> <span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载文件"><span class="nav-number">2.1.1.</span> <span class="nav-text">下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷机"><span class="nav-number">2.1.2.</span> <span class="nav-text">刷机</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FLV-格式"><span class="nav-number">2.</span> <span class="nav-text">FLV 格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FLV-header"><span class="nav-number">3.</span> <span class="nav-text">FLV header</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#从-FLV-报文看-FLV-header-数据结构"><span class="nav-number">3.1.</span> <span class="nav-text">从 FLV 报文看 FLV header 数据结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FLV-body"><span class="nav-number">4.</span> <span class="nav-text">FLV body</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FLV-TAG-header"><span class="nav-number">4.1.</span> <span class="nav-text">FLV TAG header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个-TAG"><span class="nav-number">4.2.</span> <span class="nav-text">第一个 TAG</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rtmp-中，FLV-body-的第一个-TAG-必须是-onMetaData"><span class="nav-number">4.2.1.</span> <span class="nav-text">rtmp 中，FLV body 的第一个 TAG 必须是 onMetaData</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#onMetaData-的-header"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">onMetaData 的 header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#onMetaData-的-body"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">onMetaData 的 body</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二个-TAG"><span class="nav-number">4.3.</span> <span class="nav-text">第二个 TAG</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如果有-AVC，rtmp-中，FLV-body-下一个-TAG-必须是-AVCDecoderConfigurationRecord"><span class="nav-number">4.3.1.</span> <span class="nav-text">如果有 AVC，rtmp 中，FLV body 下一个 TAG 必须是 AVCDecoderConfigurationRecord</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如果有-AAC，rtmp-中，FLV-body-下一个-TAG-必须是-AudioSpecificConfig"><span class="nav-number">4.3.2.</span> <span class="nav-text">如果有 AAC，rtmp 中，FLV body 下一个 TAG 必须是 AudioSpecificConfig</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续-TAG"><span class="nav-number">4.4.</span> <span class="nav-text">后续 TAG</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TAG-header"><span class="nav-number">4.4.1.</span> <span class="nav-text">TAG header</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVC-编码格式的-header"><span class="nav-number">4.4.1.1.</span> <span class="nav-text">AVC 编码格式的 header</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AAC-编码格式的-header"><span class="nav-number">4.4.1.2.</span> <span class="nav-text">AAC 编码格式的 header</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TAG-body"><span class="nav-number">4.4.2.</span> <span class="nav-text">TAG body</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AVC-编码格式的-body"><span class="nav-number">4.4.2.1.</span> <span class="nav-text">AVC 编码格式的 body</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AAC-编码格式的-body"><span class="nav-number">4.4.2.2.</span> <span class="nav-text">AAC 编码格式的 body</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
