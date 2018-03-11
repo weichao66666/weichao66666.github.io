@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference libstreaming MediaMirror   概述实现同屏需要一个服务端和至少一个客户端。服务端是发送音视频数据的，数据来源可以是相机、屏幕捕捉等。客户端是接收音视频数据的，接收到的数据会实时在屏幕上显示。 MediaMirror是libstreaming的 demo，实现了服务端通过相机采集数据，并发送数据给客户端，客户端实时在屏幕上显示的功能。 实现同屏的操作是：1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 libstreaming 实现同屏时的代码执行流程">
+<meta property="og:url" content="http://www.weichao.io/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference libstreaming MediaMirror   概述实现同屏需要一个服务端和至少一个客户端。服务端是发送音视频数据的，数据来源可以是相机、屏幕捕捉等。客户端是接收音视频数据的，接收到的数据会实时在屏幕上显示。 MediaMirror是libstreaming的 demo，实现了服务端通过相机采集数据，并发送数据给客户端，客户端实时在屏幕上显示的功能。 实现同屏的操作是：1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-11T10:45:16.396Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用 libstreaming 实现同屏时的代码执行流程">
+<meta name="twitter:description" content="Reference libstreaming MediaMirror   概述实现同屏需要一个服务端和至少一个客户端。服务端是发送音视频数据的，数据来源可以是相机、屏幕捕捉等。客户端是接收音视频数据的，接收到的数据会实时在屏幕上显示。 MediaMirror是libstreaming的 demo，实现了服务端通过相机采集数据，并发送数据给客户端，客户端实时在屏幕上显示的功能。 实现同屏的操作是：1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/"/>
+
+
+
+
+
+  <title>使用 libstreaming 实现同屏时的代码执行流程 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">使用 libstreaming 实现同屏时的代码执行流程</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T18:39:10+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,484 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  12 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/" class="leancloud_visitors" data-flag-title="使用 libstreaming 实现同屏时的代码执行流程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="https://github.com/fyhertz/libstreaming" title="https://github.com/fyhertz/libstreaming" target="_blank" rel="external">libstreaming</a></li>
+<li><a href="https://github.com/weichao66666/MediaMirror" title="https://github.com/weichao66666/MediaMirror" target="_blank" rel="external">MediaMirror</a></li>
+</ul>
+<hr>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h1><p>实现同屏需要一个服务端和至少一个客户端。服务端是发送音视频数据的，数据来源可以是相机、屏幕捕捉等。客户端是接收音视频数据的，接收到的数据会实时在屏幕上显示。</p>
+<p><code>MediaMirror</code>是<code>libstreaming</code>的 demo，实现了服务端通过相机采集数据，并发送数据给客户端，客户端实时在屏幕上显示的功能。</p>
+<p>实现同屏的操作是：<br>1、服务端和客户端连接同一个 AP。<br>2、服务端安装在 Android 6.0+ 系统上需要手动授权。<br>3、客户端需要修改 IP 地址指向服务端。<br>4、先启动服务端，再启动客户端。</p>
+<p><code>MediaMirror</code>基于<code>libstreaming</code>，对代码有修改，以下分析基于<code>MediaMirror</code>。</p>
+<hr>
+<h1 id="启动服务端"><a href="#启动服务端" class="headerlink" title="启动服务端"></a><strong>启动服务端</strong></h1><h2 id="入口-Activity"><a href="#入口-Activity" class="headerlink" title="入口 Activity"></a><strong>入口 Activity</strong></h2><p>代码很少，全部贴出来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">SurfaceHolder</span>.<span class="title">Callback</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> SurfaceView surfaceView;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Session session;</div><div class="line">    <span class="keyword">private</span> RtspServer rtspServer;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        surfaceView = findViewById(R.id.surface);</div><div class="line"></div><div class="line">        surfaceView.getHolder().addCallback(<span class="keyword">this</span>);</div><div class="line">        startRtspServer();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">        stopRtspServer();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">startRtspServer</span><span class="params">()</span> </span>&#123;</div><div class="line">        rtspServer = <span class="keyword">new</span> RtspServer();</div><div class="line">        rtspServer.start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">stopRtspServer</span><span class="params">()</span> </span>&#123;</div><div class="line">        rtspServer.stop();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">buildSession</span><span class="params">()</span> </span>&#123;</div><div class="line">        session = SessionBuilder.getInstance()</div><div class="line">                .setSurfaceView(surfaceView)</div><div class="line">                .setPreviewOrientation(<span class="number">90</span>)</div><div class="line">                .setContext(<span class="keyword">this</span>)</div><div class="line">                .setAudioEncoder(SessionBuilder.AUDIO_AAC)</div><div class="line">                .setAudioQuality(<span class="keyword">new</span> AudioQuality(<span class="number">16000</span>, <span class="number">32000</span>))</div><div class="line">                .setVideoEncoder(SessionBuilder.VIDEO_H264)</div><div class="line">                .setVideoQuality(<span class="keyword">new</span> VideoQuality(<span class="number">320</span>, <span class="number">240</span>, <span class="number">20</span>, <span class="number">500000</span>))</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*SurfaceHolder.Callback start*/</span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceCreated</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</div><div class="line">        buildSession();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceChanged</span><span class="params">(SurfaceHolder holder, <span class="keyword">int</span> format, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceDestroyed</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</div><div class="line">        session.release();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*SurfaceHolder.Callback end*/</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>布局文件中只有一个普通的<code>SurfaceView</code>，在<code>SurfaceView</code>回调<code>surfaceCreated(SurfaceHolder holder)</code>方法时会调用<code>buildSession()</code>方法，<code>buildSession()</code>设置了<code>Session</code>的参数并最终调用<code>SessionBuilder#build()</code>方法进行初始化。</p>
+<p>然后，创建了<code>RtspServer</code>实例并启动。</p>
+<h3 id="SessionBuilder-build"><a href="#SessionBuilder-build" class="headerlink" title="SessionBuilder#build()"></a><strong>SessionBuilder#build()</strong></h3><p>创建 H.264 视频的对应流并设置给<code>Session</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">H264Stream stream = <span class="keyword">new</span> H264Stream(mCameraFacing);</div><div class="line"><span class="keyword">if</span> (mContext != <span class="keyword">null</span>) &#123;</div><div class="line">    stream.setSharedPreferences(PreferenceManager.getDefaultSharedPreferences(mContext));</div><div class="line">&#125;</div><div class="line">session.addVideoTrack(stream);</div></pre></td></tr></table></figure>
+<p>创建 AAC 音频的对应流并设置给<code>Session</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">AacStream stream = <span class="keyword">new</span> AacStream();</div><div class="line">session.addAudioTrack(stream);</div><div class="line"><span class="keyword">if</span> (mContext != <span class="keyword">null</span>) &#123;</div><div class="line">    stream.setPreferences(PreferenceManager.getDefaultSharedPreferences(mContext));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="H264Stream-构造函数"><a href="#H264Stream-构造函数" class="headerlink" title="H264Stream 构造函数"></a><strong>H264Stream 构造函数</strong></h4><p><code>H264Stream</code>是<code>VideoStream</code>的子类，这里调用了<code>VideoStream</code>的有参构造函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">super</span>(cameraId);</div></pre></td></tr></table></figure>
+<p>创建了<code>H264Packetizer</code>实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">packetizer = <span class="keyword">new</span> H264Packetizer();</div></pre></td></tr></table></figure>
+<h5 id="VideoStream-有参构造函数"><a href="#VideoStream-有参构造函数" class="headerlink" title="VideoStream 有参构造函数"></a><strong>VideoStream 有参构造函数</strong></h5><p><code>VideoStream</code>是<code>MediaStream</code>的子类，这里调用了<code>MediaStream</code>的无参构造函数。</p>
+<h5 id="H264Packetizer-构造函数"><a href="#H264Packetizer-构造函数" class="headerlink" title="H264Packetizer 构造函数"></a><strong>H264Packetizer 构造函数</strong></h5><p><code>H264Packetizer</code>是<code>AbstractPacketizer</code>的子类，这里调用了<code>AbstractPacketizer</code>的无参构造函数。</p>
+<h6 id="AbstractPacketizer-构造函数"><a href="#AbstractPacketizer-构造函数" class="headerlink" title="AbstractPacketizer 构造函数"></a><strong>AbstractPacketizer 构造函数</strong></h6><p>创建了<code>RtpSocket</code>实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rtpSocket = <span class="keyword">new</span> RtpSocket();</div></pre></td></tr></table></figure>
+<p>####### <strong>RtpSocket 构造函数</strong></p>
+<p>创建 UDP 的数据包数组：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">datagramPackets = <span class="keyword">new</span> DatagramPacket[bufferCount];</div></pre></td></tr></table></figure>
+<p>创建<code>MulticastSocket</code>实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">multicastSocket = <span class="keyword">new</span> MulticastSocket();</div></pre></td></tr></table></figure>
+<h4 id="AacStream-构造函数"><a href="#AacStream-构造函数" class="headerlink" title="AacStream 构造函数"></a><strong>AacStream 构造函数</strong></h4><p><code>AacStream</code>是<code>AudioStream</code>的子类，这里调用了<code>AudioStream</code>的无参构造函数。</p>
+<h5 id="AudioStream-构造函数"><a href="#AudioStream-构造函数" class="headerlink" title="AudioStream 构造函数"></a><strong>AudioStream 构造函数</strong></h5><p><code>AudioStream</code>是<code>MediaStream</code>的子类，这里调用了<code>MediaStream</code>的无参构造函数。</p>
+<h3 id="RtspServer-start"><a href="#RtspServer-start" class="headerlink" title="RtspServer#start()"></a><strong>RtspServer#start()</strong></h3><p>创建<code>RequestListener</code>实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requestListener = <span class="keyword">new</span> RequestListener();</div></pre></td></tr></table></figure>
+<h4 id="RequestListener-构造函数"><a href="#RequestListener-构造函数" class="headerlink" title="RequestListener 构造函数"></a><strong>RequestListener 构造函数</strong></h4><p><code>RequestListener</code>是一个线程，在构造函数中会创建<code>ServerSocket</code>实例，并开启这个线程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">serverSocket = <span class="keyword">new</span> ServerSocket(port);</div><div class="line">start();</div></pre></td></tr></table></figure>
+<h5 id="RequestListener-run"><a href="#RequestListener-run" class="headerlink" title="RequestListener#run()"></a><strong>RequestListener#run()</strong></h5><p>创建<code>WorkerThread</code>实例，<code>WorkerThread</code>同样是个线程，创建后立刻开启线程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> WorkerThread(serverSocket.accept()).start();</div></pre></td></tr></table></figure>
+<h6 id="WorkerThread-有参构造函数"><a href="#WorkerThread-有参构造函数" class="headerlink" title="WorkerThread 有参构造函数"></a><strong>WorkerThread 有参构造函数</strong></h6><p>创建客户端输入流的缓冲流和输出流：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mInput = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(client.getInputStream()));</div><div class="line">mOutput = client.getOutputStream();</div></pre></td></tr></table></figure>
+<p>创建<code>Session</code>实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">session = <span class="keyword">new</span> Session();</div></pre></td></tr></table></figure>
+<p>####### <strong>WorkerThread#run()</strong></p>
+<p>等待客户端连接，如果接收到客户端请求，解析该请求，并做出对应的响应，最后发送响应给客户端。</p>
+<p>当客户端断开连接后，停止流传输并释放资源：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">boolean</span> streaming = isStreaming();</div><div class="line">session.syncStop();</div><div class="line"><span class="keyword">if</span> (streaming &amp;&amp; !isStreaming()) &#123;</div><div class="line">    postMessage(MESSAGE_STREAMING_STOPPED);</div><div class="line">&#125;</div><div class="line">session.release();</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    mClient.close();</div><div class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="启动客户端"><a href="#启动客户端" class="headerlink" title="启动客户端"></a><strong>启动客户端</strong></h1><h2 id="入口-Activity-1"><a href="#入口-Activity-1" class="headerlink" title="入口 Activity"></a><strong>入口 Activity</strong></h2><p>代码很少，全部贴出来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title">SurfaceHolder</span>.<span class="title">Callback</span>, <span class="title">MediaPlayer</span>.<span class="title">OnPreparedListener</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String VIDEO_URL_HOST = <span class="string">"192.168.0.114"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String VIDEO_URL_PORT = <span class="string">"8086"</span>;<span class="comment">// RtspServer.DEFAULT_RTSP_PORT</span></div><div class="line"></div><div class="line">    <span class="keyword">private</span> SurfaceView surfaceView;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> MediaPlayer mediaPlayer;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        surfaceView = findViewById(R.id.surface);</div><div class="line"></div><div class="line">        surfaceView.getHolder().addCallback(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">configureMediaPlayer</span><span class="params">(Uri videoUri)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mediaPlayer == <span class="keyword">null</span>) &#123;</div><div class="line">            mediaPlayer = <span class="keyword">new</span> MediaPlayer();</div><div class="line">        &#125;</div><div class="line">        mediaPlayer.setDisplay(surfaceView.getHolder());</div><div class="line">        mediaPlayer.setOnPreparedListener(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            mediaPlayer.setDataSource(<span class="keyword">this</span>, videoUri);</div><div class="line">            mediaPlayer.prepareAsync();</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">releaseMediaPlayer</span><span class="params">()</span> </span>&#123;</div><div class="line">        surfaceView.getHolder().removeCallback(<span class="keyword">this</span>);</div><div class="line">        mediaPlayer.release();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*SurfaceHolder.Callback start*/</span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceCreated</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</div><div class="line">        StringBuilder videoUrlBuilder = <span class="keyword">new</span> StringBuilder();</div><div class="line">        videoUrlBuilder.append(<span class="string">"rtsp://"</span> + VIDEO_URL_HOST + <span class="string">":"</span> + VIDEO_URL_PORT + <span class="string">"/"</span>);</div><div class="line">        Uri videoUri = Uri.parse(videoUrlBuilder.toString());</div><div class="line">        configureMediaPlayer(videoUri);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceChanged</span><span class="params">(SurfaceHolder holder, <span class="keyword">int</span> format, <span class="keyword">int</span> width, <span class="keyword">int</span> height)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">surfaceDestroyed</span><span class="params">(SurfaceHolder holder)</span> </span>&#123;</div><div class="line">        releaseMediaPlayer();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*SurfaceHolder.Callback end*/</span></div><div class="line"></div><div class="line">    <span class="comment">/*MediaPlayer.OnPreparedListener start*/</span></div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPrepared</span><span class="params">(MediaPlayer mp)</span> </span>&#123;</div><div class="line">        mp.start();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/*MediaPlayer.OnPreparedListener end*/</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>布局文件中只有一个 Android 原生的<code>VideoView</code>，<code>VideoView</code>是<code>SurfaceView</code>的子类，在<code>SurfaceView</code>回调<code>surfaceCreated(SurfaceHolder holder)</code>方法时，调用<code>configureMediaPlayer()</code>方法，该方法中会创建<code>MediaPlayer</code>实例，并在设置<code>MediaPlayer</code>的参数后开始准备，最后在<code>onPrepared(MediaPlayer mp)</code>回调中开始播放。</p>
+<p><code>VideoView</code>支持<code>RTSP</code>，<code>RTSP</code>请求都是自发的。</p>
+<h3 id="服务端接收到请求"><a href="#服务端接收到请求" class="headerlink" title="服务端接收到请求"></a><strong>服务端接收到请求</strong></h3><p>解析该请求：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request = Request.parseRequest(mInput);</div></pre></td></tr></table></figure>
+<p>并做出对应的响应：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response = processRequest(request);</div></pre></td></tr></table></figure>
+<p>最后发送响应给客户端。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">response.send(mOutput);</div></pre></td></tr></table></figure>
+<h4 id="RtspServer-processRequest-Request-request"><a href="#RtspServer-processRequest-Request-request" class="headerlink" title="RtspServer#processRequest(Request request)"></a><strong>RtspServer#processRequest(Request request)</strong></h4><p>该方法会根据不同的客户端请求，执行相应处理，并拼接响应报文，最后返回给客户端。</p>
+<p>1、当是<code>DESCRIBE</code>请求时，调用了<code>handleRequest()</code>方法（该方法创建了<code>Session</code>，所以该请求是建立同步的入口）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">session = handleRequest(request.uri, mClient);</div></pre></td></tr></table></figure>
+<p>拼接会话描述信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line">builder.append(<span class="string">"Content-Base: "</span> + mClient.getLocalAddress().getHostAddress() + <span class="string">":"</span> + mClient.getLocalPort() + <span class="string">"/"</span>)<span class="comment">// Content-Base: 10.4.70.229:8086/</span></div><div class="line">        .append(<span class="string">"\r\n"</span>)</div><div class="line">        .append(<span class="string">"Content-Type: application/sdp"</span>)<span class="comment">// Content-Type: application/sdp</span></div><div class="line">        .append(<span class="string">"\r\n"</span>);</div><div class="line">response.attributes = builder.toString();</div><div class="line">response.content = session.getSessionDescription();</div><div class="line">response.status = Response.STATUS_OK;</div></pre></td></tr></table></figure>
+<p>2、当是<code>SETUP</code>请求时，会将音视频通道分别映射到客户端指定的端口，如果客户端没有指定端口，则使用默认端口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">Pattern pattern;</div><div class="line">Matcher matcher;</div><div class="line"><span class="keyword">int</span> port1, port2, ssrc, trackId, src[];</div><div class="line">String destination;</div><div class="line"></div><div class="line">pattern = Pattern.compile(<span class="string">"trackID=(\\w+)"</span>, Pattern.CASE_INSENSITIVE);</div><div class="line">matcher = pattern.matcher(request.uri);</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!matcher.find()) &#123;</div><div class="line">    response.status = Response.STATUS_BAD_REQUEST;</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125;</div><div class="line"></div><div class="line">trackId = Integer.parseInt(matcher.group(<span class="number">1</span>));</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!session.isTrackExist(trackId)) &#123;</div><div class="line">    response.status = Response.STATUS_NOT_FOUND;</div><div class="line">    <span class="keyword">return</span> response;</div><div class="line">&#125;</div><div class="line"></div><div class="line">pattern = Pattern.compile(<span class="string">"client_port=(\\d+)-(\\d+)"</span>, Pattern.CASE_INSENSITIVE);</div><div class="line">matcher = pattern.matcher(request.headers.get(<span class="string">"transport"</span>));</div><div class="line">IStream track = session.getTrack(trackId);</div><div class="line"></div><div class="line"><span class="keyword">if</span> (!matcher.find()) &#123;</div><div class="line">    <span class="keyword">int</span>[] ports = track.getDestinationPorts();</div><div class="line">    port1 = ports[<span class="number">0</span>];</div><div class="line">    port2 = ports[<span class="number">1</span>];</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    port1 = Integer.parseInt(matcher.group(<span class="number">1</span>));</div><div class="line">    port2 = Integer.parseInt(matcher.group(<span class="number">2</span>));</div><div class="line">&#125;</div><div class="line"></div><div class="line">ssrc = track.getSsrc();</div><div class="line">src = track.getLocalPorts();</div><div class="line">destination = session.getDestination();</div><div class="line"></div><div class="line">track.setDestinationPorts(port1, port2);</div></pre></td></tr></table></figure>
+<p>调用了<code>Session#syncStart()</code>方法，该方法用于开始同步：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">session.syncStart(trackId);</div></pre></td></tr></table></figure>
+<p>拼接会话描述信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">StringBuilder builder = <span class="keyword">new</span> StringBuilder();</div><div class="line">builder.append(<span class="string">"Transport: RTP/AVP/UDP;"</span> + (InetAddress.getByName(destination).isMulticastAddress() ? <span class="string">"multicast"</span> : <span class="string">"unicast"</span>)</div><div class="line">        + <span class="string">";destination="</span> + session.getDestination()</div><div class="line">        + <span class="string">";client_port="</span> + port1 + <span class="string">"-"</span> + port2</div><div class="line">        + <span class="string">";server_port="</span> + src[<span class="number">0</span>] + <span class="string">"-"</span> + src[<span class="number">1</span>]</div><div class="line">        + <span class="string">";ssrc="</span> + Integer.toHexString(ssrc)</div><div class="line">        + <span class="string">";mode=play"</span></div><div class="line">)<span class="comment">// Transport: RTP/AVP/UDP;unicast;destination=10.4.70.110;client_port=57148-57149;server_port=39848-33032;ssrc=4b5eeef9;mode=play</span></div><div class="line">        .append(<span class="string">"\r\n"</span>)</div><div class="line">        .append(<span class="string">"Session: "</span> + <span class="string">"1185d20035702ca"</span>)<span class="comment">// Session: 1185d20035702ca</span></div><div class="line">        .append(<span class="string">"\r\n"</span>)</div><div class="line">        .append(<span class="string">"Cache-Control: no-cache"</span>)<span class="comment">// Cache-Control: no-cache</span></div><div class="line">        .append(<span class="string">"\r\n"</span>);</div><div class="line">response.attributes = builder.toString();</div><div class="line">response.status = Response.STATUS_OK;</div></pre></td></tr></table></figure>
+<h5 id="RtspServer-handleRequest-String-uri-Socket-client"><a href="#RtspServer-handleRequest-String-uri-Socket-client" class="headerlink" title="RtspServer#handleRequest(String uri, Socket client)"></a><strong>RtspServer#handleRequest(String uri, Socket client)</strong></h5><p>调用了<code>UriParser#parse()</code>方法，该方法用于解析客户端传递的参数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Session session = UriParser.parse(uri);</div></pre></td></tr></table></figure>
+<p>设置会话的源地址和目的地址：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">session.setOrigin(client.getLocalAddress().getHostAddress());</div><div class="line"><span class="keyword">if</span> (session.getDestination() == <span class="keyword">null</span>) &#123;</div><div class="line">    session.setDestination(client.getInetAddress().getHostAddress());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="Session-syncStart-int-id"><a href="#Session-syncStart-int-id" class="headerlink" title="Session#syncStart(int id)"></a><strong>Session#syncStart(int id)</strong></h5><p>开始同步流：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">stream.start();</div></pre></td></tr></table></figure>
+<p>对于<code>H264</code>视频，依次调用了<code>H264Stream#start()</code>-&gt;<code>VideoStream#start()</code>-&gt;<code>MediaStream#start()</code>-&gt;<code>MediaStream#encodeWithMediaCodec()</code>-&gt;<code>VideoStream#encodeWithMediaCodec()</code>-&gt;<code>VideoStream#encodeWithMediaCodecMethod1()</code>。</p>
+<h6 id="VideoStream-encodeWithMediaCodecMethod1"><a href="#VideoStream-encodeWithMediaCodecMethod1" class="headerlink" title="VideoStream#encodeWithMediaCodecMethod1()"></a><strong>VideoStream#encodeWithMediaCodecMethod1()</strong></h6><p>开始相机预览：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">camera.startPreview();</div></pre></td></tr></table></figure>
+<p>调试编码参数后运行编码器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">EncoderDebugger debugger = EncoderDebugger.debug(mSharedPreferences, mQuality.resX, mQuality.resY);</div><div class="line"><span class="keyword">final</span> Nv21Convertor convertor = debugger.getNv21Convertor();</div><div class="line">mediaCodec = MediaCodec.createByCodecName(debugger.getEncoderName());</div><div class="line">MediaFormat mediaFormat = MediaFormat.createVideoFormat(<span class="string">"video/avc"</span>, mQuality.resX, mQuality.resY);</div><div class="line">mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, mQuality.bitrate);</div><div class="line">mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, mQuality.framerate);</div><div class="line">mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, debugger.getEncoderColorFormat());</div><div class="line">mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, <span class="number">1</span>);</div><div class="line">mediaCodec.configure(mediaFormat, <span class="keyword">null</span>, <span class="keyword">null</span>, MediaCodec.CONFIGURE_FLAG_ENCODE);</div><div class="line">mediaCodec.start();</div></pre></td></tr></table></figure>
+<p>将预览回调的帧数据进行转换，再由编码器编码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">    camera.addCallbackBuffer(<span class="keyword">new</span> <span class="keyword">byte</span>[convertor.getBufferSize()]);</div><div class="line">&#125;</div><div class="line">camera.setPreviewCallbackWithBuffer(<span class="keyword">new</span> Camera.PreviewCallback() &#123;</div><div class="line">    ByteBuffer[] inputBuffers = mediaCodec.getInputBuffers();</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPreviewFrame</span><span class="params">(<span class="keyword">byte</span>[] data, Camera camera)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">int</span> bufferIndex = mediaCodec.dequeueInputBuffer(<span class="number">500000</span>);</div><div class="line">            <span class="keyword">if</span> (bufferIndex &gt;= <span class="number">0</span>) &#123;</div><div class="line">                inputBuffers[bufferIndex].clear();</div><div class="line">                <span class="keyword">if</span> (data == <span class="keyword">null</span>) &#123;</div><div class="line">                    Log.e(TAG, <span class="string">"Symptom of the \"Callback buffer was to small\" problem..."</span>);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    convertor.convert(data, inputBuffers[bufferIndex]);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">long</span> now = System.nanoTime() / <span class="number">1000</span>;</div><div class="line">                mediaCodec.queueInputBuffer(bufferIndex, <span class="number">0</span>, inputBuffers[bufferIndex].position(), now, <span class="number">0</span>);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                Log.e(TAG, <span class="string">"No buffer available !"</span>);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            VideoStream.<span class="keyword">this</span>.camera.addCallbackBuffer(data);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>将数据写入打包器，启动打包器线程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">packetizer.setInputStream(<span class="keyword">new</span> MediaCodecInputStream(mediaCodec));</div><div class="line">packetizer.start();</div></pre></td></tr></table></figure>
+<p>####### <strong>H264Packetizer#run()</strong></p>
+<p>调用了<code>send()</code>方法发送数据。</p>
+<p>######## <strong>H264Packetizer#send()</strong></p>
+<p>生成<code>NAL</code>单元<code>LENGTH</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fill(header, <span class="number">0</span>, NALU_LENGTH_LENGTH);</div></pre></td></tr></table></figure>
+<p>生成时间戳和<code>NAL</code>单元长度：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">timestamp = ((MediaCodecInputStream) inputStream).getLastBufferInfo().presentationTimeUs * <span class="number">1000L</span>;</div><div class="line">naluLength = inputStream.available() + <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<p>如果出现<code>NAL</code>单元类型为<code>IDR</code>类型，需要调用<code>AbstractPacketizer#send()</code>方法发送该数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">buffer = rtpSocket.requestBuffer();</div><div class="line">rtpSocket.markNextPacket();</div><div class="line">rtpSocket.updateTimestamp(timestamp);</div><div class="line">System.arraycopy(mStapA, <span class="number">0</span>, buffer, RtpSocket.RTP_HEADER_LENGTH, mStapA.length);</div><div class="line"><span class="keyword">super</span>.send(RtpSocket.RTP_HEADER_LENGTH + mStapA.length);</div></pre></td></tr></table></figure>
+<p>如果<code>NAL</code>长度低于设置的最大包大小，会调用<code>AbstractPacketizer#send()</code>方法发送该数据，否则，拆分<code>NAL</code>单元为<code>FU-A</code>单元再调用<code>AbstractPacketizer#send()</code>方法发送：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Small NAL unit =&gt; Single NAL unit</span></div><div class="line"><span class="keyword">if</span> (naluLength &lt;= MAX_PACKET_SIZE - RtpSocket.RTP_HEADER_LENGTH - <span class="number">2</span>) &#123;</div><div class="line">    buffer = rtpSocket.requestBuffer();</div><div class="line">    <span class="comment">// RTP 头后面的一个字节用于表示前一个 NALU 的长度</span></div><div class="line">    buffer[RtpSocket.RTP_HEADER_LENGTH] = header[<span class="number">4</span>];</div><div class="line">    fill(buffer, RtpSocket.RTP_HEADER_LENGTH + <span class="number">1</span>, naluLength - <span class="number">1</span>);</div><div class="line">    rtpSocket.updateTimestamp(timestamp);</div><div class="line">    rtpSocket.markNextPacket();</div><div class="line">    <span class="keyword">super</span>.send(naluLength + RtpSocket.RTP_HEADER_LENGTH);</div><div class="line">    <span class="comment">// Log.d(TAG,"----- Single NAL unit - len:"+len+" delay: "+delay);</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// Large NAL unit =&gt; Split nal unit</span></div><div class="line"><span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// Set FU-A header</span></div><div class="line">    header[<span class="number">1</span>] = (<span class="keyword">byte</span>) (header[<span class="number">4</span>] &amp; <span class="number">0x1F</span>);  <span class="comment">// FU header type</span></div><div class="line">    header[<span class="number">1</span>] += <span class="number">0x80</span>; <span class="comment">// Start bit</span></div><div class="line">    <span class="comment">// Set FU-A indicator</span></div><div class="line">    header[<span class="number">0</span>] = (<span class="keyword">byte</span>) ((header[<span class="number">4</span>] &amp; <span class="number">0x60</span>) &amp; <span class="number">0xFF</span>); <span class="comment">// FU indicator NRI</span></div><div class="line">    header[<span class="number">0</span>] += <span class="number">28</span>;</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (sum &lt; naluLength) &#123;</div><div class="line">        buffer = rtpSocket.requestBuffer();</div><div class="line">        buffer[RtpSocket.RTP_HEADER_LENGTH] = header[<span class="number">0</span>];</div><div class="line">        buffer[RtpSocket.RTP_HEADER_LENGTH + <span class="number">1</span>] = header[<span class="number">1</span>];</div><div class="line">        rtpSocket.updateTimestamp(timestamp);</div><div class="line">        <span class="keyword">if</span> ((len = fill(buffer, RtpSocket.RTP_HEADER_LENGTH + <span class="number">2</span>, Math.min(naluLength - sum, MAX_PACKET_SIZE - RtpSocket.RTP_HEADER_LENGTH - <span class="number">2</span>))) &lt; <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        sum += len;</div><div class="line">        <span class="comment">// Last packet before next NAL</span></div><div class="line">        <span class="comment">// 下一个 NAL 前的最后一个包</span></div><div class="line">        <span class="keyword">if</span> (sum &gt;= naluLength) &#123;</div><div class="line">            <span class="comment">// End bit on</span></div><div class="line">            buffer[RtpSocket.RTP_HEADER_LENGTH + <span class="number">1</span>] += <span class="number">0x40</span>;</div><div class="line">            rtpSocket.markNextPacket();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">super</span>.send(len + RtpSocket.RTP_HEADER_LENGTH + <span class="number">2</span>);</div><div class="line">        <span class="comment">// Switch start bit</span></div><div class="line">        header[<span class="number">1</span>] = (<span class="keyword">byte</span>) (header[<span class="number">1</span>] &amp; <span class="number">0x7F</span>);</div><div class="line">        <span class="comment">// Log.d(TAG,"----- FU-A unit, sum:"+sum);</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>######### <strong>AbstractPacketizer#send(int length)</strong></p>
+<p>调用了<code>RtpSocket#commitBuffer()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rtpSocket.commitBuffer(length);</div></pre></td></tr></table></figure>
+<p>########## <strong>RtpSocket#commitBuffer(int length)</strong></p>
+<p>调用<code>updateSequence()</code>方法，<code>updateSequence()</code>方法调用了<code>setLong()</code>方法，<code>setLong()</code>方法用于扩充数组索引长度。原来是 1 个字节表示一个索引，则最多可以表示 256 个索引，现在用连续的 2 个字节表示一个索引。</p>
+<p>设置<code>UDP</code>包当前索引对应数据的长度：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">datagramPackets[bufferInputIndex].setLength(length);</div></pre></td></tr></table></figure>
+<p>如果<code>UDP</code>包下一个索引已超过设置的缓冲大小时，从头开始替换：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (++bufferInputIndex &gt;= bufferCount) &#123;</div><div class="line">    bufferInputIndex = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果<code>RtpSocket</code>线程未启动，则启动该线程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (mThread == <span class="keyword">null</span>) &#123;</div><div class="line">    mThread = <span class="keyword">new</span> Thread(<span class="keyword">this</span>);</div><div class="line">    mThread.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>########### <strong>RtpSocket#run()</strong></p>
+<p>调用<code>SenderReport#update()</code>方法更新数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">senderReport.update(datagramPackets[bufferOutputIndex].getLength(), (timestamps[bufferOutputIndex] / <span class="number">100L</span>) * (mClock / <span class="number">1000L</span>) / <span class="number">10000L</span>);</div></pre></td></tr></table></figure>
+<p>忽略前 30 帧，之后发送缓冲区中的数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (count++ &gt; <span class="number">30</span>) &#123;</div><div class="line">    <span class="keyword">if</span> (transport == TRANSPORT_UDP) &#123;</div><div class="line">        multicastSocket.send(datagramPackets[bufferOutputIndex]);<span class="comment">// TODO</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        sendTcp();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果<code>UDP</code>包下一个索引已超过设置的缓冲大小时，从头开始发送：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (++bufferOutputIndex &gt;= BUFFER_COUNT) &#123;</div><div class="line">    bufferOutputIndex = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>############ <strong>SenderReport#update(int length, long rtpTimestamp)</strong></p>
+<p>更新数据，最后调用了<code>send()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">send(System.nanoTime(), rtpTimestamp);</div></pre></td></tr></table></figure>
+<p>############ <strong>SenderReport#send(long ntpTimestamp, long rtpTimestamp)</strong></p>
+<p>发送<code>RTCP</code>数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">multicastSocket.send(datagramPacket);</div></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/">使用 libstreaming 实现同屏时的代码执行流程</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2018年03月11日 - 18:03</p>
+  <p><span>最后更新:</span>2018年03月11日 - 18:03</p>
+  <p><span>原始链接:</span><a href="/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/" title="使用 libstreaming 实现同屏时的代码执行流程">http://www.weichao.io/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/03/11/使用-libstreaming-实现同屏时的代码执行流程/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/04/触摸事件传递机制/" rel="next" title="触摸事件传递机制">
+                <i class="fa fa-chevron-left"></i> 触摸事件传递机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动服务端"><span class="nav-number">3.</span> <span class="nav-text">启动服务端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#入口-Activity"><span class="nav-number">3.1.</span> <span class="nav-text">入口 Activity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SessionBuilder-build"><span class="nav-number">3.1.1.</span> <span class="nav-text">SessionBuilder#build()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#H264Stream-构造函数"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">H264Stream 构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#VideoStream-有参构造函数"><span class="nav-number">3.1.1.1.1.</span> <span class="nav-text">VideoStream 有参构造函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#H264Packetizer-构造函数"><span class="nav-number">3.1.1.1.2.</span> <span class="nav-text">H264Packetizer 构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#AbstractPacketizer-构造函数"><span class="nav-number">3.1.1.1.2.1.</span> <span class="nav-text">AbstractPacketizer 构造函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AacStream-构造函数"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">AacStream 构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#AudioStream-构造函数"><span class="nav-number">3.1.1.2.1.</span> <span class="nav-text">AudioStream 构造函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RtspServer-start"><span class="nav-number">3.1.2.</span> <span class="nav-text">RtspServer#start()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RequestListener-构造函数"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">RequestListener 构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RequestListener-run"><span class="nav-number">3.1.2.1.1.</span> <span class="nav-text">RequestListener#run()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#WorkerThread-有参构造函数"><span class="nav-number">3.1.2.1.1.1.</span> <span class="nav-text">WorkerThread 有参构造函数</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动客户端"><span class="nav-number">4.</span> <span class="nav-text">启动客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#入口-Activity-1"><span class="nav-number">4.1.</span> <span class="nav-text">入口 Activity</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端接收到请求"><span class="nav-number">4.1.1.</span> <span class="nav-text">服务端接收到请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RtspServer-processRequest-Request-request"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">RtspServer#processRequest(Request request)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RtspServer-handleRequest-String-uri-Socket-client"><span class="nav-number">4.1.1.1.1.</span> <span class="nav-text">RtspServer#handleRequest(String uri, Socket client)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Session-syncStart-int-id"><span class="nav-number">4.1.1.1.2.</span> <span class="nav-text">Session#syncStart(int id)</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#VideoStream-encodeWithMediaCodecMethod1"><span class="nav-number">4.1.1.1.2.1.</span> <span class="nav-text">VideoStream#encodeWithMediaCodecMethod1()</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 32.5k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
