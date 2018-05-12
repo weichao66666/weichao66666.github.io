@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference 《FFmpeg 从入门到精通》   ffmpeg 命令参数组成信息查询部分查看支持的视频文件格式列表1、输入命令： 1ffmpeg -formats 2、输出结果（只截取了部分）：  3、输出内容包括：    列数 说明     1 包含 2 个字段：（1）是否支持 Demuxing 多媒体文件封装格式（2）是否支持 Muxing 多媒体文件封装格式   2 多媒体文件格式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg 命令常用功能">
+<meta property="og:url" content="http://www.weichao.io/2018/05/12/ffmpeg-命令常用功能/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   ffmpeg 命令参数组成信息查询部分查看支持的视频文件格式列表1、输入命令： 1ffmpeg -formats 2、输出结果（只截取了部分）：  3、输出内容包括：    列数 说明     1 包含 2 个字段：（1）是否支持 Demuxing 多媒体文件封装格式（2）是否支持 Muxing 多媒体文件封装格式   2 多媒体文件格式">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD1.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD2.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD3.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD4.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD5.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD6.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD7.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD8.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD9.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD10.png">
+<meta property="og:updated_time" content="2018-05-12T12:58:18.207Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ffmpeg 命令常用功能">
+<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   ffmpeg 命令参数组成信息查询部分查看支持的视频文件格式列表1、输入命令： 1ffmpeg -formats 2、输出结果（只截取了部分）：  3、输出内容包括：    列数 说明     1 包含 2 个字段：（1）是否支持 Demuxing 多媒体文件封装格式（2）是否支持 Muxing 多媒体文件封装格式   2 多媒体文件格式">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2018/05/12/ffmpeg-命令常用功能/"/>
+
+
+
+
+
+  <title>ffmpeg 命令常用功能 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/05/12/ffmpeg-命令常用功能/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">ffmpeg 命令常用功能</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T20:47:25+08:00">
+                2018-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,554 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2018/05/12/ffmpeg-命令常用功能/" class="leancloud_visitors" data-flag-title="ffmpeg 命令常用功能">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li>《FFmpeg 从入门到精通》</li>
+</ul>
+<hr>
+<h1 id="ffmpeg-命令参数组成"><a href="#ffmpeg-命令参数组成" class="headerlink" title="ffmpeg 命令参数组成"></a><strong>ffmpeg 命令参数组成</strong></h1><h2 id="信息查询部分"><a href="#信息查询部分" class="headerlink" title="信息查询部分"></a><strong>信息查询部分</strong></h2><h3 id="查看支持的视频文件格式列表"><a href="#查看支持的视频文件格式列表" class="headerlink" title="查看支持的视频文件格式列表"></a><strong>查看支持的视频文件格式列表</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -formats</div></pre></td></tr></table></figure>
+<p>2、输出结果（只截取了部分）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD1.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>列数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包含 2 个字段：<br>（1）是否支持 Demuxing 多媒体文件封装格式<br>（2）是否支持 Muxing 多媒体文件封装格式</td>
+</tr>
+<tr>
+<td>2</td>
+<td>多媒体文件格式</td>
+</tr>
+<tr>
+<td>3</td>
+<td>文件格式的详细说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看支持的编码列表"><a href="#查看支持的编码列表" class="headerlink" title="查看支持的编码列表"></a><strong>查看支持的编码列表</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -encoders</div></pre></td></tr></table></figure>
+<p>2、输出结果（只截取了部分）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD2.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>列数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包含 6 个字段：<br>（1）编码类型是视频（V）、音频（A）、字幕（S）<br>（2）是否支持帧级别的多线程<br>（3）是否支持分片级别的多线程<br>（4）是否为实验版本<br>（5）是否支持 draw horiz band 模式<br>（6）是否支持直接渲染</td>
+</tr>
+<tr>
+<td>2</td>
+<td>编码格式</td>
+</tr>
+<tr>
+<td>3</td>
+<td>编码格式的说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看支持的解码列表"><a href="#查看支持的解码列表" class="headerlink" title="查看支持的解码列表"></a><strong>查看支持的解码列表</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -decoders</div></pre></td></tr></table></figure>
+<p>2、输出结果（只截取了部分）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD3.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>列数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包含 6 个字段：<br>（1）解码类型是视频（V）、音频（A）、字幕（S）<br>（2）是否支持帧级别的多线程<br>（3）是否支持分片级别的多线程<br>（4）是否为实验版本<br>（5）是否支持 draw horiz band 模式<br>（6）是否支持直接渲染</td>
+</tr>
+<tr>
+<td>2</td>
+<td>解码格式</td>
+</tr>
+<tr>
+<td>3</td>
+<td>解码格式的说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看支持的滤镜列表"><a href="#查看支持的滤镜列表" class="headerlink" title="查看支持的滤镜列表"></a><strong>查看支持的滤镜列表</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -filters</div></pre></td></tr></table></figure>
+<p>2、输出结果（只截取了部分）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD4.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>列数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包含 3 个字段：<br>（1）是否支持时间轴<br>（2）是否支持分片级别的多线程<br>（3）是否支持命令</td>
+</tr>
+<tr>
+<td>2</td>
+<td>滤镜名</td>
+</tr>
+<tr>
+<td>3</td>
+<td>转换方式：音频转音频（A-&gt;A）、视频转视频（V-&gt;V）等</td>
+</tr>
+<tr>
+<td>4</td>
+<td>滤镜作用说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看-FLV-封装支持的参数"><a href="#查看-FLV-封装支持的参数" class="headerlink" title="查看 FLV 封装支持的参数"></a><strong>查看 FLV 封装支持的参数</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h muxer=flv</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD5.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包括 4 个内容：<br>（1）扩展名<br>（2）MIME 类型<br>（3）默认的视频编码格式<br>（4）默认的音频编码格式</td>
+</tr>
+<tr>
+<td>2</td>
+<td>封装时支持的配置参数和说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看-FLV-解封装支持的参数"><a href="#查看-FLV-解封装支持的参数" class="headerlink" title="查看 FLV 解封装支持的参数"></a><strong>查看 FLV 解封装支持的参数</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h demuxer=flv</div></pre></td></tr></table></figure>
+<p>2、输出结果（只截取了部分）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD6.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>扩展名</td>
+</tr>
+<tr>
+<td>2</td>
+<td>解封装时支持的配置参数和说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看-AVC-编码支持的参数"><a href="#查看-AVC-编码支持的参数" class="headerlink" title="查看 AVC 编码支持的参数"></a><strong>查看 AVC 编码支持的参数</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h encoder=h264</div></pre></td></tr></table></figure>
+<p>2、输出结果（只截取了部分）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD7.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包括 3 个内容：<br>（1）支持的基本编码方式<br>（2）支持的多线程编码方式<br>（3）支持的像素的色彩格式</td>
+</tr>
+<tr>
+<td>2</td>
+<td>编码时支持的配置参数和说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看-AVC-解码支持的参数"><a href="#查看-AVC-解码支持的参数" class="headerlink" title="查看 AVC 解码支持的参数"></a><strong>查看 AVC 解码支持的参数</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h decoder=h264</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD8.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包括 2 个内容：<br>（1）支持的基本解码方式<br>（2）支持的多线程解码方式</td>
+</tr>
+<tr>
+<td>2</td>
+<td>解码时支持的配置参数和说明</td>
+</tr>
+</tbody>
+</table>
+<h3 id="查看-colorkey-滤镜支持的参数"><a href="#查看-colorkey-滤镜支持的参数" class="headerlink" title="查看 colorkey 滤镜支持的参数"></a><strong>查看 colorkey 滤镜支持的参数</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h filter=colorkey</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD9.png" alt=""></p>
+<p>3、输出内容包括：</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>包括 2 个内容：<br>（1）支持的色彩格式<br>（2）支持的多线程处理方式<br>（3）支持的输入和输出</td>
+</tr>
+<tr>
+<td>2</td>
+<td>支持的参数和说明</td>
+</tr>
+</tbody>
+</table>
+<h2 id="公共操作部分"><a href="#公共操作部分" class="headerlink" title="公共操作部分"></a><strong>公共操作部分</strong></h2><h2 id="文件操作部分"><a href="#文件操作部分" class="headerlink" title="文件操作部分"></a><strong>文件操作部分</strong></h2><h2 id="视频操作部分"><a href="#视频操作部分" class="headerlink" title="视频操作部分"></a><strong>视频操作部分</strong></h2><h2 id="音频操作部分"><a href="#音频操作部分" class="headerlink" title="音频操作部分"></a><strong>音频操作部分</strong></h2><h2 id="字幕操作部分"><a href="#字幕操作部分" class="headerlink" title="字幕操作部分"></a><strong>字幕操作部分</strong></h2><hr>
+<h1 id="ffmpeg-封装转换和编码转换"><a href="#ffmpeg-封装转换和编码转换" class="headerlink" title="ffmpeg 封装转换和编码转换"></a><strong>ffmpeg 封装转换和编码转换</strong></h1><h2 id="封装转换"><a href="#封装转换" class="headerlink" title="封装转换"></a><strong>封装转换</strong></h2><p>AVFormatContext 部分参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>avioflags</td>
+<td>标记<br>direct</td>
+<td>format 的缓冲设置，默认为 0（有缓冲）<br>无缓冲</td>
+</tr>
+<tr>
+<td>probesize</td>
+<td>整数</td>
+<td>在进行媒体数据处理前获得文件内容的大小</td>
+</tr>
+<tr>
+<td>fflags</td>
+<td>标记<br>flush_packets<br>genpts<br>nofillin<br>igndts<br>discadcorrupt<br>sortdts<br>keepside<br>fastseek<br>latm<br>nobuffer<br>bitexact</td>
+<td><br>立即将 packets 数据写入文件中<br>输出时按照正常规则产生 pts<br>不填写可以精确计算缺失的值<br>忽略 dts<br>丢弃损坏的帧<br>尝试以 dts 的顺序为准输出<br>不合并数据<br>快速 seek 操作，但是不够精确<br>设置 RTP MP4_LATM 生效<br>直接读取或写出，不存入 buffer，用于在直播采集时降低延迟<br>不写入随机或者不稳定的数据</td>
+</tr>
+<tr>
+<td>seek2any</td>
+<td>整数</td>
+<td>支持随意位置 seek，这个 seek 不以 keyframe 为参考</td>
+</tr>
+<tr>
+<td>analyzeduration</td>
+<td>整数</td>
+<td>制定解析媒体所需要花销的时间，值越大解析越准确，直播时减小该值可降低延迟</td>
+</tr>
+<tr>
+<td>codec_whitelist</td>
+<td>列表</td>
+<td>设置可解析的 codec 的白名单</td>
+</tr>
+<tr>
+<td>format_whitelist</td>
+<td>列表</td>
+<td>设置可解析的 format 的白名单</td>
+</tr>
+<tr>
+<td>output_ts_offset</td>
+<td>整数</td>
+<td>设置输出文件的起始时间</td>
+</tr>
+</tbody>
+</table>
+<h2 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a><strong>编码转换</strong></h2><p>AVCodecContext 部分参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b</td>
+<td>整数</td>
+<td>设置音频与视频码率，默认是 200 kb/s，可单独使用 b:v 设置视频码率，使用 b:a 设置音频码率</td>
+</tr>
+<tr>
+<td>ab</td>
+<td>整数</td>
+<td>设置音频的码率，默认是 128 kb/s</td>
+</tr>
+<tr>
+<td>g</td>
+<td>整数</td>
+<td>设置视频 GOP 大小，默认是 12 帧一个 GOP</td>
+</tr>
+<tr>
+<td>ar</td>
+<td>整数</td>
+<td>设置音频采样率，默认为 0</td>
+</tr>
+<tr>
+<td>ac</td>
+<td>整数</td>
+<td>设置音频通道数，默认为 0</td>
+</tr>
+<tr>
+<td>bf</td>
+<td>整数</td>
+<td>设置连续编码为 B 帧的个数，默认为 0</td>
+</tr>
+<tr>
+<td>maxrate</td>
+<td>整数</td>
+<td>最大码率设置，与 bufsize 一同使用，默认为 0</td>
+</tr>
+<tr>
+<td>minrate</td>
+<td>整数</td>
+<td>最小码率设置，配合 maxrate 和 bufsize 可以设置为 CBR 模式，默认为 0</td>
+</tr>
+<tr>
+<td>bufsize</td>
+<td>整数</td>
+<td>设置控制码率的 buffer 大小，默认为 0</td>
+</tr>
+<tr>
+<td>keyint_min</td>
+<td>整数</td>
+<td>设置关键帧最小间隔，默认为 25</td>
+</tr>
+<tr>
+<td>sc_threshold</td>
+<td>整数</td>
+<td>设置场景切换支持，默认为 0</td>
+</tr>
+<tr>
+<td>me_threshold</td>
+<td>整数</td>
+<td>设置运动估计阈值，默认为 0</td>
+</tr>
+<tr>
+<td>mb_threshold</td>
+<td>整数</td>
+<td>设置宏块阈值，默认为 0</td>
+</tr>
+<tr>
+<td>profile</td>
+<td>整数</td>
+<td>设置音视频的 profile，默认为 -99</td>
+</tr>
+<tr>
+<td>level</td>
+<td>整数</td>
+<td>设置音视频的 level，默认为 -99</td>
+</tr>
+<tr>
+<td>timecode_frame_start</td>
+<td>整数</td>
+<td>设置 GOP 的开始时间，需要在 non-drop-frame 默认情况下使用</td>
+</tr>
+<tr>
+<td>channel_layout</td>
+<td>整数</td>
+<td>设置音频通道的布局格式</td>
+</tr>
+<tr>
+<td>threads</td>
+<td>整数</td>
+<td>设置编解码工作的线程数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="一个封装转换-编码转换的例子"><a href="#一个封装转换-编码转换的例子" class="headerlink" title="一个封装转换+编码转换的例子"></a><strong>一个封装转换+编码转换的例子</strong></h2><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i ~/sample.mkv -vcodec mpeg4 -b:v 200k -r 15 -an output.mp4</div></pre></td></tr></table></figure>
+<p>2、输出的信息：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD10.png" alt=""></p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/05/12/ffmpeg-命令常用功能/">ffmpeg 命令常用功能</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2018年05月12日 - 20:05</p>
+  <p><span>最后更新:</span>2018年05月12日 - 20:05</p>
+  <p><span>原始链接:</span><a href="/2018/05/12/ffmpeg-命令常用功能/" title="ffmpeg 命令常用功能">http://www.weichao.io/2018/05/12/ffmpeg-命令常用功能/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/05/12/ffmpeg-命令常用功能/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/11/FFmpeg-简介/" rel="next" title="FFmpeg 简介">
+                <i class="fa fa-chevron-left"></i> FFmpeg 简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffmpeg-命令参数组成"><span class="nav-number">2.</span> <span class="nav-text">ffmpeg 命令参数组成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息查询部分"><span class="nav-number">2.1.</span> <span class="nav-text">信息查询部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的视频文件格式列表"><span class="nav-number">2.1.1.</span> <span class="nav-text">查看支持的视频文件格式列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的编码列表"><span class="nav-number">2.1.2.</span> <span class="nav-text">查看支持的编码列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的解码列表"><span class="nav-number">2.1.3.</span> <span class="nav-text">查看支持的解码列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的滤镜列表"><span class="nav-number">2.1.4.</span> <span class="nav-text">查看支持的滤镜列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-FLV-封装支持的参数"><span class="nav-number">2.1.5.</span> <span class="nav-text">查看 FLV 封装支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-FLV-解封装支持的参数"><span class="nav-number">2.1.6.</span> <span class="nav-text">查看 FLV 解封装支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-AVC-编码支持的参数"><span class="nav-number">2.1.7.</span> <span class="nav-text">查看 AVC 编码支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-AVC-解码支持的参数"><span class="nav-number">2.1.8.</span> <span class="nav-text">查看 AVC 解码支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-colorkey-滤镜支持的参数"><span class="nav-number">2.1.9.</span> <span class="nav-text">查看 colorkey 滤镜支持的参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公共操作部分"><span class="nav-number">2.2.</span> <span class="nav-text">公共操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作部分"><span class="nav-number">2.3.</span> <span class="nav-text">文件操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视频操作部分"><span class="nav-number">2.4.</span> <span class="nav-text">视频操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#音频操作部分"><span class="nav-number">2.5.</span> <span class="nav-text">音频操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字幕操作部分"><span class="nav-number">2.6.</span> <span class="nav-text">字幕操作部分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffmpeg-封装转换和编码转换"><span class="nav-number">3.</span> <span class="nav-text">ffmpeg 封装转换和编码转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#封装转换"><span class="nav-number">3.1.</span> <span class="nav-text">封装转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码转换"><span class="nav-number">3.2.</span> <span class="nav-text">编码转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个封装转换-编码转换的例子"><span class="nav-number">3.3.</span> <span class="nav-text">一个封装转换+编码转换的例子</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 37.3k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
