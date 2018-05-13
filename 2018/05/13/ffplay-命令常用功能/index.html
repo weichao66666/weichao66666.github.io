@@ -100,29 +100,30 @@
 
 
 
-<meta name="description" content="Reference Hexo Documentation node.js git 手把手教你用Hexo+Github 搭建属于自己的博客 window下配置SSH连接GitHub、GitHub配置ssh key NexT hexo的next主题个性化教程:打造炫酷网站 Hexo文章图片存储选七牛（当然支持MD都可以） Markdown 代码高亮   环境搭建安装 Node.js安装 Git安装 H">
+<meta name="description" content="Reference 《FFmpeg 从入门到精通》   ffplay 命令参数查询 ffplay 命令支持的参数1、输入命令： 1ffplay --help 如果出现：  需要确认 FFmpeg 文件夹中是否有可执行文件 ffplay：  如果没有，说明在编译 FFmpeg 源代码时，系统中不存在 SDL（旧版本 FFmpeg 需要 1.2，新版本 FFmpeg 需要 2.0），导致未自动编译出">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo + GitHub Pages 搭建 blog">
-<meta property="og:url" content="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/index.html">
+<meta property="og:title" content="ffplay 命令常用功能">
+<meta property="og:url" content="http://www.weichao.io/2018/05/13/ffplay-命令常用功能/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference Hexo Documentation node.js git 手把手教你用Hexo+Github 搭建属于自己的博客 window下配置SSH连接GitHub、GitHub配置ssh key NexT hexo的next主题个性化教程:打造炫酷网站 Hexo文章图片存储选七牛（当然支持MD都可以） Markdown 代码高亮   环境搭建安装 Node.js安装 Git安装 H">
+<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   ffplay 命令参数查询 ffplay 命令支持的参数1、输入命令： 1ffplay --help 如果出现：  需要确认 FFmpeg 文件夹中是否有可执行文件 ffplay：  如果没有，说明在编译 FFmpeg 源代码时，系统中不存在 SDL（旧版本 FFmpeg 需要 1.2，新版本 FFmpeg 需要 2.0），导致未自动编译出">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ec.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ed.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e6.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ea.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008eb.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e5.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e7.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972ce32ab644125a100096c.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e9.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e8.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e4.png">
-<meta property="og:updated_time" content="2018-01-30T13:58:05.679Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD1.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD2.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD3.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD4.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD5.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD6.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD7.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD8.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD9.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD10.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD11.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD12.png">
+<meta property="og:updated_time" content="2018-05-13T05:19:22.662Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo + GitHub Pages 搭建 blog">
-<meta name="twitter:description" content="Reference Hexo Documentation node.js git 手把手教你用Hexo+Github 搭建属于自己的博客 window下配置SSH连接GitHub、GitHub配置ssh key NexT hexo的next主题个性化教程:打造炫酷网站 Hexo文章图片存储选七牛（当然支持MD都可以） Markdown 代码高亮   环境搭建安装 Node.js安装 Git安装 H">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ec.png">
+<meta name="twitter:title" content="ffplay 命令常用功能">
+<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   ffplay 命令参数查询 ffplay 命令支持的参数1、输入命令： 1ffplay --help 如果出现：  需要确认 FFmpeg 文件夹中是否有可执行文件 ffplay：  如果没有，说明在编译 FFmpeg 源代码时，系统中不存在 SDL（旧版本 FFmpeg 需要 1.2，新版本 FFmpeg 需要 2.0），导致未自动编译出">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD1.png">
 
 
 
@@ -150,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/"/>
+  <link rel="canonical" href="http://www.weichao.io/2018/05/13/ffplay-命令常用功能/"/>
 
 
 
 
 
-  <title>Hexo + GitHub Pages 搭建 blog | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>ffplay 命令常用功能 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -277,7 +278,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/05/13/ffplay-命令常用功能/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -294,7 +295,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Hexo + GitHub Pages 搭建 blog</h2>
+          <h2 class="post-title" itemprop="name headline">ffplay 命令常用功能</h2>
         
 
         <div class="post-meta">
@@ -306,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T12:14:46+08:00">
-                2017-07-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-13T13:13:29+08:00">
+                2018-05-13
               </time>
             
 
@@ -337,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  500 字
+                  856 字
                 </span>
               
 
@@ -353,7 +354,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -361,7 +362,7 @@
 
           
           
-             <span id="/2017/07/24/Hexo-GitHub-Pages-搭建-blog/" class="leancloud_visitors" data-flag-title="Hexo + GitHub Pages 搭建 blog">
+             <span id="/2018/05/13/ffplay-命令常用功能/" class="leancloud_visitors" data-flag-title="ffplay 命令常用功能">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -387,74 +388,192 @@
 
       
         <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
-<li><a href="https://hexo.io/docs/" title="https://hexo.io/docs/" target="_blank" rel="external">Hexo Documentation</a></li>
-<li><a href="https://nodejs.org/en/" title="https://nodejs.org/en/" target="_blank" rel="external">node.js</a></li>
-<li><a href="https://git-scm.com/" title="https://git-scm.com/" target="_blank" rel="external">git</a></li>
-<li><a href="http://blog.csdn.net/gdutxiaoxu/article/details/53576018" title="http://blog.csdn.net/gdutxiaoxu/article/details/53576018" target="_blank" rel="external">手把手教你用Hexo+Github 搭建属于自己的博客</a></li>
-<li><a href="https://jingyan.baidu.com/article/a65957f4e91ccf24e77f9b11.html" title="https://jingyan.baidu.com/article/a65957f4e91ccf24e77f9b11.html" target="_blank" rel="external">window下配置SSH连接GitHub、GitHub配置ssh key</a></li>
-<li><a href="http://theme-next.iissnan.com/getting-started.html" title="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">NexT</a></li>
-<li><a href="http://www.jianshu.com/p/f054333ac9e6" title="http://www.jianshu.com/p/f054333ac9e6" target="_blank" rel="external">hexo的next主题个性化教程:打造炫酷网站</a></li>
-<li><a href="http://www.jianshu.com/p/ec2c8acf63cd" title="http://www.jianshu.com/p/ec2c8acf63cd" target="_blank" rel="external">Hexo文章图片存储选七牛（当然支持MD都可以）</a></li>
-<li><a href="http://heckaitor.github.io/2014/04/10/hexo-markdown-code-highlight/" title="http://heckaitor.github.io/2014/04/10/hexo-markdown-code-highlight/" target="_blank" rel="external">Markdown 代码高亮</a></li>
+<li>《FFmpeg 从入门到精通》</li>
 </ul>
 <hr>
-<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a><strong>环境搭建</strong></h1><h2 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a><strong>安装 Node.js</strong></h2><h2 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a><strong>安装 Git</strong></h2><h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a><strong>安装 Hexo</strong></h2><p>在本地创建文件夹，比如 <code>D:\weichao\hexo</code></p>
-<p>windows + r 调出运行，输入 <code>cmd</code>，进入刚才创建的目录<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ec.png" alt=""></p>
-<p>输入<code>npm install -g hexo-cli</code><br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ed.png" alt=""><br>warn 不会影响正常使用</p>
-<p>输入<code>npm install hexo --save</code>，等待安装完成</p>
-<p>输入<code>hexo -v</code>，显示<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e6.png" alt=""><br>说明 Hexo 安装完成</p>
+<h1 id="ffplay-命令参数"><a href="#ffplay-命令参数" class="headerlink" title="ffplay 命令参数"></a><strong>ffplay 命令参数</strong></h1><h2 id="查询-ffplay-命令支持的参数"><a href="#查询-ffplay-命令支持的参数" class="headerlink" title="查询 ffplay 命令支持的参数"></a><strong>查询 ffplay 命令支持的参数</strong></h2><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay --help</div></pre></td></tr></table></figure>
+<p>如果出现：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD1.png" alt=""></p>
+<p>需要确认 FFmpeg 文件夹中是否有可执行文件 ffplay：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD2.png" alt=""></p>
+<p>如果没有，说明在编译 FFmpeg 源代码时，系统中不存在 SDL（旧版本 FFmpeg 需要 1.2，新版本 FFmpeg 需要 2.0），导致未自动编译出 ffplay，需要安装 SDL，且需要先删除掉已安装的 FFmpeg，再重新编译 FFmpeg 源代码并安装。</p>
+<p>如果有，说明未配置 FFmpeg 环境变量，需要主动配置并重启 PC。</p>
+<p>2、输出结果（只截取了部分）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD3.png" alt=""></p>
+<h2 id="部分参数说明"><a href="#部分参数说明" class="headerlink" title="部分参数说明"></a><strong>部分参数说明</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>强制设置视频显示窗口的宽度</td>
+</tr>
+<tr>
+<td>y</td>
+<td>强制设置视频显示窗口的高度</td>
+</tr>
+<tr>
+<td>s</td>
+<td>设置视频显示的宽高</td>
+</tr>
+<tr>
+<td>fs</td>
+<td>强制全屏显示</td>
+</tr>
+<tr>
+<td>an</td>
+<td>屏蔽音频</td>
+</tr>
+<tr>
+<td>vn</td>
+<td>屏蔽视频</td>
+</tr>
+<tr>
+<td>sn</td>
+<td>屏蔽字幕</td>
+</tr>
+<tr>
+<td>ss</td>
+<td>根据设置的秒进行定位拖动</td>
+</tr>
+<tr>
+<td>t</td>
+<td>设置播放视频/音频的长度</td>
+</tr>
+<tr>
+<td>bytes</td>
+<td>设置定位拖动的策略，0 为不可拖动，1 为可拖动，-1 为自动</td>
+</tr>
+<tr>
+<td>nodisp</td>
+<td>关闭图形化显示窗口</td>
+</tr>
+<tr>
+<td>f</td>
+<td>强制使用设置的格式进行解析</td>
+</tr>
+<tr>
+<td>window_title</td>
+<td>设置显示窗口的标题</td>
+</tr>
+<tr>
+<td>af</td>
+<td>设置音频的滤镜</td>
+</tr>
+<tr>
+<td>codec</td>
+<td>强制使用设置的 codec 进行解码</td>
+</tr>
+<tr>
+<td>autorotate</td>
+<td>自动旋转视频</td>
+</tr>
+<tr>
+<td>ast</td>
+<td>设置将要播放的音频流</td>
+</tr>
+<tr>
+<td>vst</td>
+<td>设置将要播放的视频流</td>
+</tr>
+<tr>
+<td>sst</td>
+<td>设置将要播放的字幕流</td>
+</tr>
+<tr>
+<td>stats</td>
+<td>输出多媒体播放状态</td>
+</tr>
+<tr>
+<td>fast</td>
+<td>非标准化规范的多媒体兼容优化</td>
+</tr>
+<tr>
+<td>sync</td>
+<td>音视频同步设置可根据音频时间、视频时间或者外部扩展时间进行参考</td>
+</tr>
+<tr>
+<td>autoexit</td>
+<td>多媒体播放完毕之后自动退出 ffplay，ffplay 默认播放完毕之后不退出播放器</td>
+</tr>
+<tr>
+<td>exitonkeydown</td>
+<td>当有按键按下事件产生时退出 ffplay</td>
+</tr>
+<tr>
+<td>exitonmousedown</td>
+<td>当有鼠标按下事件产生时退出 ffplay</td>
+</tr>
+<tr>
+<td>loop</td>
+<td>设置多媒体文件循环播放的次数</td>
+</tr>
+<tr>
+<td>framedrop</td>
+<td>当 CPU 资源占用过高时，自动丢帧</td>
+</tr>
+<tr>
+<td>infbuf</td>
+<td>设置无极限的播放 buffer，这个选项常用于实时流媒体播放场景</td>
+</tr>
+<tr>
+<td>vf</td>
+<td>视频滤镜设置</td>
+</tr>
+<tr>
+<td>acodec</td>
+<td>强制使用设置的音频解码器</td>
+</tr>
+<tr>
+<td>vcodec</td>
+<td>强制使用设置的视频解码器</td>
+</tr>
+<tr>
+<td>scodec</td>
+<td>强制使用设置的字幕解码器</td>
+</tr>
+</tbody>
+</table>
 <hr>
-<h1 id="clone-Hexo-项目"><a href="#clone-Hexo-项目" class="headerlink" title="clone Hexo 项目"></a><strong>clone Hexo 项目</strong></h1><p>在本地创建文件夹，比如 <code>D:\weichao\hexo\config</code></p>
-<p>windows + r 调出运行，输入 <code>cmd</code>，进入刚才创建的目录</p>
-<p>输入<code>hexo init</code></p>
-<p>输入<code>npm install</code></p>
-<p>输入<code>hexo g</code></p>
-<p>输入<code>hexo s</code>，会提示浏览器访问地址：<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ea.png" alt=""></p>
-<p>在任意浏览器中输入该地址：<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008eb.png" alt=""></p>
+<h1 id="ffplay-命令应用"><a href="#ffplay-命令应用" class="headerlink" title="ffplay 命令应用"></a><strong>ffplay 命令应用</strong></h1><h2 id="从视频的第-5-秒开始播放，播放-10-秒"><a href="#从视频的第-5-秒开始播放，播放-10-秒" class="headerlink" title="从视频的第 5 秒开始播放，播放 10 秒"></a><strong>从视频的第 5 秒开始播放，播放 10 秒</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay -ss 5 -t 10 sample.mp4</div></pre></td></tr></table></figure>
+<h2 id="播放流媒体"><a href="#播放流媒体" class="headerlink" title="播放流媒体"></a><strong>播放流媒体</strong></h2><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay -window_title "播放测试" rtmp://live.hkstv.hk.lxdns.com/live/hks</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD4.png" alt=""></p>
+<p>3、播放成功的截图：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD5.png" alt=""></p>
+<h2 id="强制使用错误的解码器会导致解码失败"><a href="#强制使用错误的解码器会导致解码失败" class="headerlink" title="强制使用错误的解码器会导致解码失败"></a><strong>强制使用错误的解码器会导致解码失败</strong></h2><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay -vcodec mpeg4 sample.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD6.png" alt=""></p>
+<h2 id="加载字幕"><a href="#加载字幕" class="headerlink" title="加载字幕"></a><strong>加载字幕</strong></h2><p>1、编辑字幕文件 sample.srt：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">1</div><div class="line">00:00:01,001 --&gt; 00:00:02,000</div><div class="line">test 1</div><div class="line"></div><div class="line">2</div><div class="line">00:00:02,001 --&gt; 00:00:03,000</div><div class="line">test 2</div><div class="line"></div><div class="line">3</div><div class="line">00:00:03,001 --&gt; 00:00:04,000</div><div class="line">test 3</div><div class="line"></div><div class="line">3</div><div class="line">00:00:04,001 --&gt; 00:00:05,000</div><div class="line">test 4</div><div class="line"></div><div class="line">3</div><div class="line">00:00:05,001 --&gt; 00:00:06,000</div><div class="line">test 5</div></pre></td></tr></table></figure>
+<p>2、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay -window_title "播放测试" -vf subtitles=sample.srt sample.mp4</div></pre></td></tr></table></figure>
+<p>3、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD7.png" alt=""></p>
+<p>4、加载字幕成功的截图：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD8.png" alt=""></p>
+<h2 id="将音频数据以音频波形的形式显示"><a href="#将音频数据以音频波形的形式显示" class="headerlink" title="将音频数据以音频波形的形式显示"></a><strong>将音频数据以音频波形的形式显示</strong></h2><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay -showmode 1 sample.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD9.png" alt=""></p>
+<p>3、显示成功的截图：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD10.png" alt=""></p>
+<h2 id="显示解码宏块（新版本-FFmpeg-已失效）"><a href="#显示解码宏块（新版本-FFmpeg-已失效）" class="headerlink" title="显示解码宏块（新版本 FFmpeg 已失效）"></a><strong>显示解码宏块（新版本 FFmpeg 已失效）</strong></h2><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay -debug vis_mb_type sample.mp4</div></pre></td></tr></table></figure>
+<h2 id="显示运动估计"><a href="#显示运动估计" class="headerlink" title="显示运动估计"></a><strong>显示运动估计</strong></h2><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffplay -flags2 +export_mvs sample.mp4 -vf codecview=mv=pf+bf+bb</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD11.png" alt=""></p>
+<p>3、显示成功的截图：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD12.png" alt=""></p>
 <hr>
-<h1 id="关联-Hexo-和-GitHub-Pages"><a href="#关联-Hexo-和-GitHub-Pages" class="headerlink" title="关联 Hexo 和 GitHub Pages"></a><strong>关联 Hexo 和 GitHub Pages</strong></h1><p>windows + r 调出运行，输入 <code>cmd</code>，进入 <code>D:\weichao\hexo\config</code></p>
-<h2 id="配置-Git"><a href="#配置-Git" class="headerlink" title="配置 Git"></a><strong>配置 Git</strong></h2><p>输入用户名、邮箱</p>
-<pre><code>git config --global user.name &quot;xx&quot;
-git config --global user.email &quot;xx@yy.com&quot;
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e5.png" alt=""></p>
-<p>修改 <code>D:\weichao\hexo\config\_config.yml</code></p>
-<pre><code>deploy:
-  type:
-</code></pre><p>为</p>
-<pre><code>deploy:
-  type: git
-  repo: git@github.com:yourname/yourname.github.io.git
-  branch: master
-</code></pre><h2 id="安装-git-扩展"><a href="#安装-git-扩展" class="headerlink" title="安装 git 扩展"></a><strong>安装 git 扩展</strong></h2><pre><code>npm install hexo-deployer-git --save
-</code></pre><h2 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a><strong>配置 SSH</strong></h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a><strong>生成密钥</strong></h3><p>进入 <code>C:\Users\itpiz\.ssh</code></p>
-<p>右键 -&gt; Git Bash Here</p>
-<pre><code>ssh-keygen -t rsa -C &quot;xx@yy.com&quot;
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e7.png" alt=""><br><code>id_rsa</code> 是密钥，<code>id_rsa.pub</code> 是公钥</p>
-<h3 id="添加密钥到-ssh-agent"><a href="#添加密钥到-ssh-agent" class="headerlink" title="添加密钥到 ssh-agent"></a><strong>添加密钥到 ssh-agent</strong></h3><pre><code>eval &quot;$(ssh-agent -s)&quot;
-ssh-add ~/.ssh/id_rsa
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972ce32ab644125a100096c.png" alt=""></p>
-<h3 id="添加密钥到-GitHub"><a href="#添加密钥到-GitHub" class="headerlink" title="添加密钥到 GitHub"></a><strong>添加密钥到 GitHub</strong></h3><p>复制 <code>id_rsa.pub</code> 中的内容</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e9.png" alt=""></p>
-<h3 id="测试-ssh-keys-是否设置成功"><a href="#测试-ssh-keys-是否设置成功" class="headerlink" title="测试 ssh keys 是否设置成功"></a><strong>测试 ssh keys 是否设置成功</strong></h3><p>输入 <code>ssh -T git@github.com</code></p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e8.png" alt=""></p>
-<hr>
-<h1 id="设置主题"><a href="#设置主题" class="headerlink" title="设置主题"></a><strong>设置主题</strong></h1><p>windows + r 调出运行，输入 <code>cmd</code></p>
-<p>进入 <code>D:\weichao\hexo\config</code></p>
-<h2 id="clone-主题"><a href="#clone-主题" class="headerlink" title="clone 主题"></a><strong>clone 主题</strong></h2><pre><code>git clone https://github.com/iissnan/hexo-theme-next themes/next
-</code></pre><h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a><strong>修改配置文件</strong></h2><p>修改 <code>D:\weichao\hexo\config\_config.yml</code></p>
-<pre><code>theme: landscape
-</code></pre><p>为</p>
-<pre><code>theme: next
-</code></pre><h2 id="清除缓存"><a href="#清除缓存" class="headerlink" title="清除缓存"></a><strong>清除缓存</strong></h2><pre><code>hexo clean
-</code></pre><h2 id="验证主题"><a href="#验证主题" class="headerlink" title="验证主题"></a><strong>验证主题</strong></h2><pre><code>hexo s -debug
-</code></pre><hr>
-<h1 id="创建文章并上传"><a href="#创建文章并上传" class="headerlink" title="创建文章并上传"></a><strong>创建文章并上传</strong></h1><p>windows + r 调出运行，输入 <code>cmd</code></p>
-<p>进入 <code>D:\weichao\hexo\config</code></p>
-<p>新建一篇博客：</p>
-<pre><code>hexo new post &quot;article title&quot;
-</code></pre><p>生成并部署</p>
-<pre><code>hexo d -g
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e4.png" alt=""></p>
 
       
     </div>
@@ -469,12 +588,12 @@ ssh-add ~/.ssh/id_rsa
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2017/07/24/Hexo-GitHub-Pages-搭建-blog/">Hexo + GitHub Pages 搭建 blog</a></p>
+  <p><span>本文标题:</span><a href="/2018/05/13/ffplay-命令常用功能/">ffplay 命令常用功能</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2017年07月24日 - 12:07</p>
-  <p><span>最后更新:</span>2018年01月30日 - 21:01</p>
-  <p><span>原始链接:</span><a href="/2017/07/24/Hexo-GitHub-Pages-搭建-blog/" title="Hexo + GitHub Pages 搭建 blog">http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年05月13日 - 13:05</p>
+  <p><span>最后更新:</span>2018年05月13日 - 13:05</p>
+  <p><span>原始链接:</span><a href="/2018/05/13/ffplay-命令常用功能/" title="ffplay 命令常用功能">http://www.weichao.io/2018/05/13/ffplay-命令常用功能/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/05/13/ffplay-命令常用功能/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -538,15 +657,15 @@ ssh-add ~/.ssh/id_rsa
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/05/12/ffmpeg-命令常用功能/" rel="next" title="ffmpeg 命令常用功能">
+                <i class="fa fa-chevron-left"></i> ffmpeg 命令常用功能
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/10/Pixel-XL-解锁/" rel="prev" title="Pixel XL 解锁">
-                Pixel XL 解锁 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -702,7 +821,7 @@ ssh-add ~/.ssh/id_rsa
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Node-js"><span class="nav-number">2.1.</span> <span class="nav-text">安装 Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Git"><span class="nav-number">2.2.</span> <span class="nav-text">安装 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Hexo"><span class="nav-number">2.3.</span> <span class="nav-text">安装 Hexo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#clone-Hexo-项目"><span class="nav-number">3.</span> <span class="nav-text">clone Hexo 项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关联-Hexo-和-GitHub-Pages"><span class="nav-number">4.</span> <span class="nav-text">关联 Hexo 和 GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Git"><span class="nav-number">4.1.</span> <span class="nav-text">配置 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-git-扩展"><span class="nav-number">4.2.</span> <span class="nav-text">安装 git 扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSH"><span class="nav-number">4.3.</span> <span class="nav-text">配置 SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成密钥"><span class="nav-number">4.3.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加密钥到-ssh-agent"><span class="nav-number">4.3.2.</span> <span class="nav-text">添加密钥到 ssh-agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加密钥到-GitHub"><span class="nav-number">4.3.3.</span> <span class="nav-text">添加密钥到 GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试-ssh-keys-是否设置成功"><span class="nav-number">4.3.4.</span> <span class="nav-text">测试 ssh keys 是否设置成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置主题"><span class="nav-number">5.</span> <span class="nav-text">设置主题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#clone-主题"><span class="nav-number">5.1.</span> <span class="nav-text">clone 主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改配置文件"><span class="nav-number">5.2.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除缓存"><span class="nav-number">5.3.</span> <span class="nav-text">清除缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证主题"><span class="nav-number">5.4.</span> <span class="nav-text">验证主题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建文章并上传"><span class="nav-number">6.</span> <span class="nav-text">创建文章并上传</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffplay-命令参数"><span class="nav-number">2.</span> <span class="nav-text">ffplay 命令参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询-ffplay-命令支持的参数"><span class="nav-number">2.1.</span> <span class="nav-text">查询 ffplay 命令支持的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部分参数说明"><span class="nav-number">2.2.</span> <span class="nav-text">部分参数说明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffplay-命令应用"><span class="nav-number">3.</span> <span class="nav-text">ffplay 命令应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#从视频的第-5-秒开始播放，播放-10-秒"><span class="nav-number">3.1.</span> <span class="nav-text">从视频的第 5 秒开始播放，播放 10 秒</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#播放流媒体"><span class="nav-number">3.2.</span> <span class="nav-text">播放流媒体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制使用错误的解码器会导致解码失败"><span class="nav-number">3.3.</span> <span class="nav-text">强制使用错误的解码器会导致解码失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加载字幕"><span class="nav-number">3.4.</span> <span class="nav-text">加载字幕</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将音频数据以音频波形的形式显示"><span class="nav-number">3.5.</span> <span class="nav-text">将音频数据以音频波形的形式显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示解码宏块（新版本-FFmpeg-已失效）"><span class="nav-number">3.6.</span> <span class="nav-text">显示解码宏块（新版本 FFmpeg 已失效）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显示运动估计"><span class="nav-number">3.7.</span> <span class="nav-text">显示运动估计</span></a></li></ol></li></ol></div>
             
 
           </div>
