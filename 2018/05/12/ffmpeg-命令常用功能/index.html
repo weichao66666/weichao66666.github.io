@@ -116,8 +116,11 @@
 <meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD7.png">
 <meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD8.png">
 <meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD9.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD21.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD22.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD23.png">
 <meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD10.png">
-<meta property="og:updated_time" content="2018-05-12T12:58:18.207Z">
+<meta property="og:updated_time" content="2018-05-16T15:50:27.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ffmpeg 命令常用功能">
 <meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   ffmpeg 命令参数组成信息查询部分查看支持的视频文件格式列表1、输入命令： 1ffmpeg -formats 2、输出结果（只截取了部分）：  3、输出内容包括：    列数 说明     1 包含 2 个字段：（1）是否支持 Demuxing 多媒体文件封装格式（2）是否支持 Muxing 多媒体文件封装格式   2 多媒体文件格式">
@@ -336,7 +339,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,554 字
+                  1,639 字
                 </span>
               
 
@@ -616,7 +619,19 @@
 </tr>
 </tbody>
 </table>
-<h2 id="公共操作部分"><a href="#公共操作部分" class="headerlink" title="公共操作部分"></a><strong>公共操作部分</strong></h2><h2 id="文件操作部分"><a href="#文件操作部分" class="headerlink" title="文件操作部分"></a><strong>文件操作部分</strong></h2><h2 id="视频操作部分"><a href="#视频操作部分" class="headerlink" title="视频操作部分"></a><strong>视频操作部分</strong></h2><h2 id="音频操作部分"><a href="#音频操作部分" class="headerlink" title="音频操作部分"></a><strong>音频操作部分</strong></h2><h2 id="字幕操作部分"><a href="#字幕操作部分" class="headerlink" title="字幕操作部分"></a><strong>字幕操作部分</strong></h2><hr>
+<h2 id="公共操作部分"><a href="#公共操作部分" class="headerlink" title="公共操作部分"></a><strong>公共操作部分</strong></h2><h2 id="文件操作部分"><a href="#文件操作部分" class="headerlink" title="文件操作部分"></a><strong>文件操作部分</strong></h2><h3 id="拆分出视频"><a href="#拆分出视频" class="headerlink" title="拆分出视频"></a><strong>拆分出视频</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -vcodec copy -vbsf h264_mp4toannexb -an output.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD21.png" alt=""></p>
+<h3 id="拆分出音频"><a href="#拆分出音频" class="headerlink" title="拆分出音频"></a><strong>拆分出音频</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec copy -vn output.aac</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD22.png" alt=""></p>
+<h3 id="视频和音频合成"><a href="#视频和音频合成" class="headerlink" title="视频和音频合成"></a><strong>视频和音频合成</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i output.mp4 -i output.aac -vcodec copy -acodec copy -absf aac_adtstoasc test.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD23.png" alt=""></p>
+<h2 id="视频操作部分"><a href="#视频操作部分" class="headerlink" title="视频操作部分"></a><strong>视频操作部分</strong></h2><h2 id="音频操作部分"><a href="#音频操作部分" class="headerlink" title="音频操作部分"></a><strong>音频操作部分</strong></h2><h2 id="字幕操作部分"><a href="#字幕操作部分" class="headerlink" title="字幕操作部分"></a><strong>字幕操作部分</strong></h2><hr>
 <h1 id="ffmpeg-封装转换和编码转换"><a href="#ffmpeg-封装转换和编码转换" class="headerlink" title="ffmpeg 封装转换和编码转换"></a><strong>ffmpeg 封装转换和编码转换</strong></h1><h2 id="封装转换"><a href="#封装转换" class="headerlink" title="封装转换"></a><strong>封装转换</strong></h2><p>AVFormatContext 部分参数：</p>
 <table>
 <thead>
@@ -793,7 +808,7 @@
   <p><span>本文标题:</span><a href="/2018/05/12/ffmpeg-命令常用功能/">ffmpeg 命令常用功能</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2018年05月12日 - 20:05</p>
-  <p><span>最后更新:</span>2018年05月12日 - 20:05</p>
+  <p><span>最后更新:</span>2018年05月16日 - 23:05</p>
   <p><span>原始链接:</span><a href="/2018/05/12/ffmpeg-命令常用功能/" title="ffmpeg 命令常用功能">http://www.weichao.io/2018/05/12/ffmpeg-命令常用功能/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/05/12/ffmpeg-命令常用功能/"  aria-label="复制成功！"></i></span>
   </p>
@@ -968,7 +983,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1027,7 +1042,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffmpeg-命令参数组成"><span class="nav-number">2.</span> <span class="nav-text">ffmpeg 命令参数组成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息查询部分"><span class="nav-number">2.1.</span> <span class="nav-text">信息查询部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的视频文件格式列表"><span class="nav-number">2.1.1.</span> <span class="nav-text">查看支持的视频文件格式列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的编码列表"><span class="nav-number">2.1.2.</span> <span class="nav-text">查看支持的编码列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的解码列表"><span class="nav-number">2.1.3.</span> <span class="nav-text">查看支持的解码列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的滤镜列表"><span class="nav-number">2.1.4.</span> <span class="nav-text">查看支持的滤镜列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-FLV-封装支持的参数"><span class="nav-number">2.1.5.</span> <span class="nav-text">查看 FLV 封装支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-FLV-解封装支持的参数"><span class="nav-number">2.1.6.</span> <span class="nav-text">查看 FLV 解封装支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-AVC-编码支持的参数"><span class="nav-number">2.1.7.</span> <span class="nav-text">查看 AVC 编码支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-AVC-解码支持的参数"><span class="nav-number">2.1.8.</span> <span class="nav-text">查看 AVC 解码支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-colorkey-滤镜支持的参数"><span class="nav-number">2.1.9.</span> <span class="nav-text">查看 colorkey 滤镜支持的参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公共操作部分"><span class="nav-number">2.2.</span> <span class="nav-text">公共操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作部分"><span class="nav-number">2.3.</span> <span class="nav-text">文件操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视频操作部分"><span class="nav-number">2.4.</span> <span class="nav-text">视频操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#音频操作部分"><span class="nav-number">2.5.</span> <span class="nav-text">音频操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字幕操作部分"><span class="nav-number">2.6.</span> <span class="nav-text">字幕操作部分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffmpeg-封装转换和编码转换"><span class="nav-number">3.</span> <span class="nav-text">ffmpeg 封装转换和编码转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#封装转换"><span class="nav-number">3.1.</span> <span class="nav-text">封装转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码转换"><span class="nav-number">3.2.</span> <span class="nav-text">编码转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个封装转换-编码转换的例子"><span class="nav-number">3.3.</span> <span class="nav-text">一个封装转换+编码转换的例子</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffmpeg-命令参数组成"><span class="nav-number">2.</span> <span class="nav-text">ffmpeg 命令参数组成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息查询部分"><span class="nav-number">2.1.</span> <span class="nav-text">信息查询部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的视频文件格式列表"><span class="nav-number">2.1.1.</span> <span class="nav-text">查看支持的视频文件格式列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的编码列表"><span class="nav-number">2.1.2.</span> <span class="nav-text">查看支持的编码列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的解码列表"><span class="nav-number">2.1.3.</span> <span class="nav-text">查看支持的解码列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看支持的滤镜列表"><span class="nav-number">2.1.4.</span> <span class="nav-text">查看支持的滤镜列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-FLV-封装支持的参数"><span class="nav-number">2.1.5.</span> <span class="nav-text">查看 FLV 封装支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-FLV-解封装支持的参数"><span class="nav-number">2.1.6.</span> <span class="nav-text">查看 FLV 解封装支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-AVC-编码支持的参数"><span class="nav-number">2.1.7.</span> <span class="nav-text">查看 AVC 编码支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-AVC-解码支持的参数"><span class="nav-number">2.1.8.</span> <span class="nav-text">查看 AVC 解码支持的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-colorkey-滤镜支持的参数"><span class="nav-number">2.1.9.</span> <span class="nav-text">查看 colorkey 滤镜支持的参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公共操作部分"><span class="nav-number">2.2.</span> <span class="nav-text">公共操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作部分"><span class="nav-number">2.3.</span> <span class="nav-text">文件操作部分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拆分出视频"><span class="nav-number">2.3.1.</span> <span class="nav-text">拆分出视频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拆分出音频"><span class="nav-number">2.3.2.</span> <span class="nav-text">拆分出音频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视频和音频合成"><span class="nav-number">2.3.3.</span> <span class="nav-text">视频和音频合成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视频操作部分"><span class="nav-number">2.4.</span> <span class="nav-text">视频操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#音频操作部分"><span class="nav-number">2.5.</span> <span class="nav-text">音频操作部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字幕操作部分"><span class="nav-number">2.6.</span> <span class="nav-text">字幕操作部分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ffmpeg-封装转换和编码转换"><span class="nav-number">3.</span> <span class="nav-text">ffmpeg 封装转换和编码转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#封装转换"><span class="nav-number">3.1.</span> <span class="nav-text">封装转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码转换"><span class="nav-number">3.2.</span> <span class="nav-text">编码转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个封装转换-编码转换的例子"><span class="nav-number">3.3.</span> <span class="nav-text">一个封装转换+编码转换的例子</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1066,7 +1081,7 @@
 <!--网站底部字数统计-->
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">本站总字数 38.3k 字 </span>
+  <span class="post-count">本站总字数 66.2k 字 </span>
 </div>
 
 <!--
