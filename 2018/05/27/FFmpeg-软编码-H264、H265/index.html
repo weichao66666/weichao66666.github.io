@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference 《FFmpeg 从入门到精通》   x264参数   参数 类型 说明     preset 字符串 编码器预设参数   tune 字符串 调优编码参数   profile 字符串 编码 profile 档级设置   level 字符串 编码 level 层级设置   wpredp 字符串 P 帧预测设置   x264opts 字符串 设置 x264 专有参数   crf 浮点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg 软编码 H264、H265">
+<meta property="og:url" content="http://www.weichao.io/2018/05/27/FFmpeg-软编码-H264、H265/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   x264参数   参数 类型 说明     preset 字符串 编码器预设参数   tune 字符串 调优编码参数   profile 字符串 编码 profile 档级设置   level 字符串 编码 level 层级设置   wpredp 字符串 P 帧预测设置   x264opts 字符串 设置 x264 专有参数   crf 浮点">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2651.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2652.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2653.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2654.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2655.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2656.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2657.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2658.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2659.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26510.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26511.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26512.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26513.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26514.png">
+<meta property="og:updated_time" content="2018-05-27T08:47:25.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FFmpeg 软编码 H264、H265">
+<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   x264参数   参数 类型 说明     preset 字符串 编码器预设参数   tune 字符串 调优编码参数   profile 字符串 编码 profile 档级设置   level 字符串 编码 level 层级设置   wpredp 字符串 P 帧预测设置   x264opts 字符串 设置 x264 专有参数   crf 浮点">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2651.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2018/05/27/FFmpeg-软编码-H264、H265/"/>
+
+
+
+
+
+  <title>FFmpeg 软编码 H264、H265 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/05/27/FFmpeg-软编码-H264、H265/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">FFmpeg 软编码 H264、H265</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-27T16:38:56+08:00">
+                2018-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,920 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2018/05/27/FFmpeg-软编码-H264、H265/" class="leancloud_visitors" data-flag-title="FFmpeg 软编码 H264、H265">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li>《FFmpeg 从入门到精通》</li>
+</ul>
+<hr>
+<h1 id="x264"><a href="#x264" class="headerlink" title="x264"></a><strong>x264</strong></h1><h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a><strong>参数</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>preset</td>
+<td>字符串</td>
+<td>编码器预设参数</td>
+</tr>
+<tr>
+<td>tune</td>
+<td>字符串</td>
+<td>调优编码参数</td>
+</tr>
+<tr>
+<td>profile</td>
+<td>字符串</td>
+<td>编码 profile 档级设置</td>
+</tr>
+<tr>
+<td>level</td>
+<td>字符串</td>
+<td>编码 level 层级设置</td>
+</tr>
+<tr>
+<td>wpredp</td>
+<td>字符串</td>
+<td>P 帧预测设置</td>
+</tr>
+<tr>
+<td>x264opts</td>
+<td>字符串</td>
+<td>设置 x264 专有参数</td>
+</tr>
+<tr>
+<td>crf</td>
+<td>浮点数</td>
+<td>选择质量恒定质量模式</td>
+</tr>
+<tr>
+<td>crf_max</td>
+<td>浮点数</td>
+<td>选择质量恒定质量模式最大值</td>
+</tr>
+<tr>
+<td>qp</td>
+<td>整数</td>
+<td>恒定量化参数控制</td>
+</tr>
+<tr>
+<td>psy</td>
+<td>浮点数</td>
+<td>只用 psychovisual 优化</td>
+</tr>
+<tr>
+<td>rc-lookahead</td>
+<td>整数</td>
+<td>设置预读帧设置</td>
+</tr>
+<tr>
+<td>weightb</td>
+<td>浮点数</td>
+<td>B 帧预测设置</td>
+</tr>
+<tr>
+<td>weightp</td>
+<td>整数</td>
+<td>设置预测分析方法：none、simple、smart 三种模式</td>
+</tr>
+<tr>
+<td>ssim</td>
+<td>布尔</td>
+<td>计算打印 SSIM 状态</td>
+</tr>
+<tr>
+<td>intra-refresh</td>
+<td>布尔</td>
+<td>定时刷 I 帧以替代 IDR 帧</td>
+</tr>
+<tr>
+<td>bluray-compat</td>
+<td>布尔</td>
+<td>蓝光兼容参数</td>
+</tr>
+<tr>
+<td>b-bias</td>
+<td>整数</td>
+<td>B 帧使用频率设置</td>
+</tr>
+<tr>
+<td>mixed-refs</td>
+<td>布尔</td>
+<td>每个 partition 一个参考，而不是每个宏块一个参考</td>
+</tr>
+<tr>
+<td>8x8dct</td>
+<td>布尔</td>
+<td>8x8 矩阵变换，用在 high profile</td>
+</tr>
+<tr>
+<td>aud</td>
+<td>布尔</td>
+<td>带 AUD 分隔标识</td>
+</tr>
+<tr>
+<td>mbtree</td>
+<td>布尔</td>
+<td>宏块树频率控制</td>
+</tr>
+<tr>
+<td>deblock</td>
+<td>字符串</td>
+<td>环路滤波参数</td>
+</tr>
+<tr>
+<td>cplxblur</td>
+<td>浮点数</td>
+<td>减少波动 QP 参数</td>
+</tr>
+<tr>
+<td>partitions</td>
+<td>字符串</td>
+<td>逗号分隔的 partition 列表，可以包含的值有 p8x8、p4x4、b8x8、i8x8、i4x4、none、all</td>
+</tr>
+<tr>
+<td>direct-pred</td>
+<td>整数</td>
+<td>运动向量预测模式</td>
+</tr>
+<tr>
+<td>slice-max-size</td>
+<td>整数</td>
+<td>Slice 的最大值</td>
+</tr>
+<tr>
+<td>nal-hrd</td>
+<td>整数</td>
+<td>HRD 信号信息设置：None、VBR、CBR 设置</td>
+</tr>
+<tr>
+<td>motion-est</td>
+<td>整数</td>
+<td>运动估计方法</td>
+</tr>
+<tr>
+<td>forced-idr</td>
+<td>布尔</td>
+<td>强行设置关键帧为 IDR 帧</td>
+</tr>
+<tr>
+<td>coder</td>
+<td>整数</td>
+<td>编码器类型包括 default、cavlc、cabac、vlc、ac</td>
+</tr>
+<tr>
+<td>b_strategy</td>
+<td>整数</td>
+<td>I/P/B 帧选择策略</td>
+</tr>
+<tr>
+<td>chromaoffset</td>
+<td>整数</td>
+<td>QP 色度和亮度之间的差异参数</td>
+</tr>
+<tr>
+<td>sc_threshold</td>
+<td>整数</td>
+<td>场景切换阈值参数</td>
+</tr>
+<tr>
+<td>noise_reduction</td>
+<td>整数</td>
+<td>降噪处理参数</td>
+</tr>
+<tr>
+<td>x264-params</td>
+<td>字符串</td>
+<td>与 x264opts 操作相同</td>
+</tr>
+</tbody>
+</table>
+<h3 id="preset"><a href="#preset" class="headerlink" title="preset"></a><strong>preset</strong></h3><h4 id="ultrafast"><a href="#ultrafast" class="headerlink" title="ultrafast"></a><strong>ultrafast</strong></h4><p>最快的编码方式。</p>
+<p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -vcodec libx264 -preset ultrafast -b:v 2000k output.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2651.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2652.png" alt=""></p>
+<h4 id="superfast"><a href="#superfast" class="headerlink" title="superfast"></a><strong>superfast</strong></h4><h4 id="veryfast"><a href="#veryfast" class="headerlink" title="veryfast"></a><strong>veryfast</strong></h4><h4 id="faster"><a href="#faster" class="headerlink" title="faster"></a><strong>faster</strong></h4><h4 id="fast"><a href="#fast" class="headerlink" title="fast"></a><strong>fast</strong></h4><h4 id="medium"><a href="#medium" class="headerlink" title="medium"></a><strong>medium</strong></h4><h4 id="slow"><a href="#slow" class="headerlink" title="slow"></a><strong>slow</strong></h4><h4 id="slower"><a href="#slower" class="headerlink" title="slower"></a><strong>slower</strong></h4><h4 id="veryslow"><a href="#veryslow" class="headerlink" title="veryslow"></a><strong>veryslow</strong></h4><h4 id="placebo"><a href="#placebo" class="headerlink" title="placebo"></a><strong>placebo</strong></h4><p>最慢的编码方式。</p>
+<h3 id="tune"><a href="#tune" class="headerlink" title="tune"></a><strong>tune</strong></h3><p>在使用 FFmpeg 与 x264 进行 H264 直播编码并进行推流时，只用 tune 参数的 zerolatency 将会提升效率，因为其降低了因编码导致的延迟。</p>
+<h4 id="zerolatency"><a href="#zerolatency" class="headerlink" title="zerolatency"></a><strong>zerolatency</strong></h4><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -vcodec libx264 -tune zerolatency -b:v 2000k output_tune_zerolatency.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2653.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2654.png" alt=""></p>
+<h3 id="profile"><a href="#profile" class="headerlink" title="profile"></a><strong>profile</strong></h3><p>x264 共支持 7 种 profile。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Baseline</th>
+<th>Extented</th>
+<th>Main</th>
+<th>High</th>
+<th>High10</th>
+<th>High4:2:2</th>
+<th>High4:4:4（Predictive）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I 与 P 分片</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>B 分片</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>SI 与 SP 分片</td>
+<td>不支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>多参考帧</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>环路去块滤波</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>CAVLC 熵编码</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>CABAC 熵编码</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>FMO</td>
+<td>不支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>ASO</td>
+<td>不支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>RS</td>
+<td>不支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>数据分区</td>
+<td>支持</td>
+<td>支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td>场编码 PAFF/MBAFF</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>4:2:0 色度格式</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>4:0:0 色度格式</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>4:2:2 色度格式</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>4:4:4 色度格式</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>8 位采样深度</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>9 和 10 位采样深度</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>11 至 14 位采样深度</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>8x8 与 4x4 转换适配</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>量化计算矩阵</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>分离 Cb 和 Cr 量化参数控制</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>分离色彩平面编码</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td>分离无损编码</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>不支持</td>
+<td>支持</td>
+</tr>
+</tbody>
+</table>
+<h3 id="level"><a href="#level" class="headerlink" title="level"></a><strong>level</strong></h3><table><tr><td rowspan="2"></td><td colspan="2">最大解码速度</td><td colspan="2">帧最大尺寸</td><td colspan="3">视频编码层最大码率</td><td rowspan="2">最大分辨率@最大帧率(最大存储帧数)切换其他细节</td></tr><tr><td>亮度采样</td><td>宏块</td><td>亮度采样</td><td>宏块</td><td>Baseline、Extended 和 Main Profile</td><td>High Profile</td><td>High 10 Profile</td></tr><tr><td>1</td><td>380160</td><td>1485</td><td>25344</td><td>99</td><td>64</td><td>80</td><td>192</td><td>128x96@30.9(8)<br>176x144@15.0(4)</td></tr><tr><td>1b</td><td>380160</td><td>1485</td><td>25344</td><td>99</td><td>128</td><td>160</td><td>384</td><td>128x96@30.9(8)<br>176x144@15.0(4)</td></tr><tr><td>1.1</td><td>768000</td><td>3000</td><td>101376</td><td>396</td><td>192</td><td>240</td><td>576</td><td>176x144@30.3(9)<br>320x240@10.0(3)<br>352x288@7.5(2)</td></tr><tr><td>1.2</td><td>1536000</td><td>6000</td><td>101376</td><td>396</td><td>384</td><td>480</td><td>1152</td><td>320x240@20.0(7)<br>352x288@15.2(6)</td></tr><tr><td>1.3</td><td>3041280</td><td>11880</td><td>101376</td><td>396</td><td>768</td><td>960</td><td>2304</td><td>320x240@36.0(7)<br>352x288@30.0(6)</td></tr><tr><td>2</td><td>3041280</td><td>11880</td><td>101376</td><td>396</td><td>2000</td><td>2500</td><td>6000</td><td>320x240@36.0(7)<br>352x288@30.0(6)</td></tr><tr><td>2.1</td><td>3041280</td><td>19800</td><td>202752</td><td>396</td><td>4000</td><td>5000</td><td>12000</td><td>352x480@30.0(7)<br>352x576@25.0(6)</td></tr><tr><td>2.2</td><td>5068800</td><td>20250</td><td>414720</td><td>1620</td><td>4000</td><td>5000</td><td>12000</td><td>352x480@30.7(12)<br>352x576@25.6(10)<br>720x480@15.0(6)<br>720x576@12.5(5)</td></tr><tr><td>3</td><td>5184000</td><td>40500</td><td>414720</td><td>1620</td><td>10000</td><td>12500</td><td>30000</td><td>352x480@61.4(12)<br>352x576@51.1(10)<br>720x480@30.0(6)<br>720x576@25.0(5)</td></tr><tr><td>3.1</td><td>10368000</td><td>108000</td><td>921600</td><td>3600</td><td>14000</td><td>17500</td><td>42000</td><td>720x480@80.0(13)<br>720x576@66.7(11)<br>1280x720@30.0(5)</td></tr><tr><td>3.2</td><td>27648000</td><td>216000</td><td>1310720</td><td>5120</td><td>20000</td><td>25000</td><td>60000</td><td>1280x720@60.0(5)<br>1280x1024@42.2(4)</td></tr><tr><td>4</td><td>55296000</td><td>245760</td><td>2097152</td><td>8192</td><td>20000</td><td>25000</td><td>60000</td><td>1280x720@68.3(9)<br>1920x1080@30.1(4)<br>2048x1024@30.0(4)</td></tr><tr><td>4.1</td><td>62914560</td><td>245760</td><td>2097152</td><td>8192</td><td>50000</td><td>62500</td><td>150000</td><td>1280x720@68.3(9)<br>1920x1080@30.1(4)<br>2048x1024@30.0(4)</td></tr><tr><td>4.2</td><td>133693440</td><td>522240</td><td>2228224</td><td>8740</td><td>50000</td><td>62500</td><td>150000</td><td>1280x720@145.1(9)<br>1920x1080@64.0(4)<br>2048x1080@60.0(4)</td></tr><tr><td>5</td><td>150994944</td><td>589824</td><td>5652480</td><td>22080</td><td>135000</td><td>168750</td><td>405000</td><td>1920x1080@72.3(13)<br>2048x1024@72.0(13)<br>2048x1080@67.8(12)<br>2560x1920@30.7(5)<br>3672x1536@26.7(5)</td></tr><tr><td>5.1</td><td>251658240</td><td>983040</td><td>9437184</td><td>36864</td><td>240000</td><td>300000</td><td>720000</td><td>1920x1080@120.5(16)<br>2560x1920@51.2(9)<br>3840x2160@31.7(5)<br>4096x2048@30.0(5)<br>4096x2160@28.5(5)<br>4096x2304@26.7(5)</td></tr><tr><td>5.2</td><td>530841600</td><td>2073600</td><td>9437184</td><td>36864</td><td>240000</td><td>300000</td><td>720000</td><td>1920x1080@172.0(16)<br>2560x1920@108.0(9)<br>3840x2160@66.8(5)<br>4096x2048@63.3(5)<br>4096x2160@60.0(5)<br>4096x2304@56.3(5)</td></tr></table>
+
+<h4 id="生成-baseline-视频"><a href="#生成-baseline-视频" class="headerlink" title="生成 baseline 视频"></a><strong>生成 baseline 视频</strong></h4><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -vcodec libx264 -profile:v baseline -level 3.1 -s 352x288 -an -y -t 10 output_baseline.ts</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2655.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2656.png" alt=""></p>
+<h4 id="生成-high-视频"><a href="#生成-high-视频" class="headerlink" title="生成 high 视频"></a><strong>生成 high 视频</strong></h4><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -vcodec libx264 -profile:v high -level 3.1 -s 352x288 -an -y -t 10 output_baseline.ts</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2657.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2658.png" alt=""></p>
+<h3 id="sc-threshold"><a href="#sc-threshold" class="headerlink" title="sc_threshold"></a><strong>sc_threshold</strong></h3><p>在 FFmpeg 中，可以通过命令行的 -g 参数设置以帧数间隔为 GOP 的长度，但是当遇到场景切换时，例如从一个画面突然变成另外一个画面时，会强行插入一个关键帧，这时 GOP 的间隔将会重新开始。可以通过 sc_threshold 参数设置是否在场景切换时插入关键帧。</p>
+<p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -c:v libx264 -g 50 -t 60 -sc_threshold 0 output_sc_threshold.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H2659.png" alt=""></p>
+<h3 id="x264opts"><a href="#x264opts" class="headerlink" title="x264opts"></a><strong>x264opts</strong></h3><p>可以通过该参数设置 x264 内部私有参数，比如设置 I 帧、P 帧、B 帧的顺序及规律等。</p>
+<h4 id="不允许-B-帧"><a href="#不允许-B-帧" class="headerlink" title="不允许 B 帧"></a><strong>不允许 B 帧</strong></h4><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -c:v libx264 -x264opts "bframes=0" -g 50 -sc_threshold 0 output_no_bframe.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26510.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26511.png" alt=""></p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26512.png" alt=""></p>
+<h4 id="每两个-P-帧之间存放-3-个-B-帧"><a href="#每两个-P-帧之间存放-3-个-B-帧" class="headerlink" title="每两个 P 帧之间存放 3 个 B 帧"></a><strong>每两个 P 帧之间存放 3 个 B 帧</strong></h4><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -c:v libx264 -x264opts "bframes=3:b-adapt=0" -g 50 -sc_threshold 0 output_pbframe.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26513.png" alt=""></p>
+<h3 id="nal-hrd"><a href="#nal-hrd" class="headerlink" title="nal-hrd"></a><strong>nal-hrd</strong></h3><p>编码可以设置为 VBR 或 CBR 模式，VBR 为可变码率，CBR 为恒定码率。<br>FFmpeg 可以通过参数 -b:v 指定视频的编码码率，但是设定的码率是平均码率，并不能很好的控制最大码率和最小码率的波动，如果需要控制最大码率和最小码率，则需要使用 FFmpeg 的三个参数 -b:v、maxrate、minrate。<br>同时，为了更好地控制编码时的波动，还可以设置编码时 buffer 的大小，buffer 的大小使用参数 -bufsize 设置即可，buffer 的设置不是越小越好，而是要设置得恰到好处。</p>
+<p>比如设置 1M bit/s 码率，bufsize 为 50 KB。</p>
+<p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.mp4 -c:v libx264 -x264opts "bframes=10:b-adapt=0" -b:v 1000k -maxrate 1000k -minrate 1000k -bufsize 50k -nal-hrd cbr -g 50 -sc_threshold 0 output_nal_hrd.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H26514.png" alt=""></p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/05/27/FFmpeg-软编码-H264、H265/">FFmpeg 软编码 H264、H265</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2018年05月27日 - 16:05</p>
+  <p><span>最后更新:</span>2018年05月27日 - 16:05</p>
+  <p><span>原始链接:</span><a href="/2018/05/27/FFmpeg-软编码-H264、H265/" title="FFmpeg 软编码 H264、H265">http://www.weichao.io/2018/05/27/FFmpeg-软编码-H264、H265/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/05/27/FFmpeg-软编码-H264、H265/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/20/HLS-封装格式/" rel="next" title="HLS 封装格式">
+                <i class="fa fa-chevron-left"></i> HLS 封装格式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#x264"><span class="nav-number">2.</span> <span class="nav-text">x264</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">2.1.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#preset"><span class="nav-number">2.1.1.</span> <span class="nav-text">preset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ultrafast"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">ultrafast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#superfast"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">superfast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#veryfast"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">veryfast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#faster"><span class="nav-number">2.1.1.4.</span> <span class="nav-text">faster</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fast"><span class="nav-number">2.1.1.5.</span> <span class="nav-text">fast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#medium"><span class="nav-number">2.1.1.6.</span> <span class="nav-text">medium</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#slow"><span class="nav-number">2.1.1.7.</span> <span class="nav-text">slow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#slower"><span class="nav-number">2.1.1.8.</span> <span class="nav-text">slower</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#veryslow"><span class="nav-number">2.1.1.9.</span> <span class="nav-text">veryslow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#placebo"><span class="nav-number">2.1.1.10.</span> <span class="nav-text">placebo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tune"><span class="nav-number">2.1.2.</span> <span class="nav-text">tune</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#zerolatency"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">zerolatency</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#profile"><span class="nav-number">2.1.3.</span> <span class="nav-text">profile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#level"><span class="nav-number">2.1.4.</span> <span class="nav-text">level</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#生成-baseline-视频"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">生成 baseline 视频</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成-high-视频"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">生成 high 视频</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sc-threshold"><span class="nav-number">2.1.5.</span> <span class="nav-text">sc_threshold</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264opts"><span class="nav-number">2.1.6.</span> <span class="nav-text">x264opts</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#不允许-B-帧"><span class="nav-number">2.1.6.1.</span> <span class="nav-text">不允许 B 帧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#每两个-P-帧之间存放-3-个-B-帧"><span class="nav-number">2.1.6.2.</span> <span class="nav-text">每两个 P 帧之间存放 3 个 B 帧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nal-hrd"><span class="nav-number">2.1.7.</span> <span class="nav-text">nal-hrd</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 128.1k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
