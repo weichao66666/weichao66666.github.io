@@ -100,23 +100,22 @@
 
 
 
-<meta name="description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
+<meta name="description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pixel XL 刷机">
-<meta property="og:url" content="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/index.html">
+<meta property="og:title" content="FFmpeg 输出 MP3">
+<meta property="og:url" content="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
+<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png">
-<meta property="og:updated_time" content="2017-10-23T14:21:04.157Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png">
+<meta property="og:updated_time" content="2018-07-29T03:18:28.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pixel XL 刷机">
-<meta name="twitter:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
+<meta name="twitter:title" content="FFmpeg 输出 MP3">
+<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
 
 
 
@@ -144,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/"/>
+  <link rel="canonical" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"/>
 
 
 
 
 
-  <title>Pixel XL 刷机 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>FFmpeg 输出 MP3 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -271,7 +270,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -288,7 +287,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Pixel XL 刷机</h2>
+          <h2 class="post-title" itemprop="name headline">FFmpeg 输出 MP3</h2>
         
 
         <div class="post-meta">
@@ -300,8 +299,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T20:49:25+08:00">
-                2017-10-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T11:11:11+08:00">
+                2018-07-29
               </time>
             
 
@@ -331,7 +330,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  197 字
+                  338 字
                 </span>
               
 
@@ -347,7 +346,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -355,7 +354,7 @@
 
           
           
-             <span id="/2017/10/11/Pixel-XL-刷机/" class="leancloud_visitors" data-flag-title="Pixel XL 刷机">
+             <span id="/2018/07/29/FFmpeg-输出-MP3/" class="leancloud_visitors" data-flag-title="FFmpeg 输出 MP3">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -381,36 +380,144 @@
 
       
         <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
-<li><a href="https://sspai.com/post/38319" title="https://sspai.com/post/38319" target="_blank" rel="external">从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记</a></li>
+<li>《FFmpeg 从入门到精通》</li>
 </ul>
 <hr>
-<h1 id="手动刷入工厂镜像"><a href="#手动刷入工厂镜像" class="headerlink" title="手动刷入工厂镜像"></a><strong>手动刷入工厂镜像</strong></h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a><strong>操作步骤</strong></h2><h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a><strong>下载文件</strong></h3><ol>
-<li><p>从<a href="https://developers.google.cn/android/images" title="https://developers.google.cn/android/images" target="_blank" rel="external">工厂镜像官网</a>下载对应版本的 zip 文件</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png" alt=""></p>
-</li>
-</ol>
-<h3 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a><strong>刷机</strong></h3><ol>
-<li><p>解压 zip 文件</p>
-<p> 比如将 zip 文件解压到 f 盘根目录。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png" alt=""></p>
-</li>
-<li><p>修改文件，用于刷机时保留系统数据</p>
-<p> 使用文本编辑器修改 <code>flash-all.bat</code> 中的 <code>fastboot -w update image-marlin-opr3.170623.008.zip</code> 为 <code>fastboot update image-marlin-opr3.170623.008.zip</code>，即去掉 <code>-w</code>。</p>
-</li>
-<li><p>通过 USB 线连接手机和 PC</p>
-</li>
-<li><p>让手机进入 fastboot 模式</p>
-<p> 在命令行中执行<code>adb reboot bootloader</code>。</p>
-</li>
-<li><p>进入 <code>flash-all.bat</code> 所在目录</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png" alt=""></p>
-</li>
-<li><p>执行 <code>flash-all.bat</code>，等待刷机完成</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png" alt=""></p>
-<p> 重启后进入<code>设置</code>-&gt;<code>系统</code>可以看到系统版本。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png" alt=""></p>
-</li>
-</ol>
+<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h1><p>FFmpeg 使用第三方库 libmp3lame 编码 MP3。</p>
+<hr>
+<h1 id="获取-libmp3lame-编码-MP3-的参数"><a href="#获取-libmp3lame-编码-MP3-的参数" class="headerlink" title="获取 libmp3lame 编码 MP3 的参数"></a><strong>获取 libmp3lame 编码 MP3 的参数</strong></h1><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h encoder=libmp3lame</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png" alt=""></p>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a><strong>参数</strong></h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b</td>
+<td>布尔</td>
+<td>设置 MP3 编码的码率</td>
+</tr>
+<tr>
+<td>joint_stereo</td>
+<td>布尔</td>
+<td>设置环绕立体声模式</td>
+</tr>
+<tr>
+<td>abr</td>
+<td>布尔</td>
+<td>设置编码为 ABR 状态，自动调整码率</td>
+</tr>
+<tr>
+<td>compression_level</td>
+<td>整数</td>
+<td>设置压缩算法质量，参数设置为 0~9 区间的值即可，数值越大质量越差，但是编码速度越快</td>
+</tr>
+<tr>
+<td>q</td>
+<td>整型</td>
+<td>设置恒质量的 VBR。调用 lame 接口的话，设置 global_quality 变量具有同样的效果</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1 id="转编码-MP3"><a href="#转编码-MP3" class="headerlink" title="转编码 MP3"></a><strong>转编码 MP3</strong></h1><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame output.mp3</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png" alt=""></p>
+<hr>
+<h1 id="设置编码-MP3-的质量"><a href="#设置编码-MP3-的质量" class="headerlink" title="设置编码 MP3 的质量"></a><strong>设置编码 MP3 的质量</strong></h1><table>
+<thead>
+<tr>
+<th>lame 操作参数</th>
+<th>平均码率(kbit/s)</th>
+<th>码率区间(kbit/s)</th>
+<th>ffmpeg 操作参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-b 320</td>
+<td>320</td>
+<td>320(CBR)</td>
+<td>-b:a 320k</td>
+</tr>
+<tr>
+<td>-v 0</td>
+<td>245</td>
+<td>220~260</td>
+<td>-q:a 0</td>
+</tr>
+<tr>
+<td>-v 1</td>
+<td>225</td>
+<td>190~250</td>
+<td>-q:a 1</td>
+</tr>
+<tr>
+<td>-v 2</td>
+<td>190</td>
+<td>170~210</td>
+<td>-q:a 2</td>
+</tr>
+<tr>
+<td>-v 3</td>
+<td>175</td>
+<td>150~195</td>
+<td>-q:a 3</td>
+</tr>
+<tr>
+<td>-v 4</td>
+<td>165</td>
+<td>140~185</td>
+<td>-q:a 4</td>
+</tr>
+<tr>
+<td>-v 5</td>
+<td>130</td>
+<td>120~150</td>
+<td>-q:a 5</td>
+</tr>
+<tr>
+<td>-v 6</td>
+<td>115</td>
+<td>100~130</td>
+<td>-q:a 6</td>
+</tr>
+<tr>
+<td>-v 7</td>
+<td>100</td>
+<td>80~120</td>
+<td>-q:a 7</td>
+</tr>
+<tr>
+<td>-v 8</td>
+<td>85</td>
+<td>70~105</td>
+<td>-q:a 8</td>
+</tr>
+<tr>
+<td>-v 9</td>
+<td>65</td>
+<td>45~85</td>
+<td>-q:a 9</td>
+</tr>
+</tbody>
+</table>
+<p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -q:a 8 output.mp3</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png" alt=""></p>
+<hr>
+<h1 id="使用平均码率编码参数-ABR"><a href="#使用平均码率编码参数-ABR" class="headerlink" title="使用平均码率编码参数 ABR"></a><strong>使用平均码率编码参数 ABR</strong></h1><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -b:a 64k -abr 1 output.mp3</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png" alt=""></p>
 <hr>
 
       
@@ -426,12 +533,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2017/10/11/Pixel-XL-刷机/">Pixel XL 刷机</a></p>
+  <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-输出-MP3/">FFmpeg 输出 MP3</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2017年10月11日 - 20:10</p>
-  <p><span>最后更新:</span>2017年10月23日 - 22:10</p>
-  <p><span>原始链接:</span><a href="/2017/10/11/Pixel-XL-刷机/" title="Pixel XL 刷机">http://www.weichao.io/2017/10/11/Pixel-XL-刷机/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年07月29日 - 11:07</p>
+  <p><span>最后更新:</span>2018年07月29日 - 11:07</p>
+  <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-输出-MP3/" title="FFmpeg 输出 MP3">http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -495,8 +602,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/Pixel-XL-解锁/" rel="next" title="Pixel XL 解锁">
-                <i class="fa fa-chevron-left"></i> Pixel XL 解锁
+              <a href="/2018/05/27/FFmpeg-软编码-H264、H265/" rel="next" title="FFmpeg 软编码 H264、H265">
+                <i class="fa fa-chevron-left"></i> FFmpeg 软编码 H264、H265
               </a>
             
           </div>
@@ -504,10 +611,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/15/编译、运行源码/" rel="prev" title="编译、运行源码">
-                编译、运行源码 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -663,7 +766,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#手动刷入工厂镜像"><span class="nav-number">2.</span> <span class="nav-text">手动刷入工厂镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作步骤"><span class="nav-number">2.1.</span> <span class="nav-text">操作步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载文件"><span class="nav-number">2.1.1.</span> <span class="nav-text">下载文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷机"><span class="nav-number">2.1.2.</span> <span class="nav-text">刷机</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现方式"><span class="nav-number">2.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取-libmp3lame-编码-MP3-的参数"><span class="nav-number">3.</span> <span class="nav-text">获取 libmp3lame 编码 MP3 的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#转编码-MP3"><span class="nav-number">4.</span> <span class="nav-text">转编码 MP3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置编码-MP3-的质量"><span class="nav-number">5.</span> <span class="nav-text">设置编码 MP3 的质量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用平均码率编码参数-ABR"><span class="nav-number">6.</span> <span class="nav-text">使用平均码率编码参数 ABR</span></a></li></ol></div>
             
 
           </div>
