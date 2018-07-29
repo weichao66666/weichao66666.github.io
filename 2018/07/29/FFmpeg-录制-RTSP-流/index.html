@@ -100,22 +100,19 @@
 
 
 
-<meta name="description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
+<meta name="description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTSP 的参数   参数 类型 说明     initial_pause 布尔 建立连接后暂停播放   rtsp_transport 标记 设置 RTSP 传输协议，具体如下：udp：UDPtcp：TCPudp_multicast：UDP 多播协议http：HTTP 隧道   rtsp_flags 标记 RTSP 使用标">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FFmpeg 输出 MP3">
-<meta property="og:url" content="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/index.html">
+<meta property="og:title" content="FFmpeg 录制 RTSP 流">
+<meta property="og:url" content="http://www.weichao.io/2018/07/29/FFmpeg-录制-RTSP-流/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
+<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTSP 的参数   参数 类型 说明     initial_pause 布尔 建立连接后暂停播放   rtsp_transport 标记 设置 RTSP 传输协议，具体如下：udp：UDPtcp：TCPudp_multicast：UDP 多播协议http：HTTP 隧道   rtsp_flags 标记 RTSP 使用标">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png">
-<meta property="og:updated_time" content="2018-07-29T03:18:28.948Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-RTSP-%E6%B5%811.png">
+<meta property="og:updated_time" content="2018-07-29T07:40:41.702Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FFmpeg 输出 MP3">
-<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
+<meta name="twitter:title" content="FFmpeg 录制 RTSP 流">
+<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTSP 的参数   参数 类型 说明     initial_pause 布尔 建立连接后暂停播放   rtsp_transport 标记 设置 RTSP 传输协议，具体如下：udp：UDPtcp：TCPudp_multicast：UDP 多播协议http：HTTP 隧道   rtsp_flags 标记 RTSP 使用标">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-RTSP-%E6%B5%811.png">
 
 
 
@@ -143,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"/>
+  <link rel="canonical" href="http://www.weichao.io/2018/07/29/FFmpeg-录制-RTSP-流/"/>
 
 
 
 
 
-  <title>FFmpeg 输出 MP3 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>FFmpeg 录制 RTSP 流 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -270,7 +267,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/07/29/FFmpeg-录制-RTSP-流/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -287,7 +284,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">FFmpeg 输出 MP3</h2>
+          <h2 class="post-title" itemprop="name headline">FFmpeg 录制 RTSP 流</h2>
         
 
         <div class="post-meta">
@@ -299,7 +296,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T11:11:11+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T15:38:50+08:00">
                 2018-07-29
               </time>
             
@@ -330,7 +327,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  338 字
+                  286 字
                 </span>
               
 
@@ -346,7 +343,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  1 分钟
                 </span>
               
             </div>
@@ -354,7 +351,7 @@
 
           
           
-             <span id="/2018/07/29/FFmpeg-输出-MP3/" class="leancloud_visitors" data-flag-title="FFmpeg 输出 MP3">
+             <span id="/2018/07/29/FFmpeg-录制-RTSP-流/" class="leancloud_visitors" data-flag-title="FFmpeg 录制 RTSP 流">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,13 +380,7 @@
 <li>《FFmpeg 从入门到精通》</li>
 </ul>
 <hr>
-<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h1><p>FFmpeg 使用第三方库 libmp3lame 编码 MP3。</p>
-<hr>
-<h1 id="获取-libmp3lame-编码-MP3-的参数"><a href="#获取-libmp3lame-编码-MP3-的参数" class="headerlink" title="获取 libmp3lame 编码 MP3 的参数"></a><strong>获取 libmp3lame 编码 MP3 的参数</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h encoder=libmp3lame</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png" alt=""></p>
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a><strong>参数</strong></h2><table>
+<h1 id="FFmpeg-操作-RTSP-的参数"><a href="#FFmpeg-操作-RTSP-的参数" class="headerlink" title="FFmpeg 操作 RTSP 的参数"></a><strong>FFmpeg 操作 RTSP 的参数</strong></h1><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -399,125 +390,63 @@
 </thead>
 <tbody>
 <tr>
-<td>b</td>
+<td>initial_pause</td>
 <td>布尔</td>
-<td>设置 MP3 编码的码率</td>
+<td>建立连接后暂停播放</td>
 </tr>
 <tr>
-<td>joint_stereo</td>
-<td>布尔</td>
-<td>设置环绕立体声模式</td>
+<td>rtsp_transport</td>
+<td>标记</td>
+<td>设置 RTSP 传输协议，具体如下：<br>udp：UDP<br>tcp：TCP<br>udp_multicast：UDP 多播协议<br>http：HTTP 隧道</td>
 </tr>
 <tr>
-<td>abr</td>
-<td>布尔</td>
-<td>设置编码为 ABR 状态，自动调整码率</td>
+<td>rtsp_flags</td>
+<td>标记</td>
+<td>RTSP 使用标记，具体如下：<br>filter_src：只接收指定 IP 的流<br>listen：设置为被动接收模式<br>prefer_tcp：TCP 亲和模式，如果 TCP 可用则首选 TCP 传输</td>
 </tr>
 <tr>
-<td>compression_level</td>
+<td>allowed_media_types</td>
+<td>标记</td>
+<td>设置允许接收的数据模式（默认为全部开启）：<br>video：只接收视频<br>audio：只接收音频<br>data：只接收数据<br>subtitle：只接收字幕</td>
+</tr>
+<tr>
+<td>min_port</td>
 <td>整数</td>
-<td>设置压缩算法质量，参数设置为 0~9 区间的值即可，数值越大质量越差，但是编码速度越快</td>
+<td>设置最小本地 UDP 端口，默认为 5000</td>
 </tr>
 <tr>
-<td>q</td>
-<td>整型</td>
-<td>设置恒质量的 VBR。调用 lame 接口的话，设置 global_quality 变量具有同样的效果</td>
+<td>max_port</td>
+<td>整数</td>
+<td>设置最大本地 UDP 端口，默认为 65000</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>整数</td>
+<td>设置监听端口超时时间</td>
+</tr>
+<tr>
+<td>reorder_queue_size</td>
+<td>整数</td>
+<td>设置录制数据 Buffer 的大小</td>
+</tr>
+<tr>
+<td>buffer_size</td>
+<td>整数</td>
+<td>设置底层传输包 Buffer 的大小</td>
+</tr>
+<tr>
+<td>user-agent</td>
+<td>字符串</td>
+<td>用户客户端标识</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h1 id="转编码-MP3"><a href="#转编码-MP3" class="headerlink" title="转编码 MP3"></a><strong>转编码 MP3</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame output.mp3</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png" alt=""></p>
-<hr>
-<h1 id="设置编码-MP3-的质量"><a href="#设置编码-MP3-的质量" class="headerlink" title="设置编码 MP3 的质量"></a><strong>设置编码 MP3 的质量</strong></h1><table>
-<thead>
-<tr>
-<th>lame 操作参数</th>
-<th>平均码率(kbit/s)</th>
-<th>码率区间(kbit/s)</th>
-<th>ffmpeg 操作参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-b 320</td>
-<td>320</td>
-<td>320(CBR)</td>
-<td>-b:a 320k</td>
-</tr>
-<tr>
-<td>-v 0</td>
-<td>245</td>
-<td>220~260</td>
-<td>-q:a 0</td>
-</tr>
-<tr>
-<td>-v 1</td>
-<td>225</td>
-<td>190~250</td>
-<td>-q:a 1</td>
-</tr>
-<tr>
-<td>-v 2</td>
-<td>190</td>
-<td>170~210</td>
-<td>-q:a 2</td>
-</tr>
-<tr>
-<td>-v 3</td>
-<td>175</td>
-<td>150~195</td>
-<td>-q:a 3</td>
-</tr>
-<tr>
-<td>-v 4</td>
-<td>165</td>
-<td>140~185</td>
-<td>-q:a 4</td>
-</tr>
-<tr>
-<td>-v 5</td>
-<td>130</td>
-<td>120~150</td>
-<td>-q:a 5</td>
-</tr>
-<tr>
-<td>-v 6</td>
-<td>115</td>
-<td>100~130</td>
-<td>-q:a 6</td>
-</tr>
-<tr>
-<td>-v 7</td>
-<td>100</td>
-<td>80~120</td>
-<td>-q:a 7</td>
-</tr>
-<tr>
-<td>-v 8</td>
-<td>85</td>
-<td>70~105</td>
-<td>-q:a 8</td>
-</tr>
-<tr>
-<td>-v 9</td>
-<td>65</td>
-<td>45~85</td>
-<td>-q:a 9</td>
-</tr>
-</tbody>
-</table>
+<h1 id="参数使用示例"><a href="#参数使用示例" class="headerlink" title="参数使用示例"></a><strong>参数使用示例</strong></h1><h2 id="rtsp-transport"><a href="#rtsp-transport" class="headerlink" title="rtsp_transport"></a><strong>rtsp_transport</strong></h2><p>FFmpeg 默认使用的 RTSP 拉流的方式是 UDP 传输。</p>
 <p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -q:a 8 output.mp3</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -rtsp_transport tcp -i rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov -c copy -f mp4 output.mp4</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png" alt=""></p>
-<hr>
-<h1 id="使用平均码率编码参数-ABR"><a href="#使用平均码率编码参数-ABR" class="headerlink" title="使用平均码率编码参数 ABR"></a><strong>使用平均码率编码参数 ABR</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -b:a 64k -abr 1 output.mp3</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png" alt=""></p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-RTSP-%E6%B5%811.png" alt=""></p>
 <hr>
 
       
@@ -533,12 +462,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-输出-MP3/">FFmpeg 输出 MP3</a></p>
+  <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-录制-RTSP-流/">FFmpeg 录制 RTSP 流</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2018年07月29日 - 11:07</p>
-  <p><span>最后更新:</span>2018年07月29日 - 11:07</p>
-  <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-输出-MP3/" title="FFmpeg 输出 MP3">http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年07月29日 - 15:07</p>
+  <p><span>最后更新:</span>2018年07月29日 - 15:07</p>
+  <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-录制-RTSP-流/" title="FFmpeg 录制 RTSP 流">http://www.weichao.io/2018/07/29/FFmpeg-录制-RTSP-流/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-录制-RTSP-流/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -602,8 +531,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/27/FFmpeg-软编码-H264、H265/" rel="next" title="FFmpeg 软编码 H264、H265">
-                <i class="fa fa-chevron-left"></i> FFmpeg 软编码 H264、H265
+              <a href="/2018/07/29/FFmpeg-发布与录制-RTMP-流/" rel="next" title="FFmpeg 发布与录制 RTMP 流">
+                <i class="fa fa-chevron-left"></i> FFmpeg 发布与录制 RTMP 流
               </a>
             
           </div>
@@ -612,8 +541,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/29/FFmpeg-输出-AAC/" rel="prev" title="FFmpeg 输出 AAC">
-                FFmpeg 输出 AAC <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/29/FFmpeg-录制-HTTP-流/" rel="prev" title="FFmpeg 录制 HTTP 流">
+                FFmpeg 录制 HTTP 流 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -770,7 +699,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现方式"><span class="nav-number">2.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取-libmp3lame-编码-MP3-的参数"><span class="nav-number">3.</span> <span class="nav-text">获取 libmp3lame 编码 MP3 的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#转编码-MP3"><span class="nav-number">4.</span> <span class="nav-text">转编码 MP3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置编码-MP3-的质量"><span class="nav-number">5.</span> <span class="nav-text">设置编码 MP3 的质量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用平均码率编码参数-ABR"><span class="nav-number">6.</span> <span class="nav-text">使用平均码率编码参数 ABR</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FFmpeg-操作-RTSP-的参数"><span class="nav-number">2.</span> <span class="nav-text">FFmpeg 操作 RTSP 的参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数使用示例"><span class="nav-number">3.</span> <span class="nav-text">参数使用示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rtsp-transport"><span class="nav-number">3.1.</span> <span class="nav-text">rtsp_transport</span></a></li></ol></li></ol></div>
             
 
           </div>

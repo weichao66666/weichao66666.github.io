@@ -100,22 +100,24 @@
 
 
 
-<meta name="description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
+<meta name="description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTMP 的参数   参数 类型 说明     rtmp_app 字符串 RTMP 流发布点，又称 APP   rtmp_buffer 整数 客户端 buffer 大小（单位：毫秒），默认为 3 秒   rtmp_conn 字符串 在 RTMP 的 Connect 命令中增加自定义 AMF 数据   rtmp_flashv">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FFmpeg 输出 MP3">
-<meta property="og:url" content="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/index.html">
+<meta property="og:title" content="FFmpeg 发布与录制 RTMP 流">
+<meta property="og:url" content="http://www.weichao.io/2018/07/29/FFmpeg-发布与录制-RTMP-流/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
+<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTMP 的参数   参数 类型 说明     rtmp_app 字符串 RTMP 流发布点，又称 APP   rtmp_buffer 整数 客户端 buffer 大小（单位：毫秒），默认为 3 秒   rtmp_conn 字符串 在 RTMP 的 Connect 命令中增加自定义 AMF 数据   rtmp_flashv">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png">
-<meta property="og:updated_time" content="2018-07-29T03:18:28.948Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%812.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%813.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%814.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%815.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%816.png">
+<meta property="og:updated_time" content="2018-07-29T07:38:03.035Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FFmpeg 输出 MP3">
-<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
+<meta name="twitter:title" content="FFmpeg 发布与录制 RTMP 流">
+<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTMP 的参数   参数 类型 说明     rtmp_app 字符串 RTMP 流发布点，又称 APP   rtmp_buffer 整数 客户端 buffer 大小（单位：毫秒），默认为 3 秒   rtmp_conn 字符串 在 RTMP 的 Connect 命令中增加自定义 AMF 数据   rtmp_flashv">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png">
 
 
 
@@ -143,13 +145,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"/>
+  <link rel="canonical" href="http://www.weichao.io/2018/07/29/FFmpeg-发布与录制-RTMP-流/"/>
 
 
 
 
 
-  <title>FFmpeg 输出 MP3 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>FFmpeg 发布与录制 RTMP 流 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -270,7 +272,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/07/29/FFmpeg-发布与录制-RTMP-流/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -287,7 +289,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">FFmpeg 输出 MP3</h2>
+          <h2 class="post-title" itemprop="name headline">FFmpeg 发布与录制 RTMP 流</h2>
         
 
         <div class="post-meta">
@@ -299,7 +301,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T11:11:11+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T15:34:57+08:00">
                 2018-07-29
               </time>
             
@@ -330,7 +332,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  338 字
+                  502 字
                 </span>
               
 
@@ -354,7 +356,7 @@
 
           
           
-             <span id="/2018/07/29/FFmpeg-输出-MP3/" class="leancloud_visitors" data-flag-title="FFmpeg 输出 MP3">
+             <span id="/2018/07/29/FFmpeg-发布与录制-RTMP-流/" class="leancloud_visitors" data-flag-title="FFmpeg 发布与录制 RTMP 流">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,13 +385,7 @@
 <li>《FFmpeg 从入门到精通》</li>
 </ul>
 <hr>
-<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h1><p>FFmpeg 使用第三方库 libmp3lame 编码 MP3。</p>
-<hr>
-<h1 id="获取-libmp3lame-编码-MP3-的参数"><a href="#获取-libmp3lame-编码-MP3-的参数" class="headerlink" title="获取 libmp3lame 编码 MP3 的参数"></a><strong>获取 libmp3lame 编码 MP3 的参数</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h encoder=libmp3lame</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png" alt=""></p>
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a><strong>参数</strong></h2><table>
+<h1 id="FFmpeg-操作-RTMP-的参数"><a href="#FFmpeg-操作-RTMP-的参数" class="headerlink" title="FFmpeg 操作 RTMP 的参数"></a><strong>FFmpeg 操作 RTMP 的参数</strong></h1><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -399,125 +395,112 @@
 </thead>
 <tbody>
 <tr>
-<td>b</td>
-<td>布尔</td>
-<td>设置 MP3 编码的码率</td>
+<td>rtmp_app</td>
+<td>字符串</td>
+<td>RTMP 流发布点，又称 APP</td>
 </tr>
 <tr>
-<td>joint_stereo</td>
-<td>布尔</td>
-<td>设置环绕立体声模式</td>
-</tr>
-<tr>
-<td>abr</td>
-<td>布尔</td>
-<td>设置编码为 ABR 状态，自动调整码率</td>
-</tr>
-<tr>
-<td>compression_level</td>
+<td>rtmp_buffer</td>
 <td>整数</td>
-<td>设置压缩算法质量，参数设置为 0~9 区间的值即可，数值越大质量越差，但是编码速度越快</td>
+<td>客户端 buffer 大小（单位：毫秒），默认为 3 秒</td>
 </tr>
 <tr>
-<td>q</td>
-<td>整型</td>
-<td>设置恒质量的 VBR。调用 lame 接口的话，设置 global_quality 变量具有同样的效果</td>
+<td>rtmp_conn</td>
+<td>字符串</td>
+<td>在 RTMP 的 Connect 命令中增加自定义 AMF 数据</td>
+</tr>
+<tr>
+<td>rtmp_flashver</td>
+<td>字符串</td>
+<td>设置模拟的 flashplugin 的版本号</td>
+</tr>
+<tr>
+<td>rtmp_live</td>
+<td>整数</td>
+<td>指定 RTMP 流媒体播放类型，具体如下：<br>any：直播或点播随意<br>live：直播<br>recorded：点播</td>
+</tr>
+<tr>
+<td>rtmp_pageurl</td>
+<td>字符串</td>
+<td>RTMP 在 Connect 命令中设置的 PageURL 字段，其为播放时所在的 Web 页面 URL</td>
+</tr>
+<tr>
+<td>rtmp_playpath</td>
+<td>字符串</td>
+<td>RTMP 流播放的 Stream 地址，或者称为密钥，或者称为发布流</td>
+</tr>
+<tr>
+<td>rtmp_subscribe</td>
+<td>字符串</td>
+<td>直播流名称，默认设置为 rtmp_playpath 的值</td>
+</tr>
+<tr>
+<td>rtmp_swfhash</td>
+<td>二进制数据</td>
+<td>解压 swf 文件后的 SHA256 的 hash 值</td>
+</tr>
+<tr>
+<td>rtmp_swfsize</td>
+<td>整数</td>
+<td>swf 文件解压后的大小，用于 swf 认证</td>
+</tr>
+<tr>
+<td>rtmp_swfurl</td>
+<td>字符串</td>
+<td>RTMP 的 Connect 命令中设置的 swfURL 播放器的 URL</td>
+</tr>
+<tr>
+<td>rtmp_swfverify</td>
+<td>字符串</td>
+<td>设置 swf 认证时 swf 文件的 URL 地址</td>
+</tr>
+<tr>
+<td>rtmp_tcurl</td>
+<td>字符串</td>
+<td>RTMP 的 Connect 命令中设置的 tcURL 目标发布点地址，一般形如 rtmp://xxx.xxx.xxx/app</td>
+</tr>
+<tr>
+<td>rtmp_listen</td>
+<td>整数</td>
+<td>开启 RTMP 服务时所监听的端口</td>
+</tr>
+<tr>
+<td>listen</td>
+<td>整数</td>
+<td>与 rtmp_listen 相同</td>
+</tr>
+<tr>
+<td>timeout</td>
+<td>整数</td>
+<td>监听 rtmp 端口时设置的超时时间，以秒为单位</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h1 id="转编码-MP3"><a href="#转编码-MP3" class="headerlink" title="转编码 MP3"></a><strong>转编码 MP3</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame output.mp3</div></pre></td></tr></table></figure>
+<h1 id="参数使用示例"><a href="#参数使用示例" class="headerlink" title="参数使用示例"></a><strong>参数使用示例</strong></h1><h2 id="rtmp-app"><a href="#rtmp-app" class="headerlink" title="rtmp_app"></a><strong>rtmp_app</strong></h2><h3 id="推流"><a href="#推流" class="headerlink" title="推流"></a><strong>推流</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -re -i sample.mp4 -c copy -f flv -rtmp_app live rtmp://publish.chinaffmpeg.com</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png" alt=""></p>
-<hr>
-<h1 id="设置编码-MP3-的质量"><a href="#设置编码-MP3-的质量" class="headerlink" title="设置编码 MP3 的质量"></a><strong>设置编码 MP3 的质量</strong></h1><table>
-<thead>
-<tr>
-<th>lame 操作参数</th>
-<th>平均码率(kbit/s)</th>
-<th>码率区间(kbit/s)</th>
-<th>ffmpeg 操作参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-b 320</td>
-<td>320</td>
-<td>320(CBR)</td>
-<td>-b:a 320k</td>
-</tr>
-<tr>
-<td>-v 0</td>
-<td>245</td>
-<td>220~260</td>
-<td>-q:a 0</td>
-</tr>
-<tr>
-<td>-v 1</td>
-<td>225</td>
-<td>190~250</td>
-<td>-q:a 1</td>
-</tr>
-<tr>
-<td>-v 2</td>
-<td>190</td>
-<td>170~210</td>
-<td>-q:a 2</td>
-</tr>
-<tr>
-<td>-v 3</td>
-<td>175</td>
-<td>150~195</td>
-<td>-q:a 3</td>
-</tr>
-<tr>
-<td>-v 4</td>
-<td>165</td>
-<td>140~185</td>
-<td>-q:a 4</td>
-</tr>
-<tr>
-<td>-v 5</td>
-<td>130</td>
-<td>120~150</td>
-<td>-q:a 5</td>
-</tr>
-<tr>
-<td>-v 6</td>
-<td>115</td>
-<td>100~130</td>
-<td>-q:a 6</td>
-</tr>
-<tr>
-<td>-v 7</td>
-<td>100</td>
-<td>80~120</td>
-<td>-q:a 7</td>
-</tr>
-<tr>
-<td>-v 8</td>
-<td>85</td>
-<td>70~105</td>
-<td>-q:a 8</td>
-</tr>
-<tr>
-<td>-v 9</td>
-<td>65</td>
-<td>45~85</td>
-<td>-q:a 9</td>
-</tr>
-</tbody>
-</table>
-<p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -q:a 8 output.mp3</div></pre></td></tr></table></figure>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png" alt=""></p>
+<h3 id="拉流"><a href="#拉流" class="headerlink" title="拉流"></a><strong>拉流</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -rtmp_app live -i rtmp://publish.chinaffmpeg.com -c copy -f flv output.flv</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png" alt=""></p>
-<hr>
-<h1 id="使用平均码率编码参数-ABR"><a href="#使用平均码率编码参数-ABR" class="headerlink" title="使用平均码率编码参数 ABR"></a><strong>使用平均码率编码参数 ABR</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -b:a 64k -abr 1 output.mp3</div></pre></td></tr></table></figure>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%812.png" alt=""></p>
+<h2 id="rtmp-playpath"><a href="#rtmp-playpath" class="headerlink" title="rtmp_playpath"></a><strong>rtmp_playpath</strong></h2><h3 id="推流-1"><a href="#推流-1" class="headerlink" title="推流"></a><strong>推流</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -re -i guibu.flv -c copy -f flv -rtmp_app live -rtmp_playpath class rtmp://publish.chinaffmpeg.com</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png" alt=""></p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%813.png" alt=""></p>
+<h3 id="拉流-1"><a href="#拉流-1" class="headerlink" title="拉流"></a><strong>拉流</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -rtmp_app live -rtmp_playpath class -i rtmp://publish.chinaffmpeg.com -c copy -f flv output.flv</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%814.png" alt=""></p>
+<h2 id="省略-rtmp-app-和-rtmp-playpath-的写法"><a href="#省略-rtmp-app-和-rtmp-playpath-的写法" class="headerlink" title="省略 rtmp_app 和 rtmp_playpath 的写法"></a><strong>省略 rtmp_app 和 rtmp_playpath 的写法</strong></h2><h3 id="推流-2"><a href="#推流-2" class="headerlink" title="推流"></a><strong>推流</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.flv -c copy -f flv rtmp://publish.chinaffmpeg.com/live/class</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%815.png" alt=""></p>
+<h3 id="拉流-2"><a href="#拉流-2" class="headerlink" title="拉流"></a><strong>拉流</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i rtmp://publish.chinaffmpeg.com/live/class -c copy -f flv output.flv</div></pre></td></tr></table></figure>
+<p>2、输出结果：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%816.png" alt=""></p>
 <hr>
 
       
@@ -533,12 +516,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-输出-MP3/">FFmpeg 输出 MP3</a></p>
+  <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-发布与录制-RTMP-流/">FFmpeg 发布与录制 RTMP 流</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2018年07月29日 - 11:07</p>
-  <p><span>最后更新:</span>2018年07月29日 - 11:07</p>
-  <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-输出-MP3/" title="FFmpeg 输出 MP3">http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年07月29日 - 15:07</p>
+  <p><span>最后更新:</span>2018年07月29日 - 15:07</p>
+  <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-发布与录制-RTMP-流/" title="FFmpeg 发布与录制 RTMP 流">http://www.weichao.io/2018/07/29/FFmpeg-发布与录制-RTMP-流/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-发布与录制-RTMP-流/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -602,8 +585,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/27/FFmpeg-软编码-H264、H265/" rel="next" title="FFmpeg 软编码 H264、H265">
-                <i class="fa fa-chevron-left"></i> FFmpeg 软编码 H264、H265
+              <a href="/2018/07/29/FFmpeg-输出-AAC/" rel="next" title="FFmpeg 输出 AAC">
+                <i class="fa fa-chevron-left"></i> FFmpeg 输出 AAC
               </a>
             
           </div>
@@ -612,8 +595,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/29/FFmpeg-输出-AAC/" rel="prev" title="FFmpeg 输出 AAC">
-                FFmpeg 输出 AAC <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/29/FFmpeg-录制-RTSP-流/" rel="prev" title="FFmpeg 录制 RTSP 流">
+                FFmpeg 录制 RTSP 流 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -770,7 +753,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现方式"><span class="nav-number">2.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取-libmp3lame-编码-MP3-的参数"><span class="nav-number">3.</span> <span class="nav-text">获取 libmp3lame 编码 MP3 的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#转编码-MP3"><span class="nav-number">4.</span> <span class="nav-text">转编码 MP3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置编码-MP3-的质量"><span class="nav-number">5.</span> <span class="nav-text">设置编码 MP3 的质量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用平均码率编码参数-ABR"><span class="nav-number">6.</span> <span class="nav-text">使用平均码率编码参数 ABR</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FFmpeg-操作-RTMP-的参数"><span class="nav-number">2.</span> <span class="nav-text">FFmpeg 操作 RTMP 的参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数使用示例"><span class="nav-number">3.</span> <span class="nav-text">参数使用示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rtmp-app"><span class="nav-number">3.1.</span> <span class="nav-text">rtmp_app</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推流"><span class="nav-number">3.1.1.</span> <span class="nav-text">推流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉流"><span class="nav-number">3.1.2.</span> <span class="nav-text">拉流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rtmp-playpath"><span class="nav-number">3.2.</span> <span class="nav-text">rtmp_playpath</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推流-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">推流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉流-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">拉流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#省略-rtmp-app-和-rtmp-playpath-的写法"><span class="nav-number">3.3.</span> <span class="nav-text">省略 rtmp_app 和 rtmp_playpath 的写法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推流-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">推流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉流-2"><span class="nav-number">3.3.2.</span> <span class="nav-text">拉流</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

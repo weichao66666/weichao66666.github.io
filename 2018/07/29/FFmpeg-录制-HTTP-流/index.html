@@ -100,22 +100,22 @@
 
 
 
-<meta name="description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
+<meta name="description" content="Reference 《FFmpeg 从入门到精通》   简介使用 HTTP 可以传输 FLV 直播流、TS 直播流、M3U8 及 TS 文件。  HTTP 参数说明   参数 类型 说明     seekable 布尔 设置 HTTP 链接为可以 seek 操作   chunked_post 布尔 使用 Chunked 模式 post 数据   http_proxy 字符串 设置 HTTP 代理传">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FFmpeg 输出 MP3">
-<meta property="og:url" content="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/index.html">
+<meta property="og:title" content="FFmpeg 录制 HTTP 流">
+<meta property="og:url" content="http://www.weichao.io/2018/07/29/FFmpeg-录制-HTTP-流/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
+<meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   简介使用 HTTP 可以传输 FLV 直播流、TS 直播流、M3U8 及 TS 文件。  HTTP 参数说明   参数 类型 说明     seekable 布尔 设置 HTTP 链接为可以 seek 操作   chunked_post 布尔 使用 Chunked 模式 post 数据   http_proxy 字符串 设置 HTTP 代理传">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png">
-<meta property="og:updated_time" content="2018-07-29T03:18:28.948Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%811.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%812.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%813.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%814.png">
+<meta property="og:updated_time" content="2018-07-29T07:44:51.746Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FFmpeg 输出 MP3">
-<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   实现方式FFmpeg 使用第三方库 libmp3lame 编码 MP3。  获取 libmp3lame 编码 MP3 的参数1、输入命令： 1ffmpeg -h encoder=libmp3lame 2、输出结果：  参数   参数 类型 说明     b 布尔 设置 MP3 编码的码率   joint_stereo 布尔 设置环绕立体声模式">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png">
+<meta name="twitter:title" content="FFmpeg 录制 HTTP 流">
+<meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   简介使用 HTTP 可以传输 FLV 直播流、TS 直播流、M3U8 及 TS 文件。  HTTP 参数说明   参数 类型 说明     seekable 布尔 设置 HTTP 链接为可以 seek 操作   chunked_post 布尔 使用 Chunked 模式 post 数据   http_proxy 字符串 设置 HTTP 代理传">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%811.png">
 
 
 
@@ -143,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"/>
+  <link rel="canonical" href="http://www.weichao.io/2018/07/29/FFmpeg-录制-HTTP-流/"/>
 
 
 
 
 
-  <title>FFmpeg 输出 MP3 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>FFmpeg 录制 HTTP 流 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -270,7 +270,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/07/29/FFmpeg-录制-HTTP-流/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -287,7 +287,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">FFmpeg 输出 MP3</h2>
+          <h2 class="post-title" itemprop="name headline">FFmpeg 录制 HTTP 流</h2>
         
 
         <div class="post-meta">
@@ -299,7 +299,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T11:11:11+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-29T15:41:15+08:00">
                 2018-07-29
               </time>
             
@@ -346,7 +346,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  1 分钟
                 </span>
               
             </div>
@@ -354,7 +354,7 @@
 
           
           
-             <span id="/2018/07/29/FFmpeg-输出-MP3/" class="leancloud_visitors" data-flag-title="FFmpeg 输出 MP3">
+             <span id="/2018/07/29/FFmpeg-录制-HTTP-流/" class="leancloud_visitors" data-flag-title="FFmpeg 录制 HTTP 流">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,13 +383,9 @@
 <li>《FFmpeg 从入门到精通》</li>
 </ul>
 <hr>
-<h1 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a><strong>实现方式</strong></h1><p>FFmpeg 使用第三方库 libmp3lame 编码 MP3。</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a><strong>简介</strong></h1><p>使用 HTTP 可以传输 FLV 直播流、TS 直播流、M3U8 及 TS 文件。</p>
 <hr>
-<h1 id="获取-libmp3lame-编码-MP3-的参数"><a href="#获取-libmp3lame-编码-MP3-的参数" class="headerlink" title="获取 libmp3lame 编码 MP3 的参数"></a><strong>获取 libmp3lame 编码 MP3 的参数</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -h encoder=libmp3lame</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP31.png" alt=""></p>
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a><strong>参数</strong></h2><table>
+<h1 id="HTTP-参数说明"><a href="#HTTP-参数说明" class="headerlink" title="HTTP 参数说明"></a><strong>HTTP 参数说明</strong></h1><table>
 <thead>
 <tr>
 <th>参数</th>
@@ -399,125 +395,96 @@
 </thead>
 <tbody>
 <tr>
-<td>b</td>
+<td>seekable</td>
 <td>布尔</td>
-<td>设置 MP3 编码的码率</td>
+<td>设置 HTTP 链接为可以 seek 操作</td>
 </tr>
 <tr>
-<td>joint_stereo</td>
+<td>chunked_post</td>
 <td>布尔</td>
-<td>设置环绕立体声模式</td>
+<td>使用 Chunked 模式 post 数据</td>
 </tr>
 <tr>
-<td>abr</td>
-<td>布尔</td>
-<td>设置编码为 ABR 状态，自动调整码率</td>
+<td>http_proxy</td>
+<td>字符串</td>
+<td>设置 HTTP 代理传输数据</td>
 </tr>
 <tr>
-<td>compression_level</td>
+<td>headers</td>
+<td>字符串</td>
+<td>自定义 HTTP Header 数据</td>
+</tr>
+<tr>
+<td>content_type</td>
+<td>字符串</td>
+<td>设置 POST 的内容类型</td>
+</tr>
+<tr>
+<td>user_agent</td>
+<td>字符串</td>
+<td>设置 HTTP 请求客户端信息</td>
+</tr>
+<tr>
+<td>multiple_requests</td>
+<td>布尔</td>
+<td>HTTP 长连接开启</td>
+</tr>
+<tr>
+<td>post_data</td>
+<td>二进制数据</td>
+<td>设置将要 POST 的数据</td>
+</tr>
+<tr>
+<td>cookies</td>
+<td>字符串</td>
+<td>设置 HTTP 请求时写代码的 Cookies</td>
+</tr>
+<tr>
+<td>icy</td>
+<td>布尔</td>
+<td>请求 ICY 元数据：默认打开</td>
+</tr>
+<tr>
+<td>auth_type</td>
 <td>整数</td>
-<td>设置压缩算法质量，参数设置为 0~9 区间的值即可，数值越大质量越差，但是编码速度越快</td>
+<td>HTTP 验证类型设置</td>
 </tr>
 <tr>
-<td>q</td>
-<td>整型</td>
-<td>设置恒质量的 VBR。调用 lame 接口的话，设置 global_quality 变量具有同样的效果</td>
+<td>offset</td>
+<td>整数</td>
+<td>初始化 HTTP 请求时的偏移位置</td>
+</tr>
+<tr>
+<td>method</td>
+<td>字符串</td>
+<td>发起 HTTP 请求时使用的 HTTP 的方法</td>
+</tr>
+<tr>
+<td>reconnect</td>
+<td>布尔</td>
+<td>在 EOF 之前断开发起重连</td>
+</tr>
+<tr>
+<td>reconnect_at_eof</td>
+<td>布尔</td>
+<td>在得到 EOF 时发起重连</td>
+</tr>
+<tr>
+<td>reply_code</td>
+<td>整数</td>
+<td>作为 HTTP 服务时向客户端反馈状态码</td>
 </tr>
 </tbody>
 </table>
 <hr>
-<h1 id="转编码-MP3"><a href="#转编码-MP3" class="headerlink" title="转编码 MP3"></a><strong>转编码 MP3</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame output.mp3</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP32.png" alt=""></p>
-<hr>
-<h1 id="设置编码-MP3-的质量"><a href="#设置编码-MP3-的质量" class="headerlink" title="设置编码 MP3 的质量"></a><strong>设置编码 MP3 的质量</strong></h1><table>
-<thead>
-<tr>
-<th>lame 操作参数</th>
-<th>平均码率(kbit/s)</th>
-<th>码率区间(kbit/s)</th>
-<th>ffmpeg 操作参数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-b 320</td>
-<td>320</td>
-<td>320(CBR)</td>
-<td>-b:a 320k</td>
-</tr>
-<tr>
-<td>-v 0</td>
-<td>245</td>
-<td>220~260</td>
-<td>-q:a 0</td>
-</tr>
-<tr>
-<td>-v 1</td>
-<td>225</td>
-<td>190~250</td>
-<td>-q:a 1</td>
-</tr>
-<tr>
-<td>-v 2</td>
-<td>190</td>
-<td>170~210</td>
-<td>-q:a 2</td>
-</tr>
-<tr>
-<td>-v 3</td>
-<td>175</td>
-<td>150~195</td>
-<td>-q:a 3</td>
-</tr>
-<tr>
-<td>-v 4</td>
-<td>165</td>
-<td>140~185</td>
-<td>-q:a 4</td>
-</tr>
-<tr>
-<td>-v 5</td>
-<td>130</td>
-<td>120~150</td>
-<td>-q:a 5</td>
-</tr>
-<tr>
-<td>-v 6</td>
-<td>115</td>
-<td>100~130</td>
-<td>-q:a 6</td>
-</tr>
-<tr>
-<td>-v 7</td>
-<td>100</td>
-<td>80~120</td>
-<td>-q:a 7</td>
-</tr>
-<tr>
-<td>-v 8</td>
-<td>85</td>
-<td>70~105</td>
-<td>-q:a 8</td>
-</tr>
-<tr>
-<td>-v 9</td>
-<td>65</td>
-<td>45~85</td>
-<td>-q:a 9</td>
-</tr>
-</tbody>
-</table>
-<p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -q:a 8 output.mp3</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP33.png" alt=""></p>
-<hr>
-<h1 id="使用平均码率编码参数-ABR"><a href="#使用平均码率编码参数-ABR" class="headerlink" title="使用平均码率编码参数 ABR"></a><strong>使用平均码率编码参数 ABR</strong></h1><p>1、输入命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -acodec libmp3lame -b:a 64k -abr 1 output.mp3</div></pre></td></tr></table></figure>
-<p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-MP34.png" alt=""></p>
+<h1 id="参数使用示例"><a href="#参数使用示例" class="headerlink" title="参数使用示例"></a><strong>参数使用示例</strong></h1><h2 id="seekable"><a href="#seekable" class="headerlink" title="seekable"></a><strong>seekable</strong></h2><h3 id="阻塞"><a href="#阻塞" class="headerlink" title="阻塞"></a><strong>阻塞</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -ss 300 -seekable 0 -i http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8 -c copy output.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果（实际没播放成功）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%811.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%812.png" alt=""></p>
+<h3 id="非阻塞"><a href="#非阻塞" class="headerlink" title="非阻塞"></a><strong>非阻塞</strong></h3><p>1、输入命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -ss 300 -seekable 1 -i http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8 -c copy -y output.mp4</div></pre></td></tr></table></figure>
+<p>2、输出结果（实际没播放成功）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%813.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%814.png" alt=""></p>
 <hr>
 
       
@@ -533,12 +500,12 @@
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-输出-MP3/">FFmpeg 输出 MP3</a></p>
+  <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-录制-HTTP-流/">FFmpeg 录制 HTTP 流</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2018年07月29日 - 11:07</p>
-  <p><span>最后更新:</span>2018年07月29日 - 11:07</p>
-  <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-输出-MP3/" title="FFmpeg 输出 MP3">http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-输出-MP3/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年07月29日 - 15:07</p>
+  <p><span>最后更新:</span>2018年07月29日 - 15:07</p>
+  <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-录制-HTTP-流/" title="FFmpeg 录制 HTTP 流">http://www.weichao.io/2018/07/29/FFmpeg-录制-HTTP-流/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-录制-HTTP-流/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -602,8 +569,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/27/FFmpeg-软编码-H264、H265/" rel="next" title="FFmpeg 软编码 H264、H265">
-                <i class="fa fa-chevron-left"></i> FFmpeg 软编码 H264、H265
+              <a href="/2018/07/29/FFmpeg-录制-RTSP-流/" rel="next" title="FFmpeg 录制 RTSP 流">
+                <i class="fa fa-chevron-left"></i> FFmpeg 录制 RTSP 流
               </a>
             
           </div>
@@ -611,10 +578,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/29/FFmpeg-输出-AAC/" rel="prev" title="FFmpeg 输出 AAC">
-                FFmpeg 输出 AAC <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -770,7 +733,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现方式"><span class="nav-number">2.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取-libmp3lame-编码-MP3-的参数"><span class="nav-number">3.</span> <span class="nav-text">获取 libmp3lame 编码 MP3 的参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#参数"><span class="nav-number">3.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#转编码-MP3"><span class="nav-number">4.</span> <span class="nav-text">转编码 MP3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置编码-MP3-的质量"><span class="nav-number">5.</span> <span class="nav-text">设置编码 MP3 的质量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用平均码率编码参数-ABR"><span class="nav-number">6.</span> <span class="nav-text">使用平均码率编码参数 ABR</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP-参数说明"><span class="nav-number">3.</span> <span class="nav-text">HTTP 参数说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数使用示例"><span class="nav-number">4.</span> <span class="nav-text">参数使用示例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#seekable"><span class="nav-number">4.1.</span> <span class="nav-text">seekable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞"><span class="nav-number">4.1.1.</span> <span class="nav-text">阻塞</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非阻塞"><span class="nav-number">4.1.2.</span> <span class="nav-text">非阻塞</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
