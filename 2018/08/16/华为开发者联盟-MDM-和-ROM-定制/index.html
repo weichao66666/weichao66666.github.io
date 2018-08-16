@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference 安全类授权开放SDK   MDM在官网下载资料 下载的 SecurityAuthorizationOpenSDK-2.0.rar 包里面提供了部分资料，但是《目录结构说明.txt》中提到的【华为证书HUAWEI.cer】和【MDMSample.apk】均没有提供。 coding 前1、开发指导书：docs/HW安全类授权开放SDK开发指导书V2.0.pdf 2、功能概述：doc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="华为开发者联盟 MDM 和 ROM 定制">
+<meta property="og:url" content="http://www.weichao.io/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference 安全类授权开放SDK   MDM在官网下载资料 下载的 SecurityAuthorizationOpenSDK-2.0.rar 包里面提供了部分资料，但是《目录结构说明.txt》中提到的【华为证书HUAWEI.cer】和【MDMSample.apk】均没有提供。 coding 前1、开发指导书：docs/HW安全类授权开放SDK开发指导书V2.0.pdf 2、功能概述：doc">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B61.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B62.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B63.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B64.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B65.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B66.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B67.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B68.jpeg">
+<meta property="og:updated_time" content="2018-08-16T15:22:11.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="华为开发者联盟 MDM 和 ROM 定制">
+<meta name="twitter:description" content="Reference 安全类授权开放SDK   MDM在官网下载资料 下载的 SecurityAuthorizationOpenSDK-2.0.rar 包里面提供了部分资料，但是《目录结构说明.txt》中提到的【华为证书HUAWEI.cer】和【MDMSample.apk】均没有提供。 coding 前1、开发指导书：docs/HW安全类授权开放SDK开发指导书V2.0.pdf 2、功能概述：doc">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B61.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/"/>
+
+
+
+
+
+  <title>华为开发者联盟 MDM 和 ROM 定制 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">华为开发者联盟 MDM 和 ROM 定制</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T23:12:11+08:00">
+                2018-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  973 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  4 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/" class="leancloud_visitors" data-flag-title="华为开发者联盟 MDM 和 ROM 定制">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="https://developer.huawei.com/consumer/cn/devservice/doc/10101" title="https://developer.huawei.com/consumer/cn/devservice/doc/10101" target="_blank" rel="external">安全类授权开放SDK</a></li>
+</ul>
+<hr>
+<h1 id="MDM"><a href="#MDM" class="headerlink" title="MDM"></a><strong>MDM</strong></h1><h2 id="在官网下载资料"><a href="#在官网下载资料" class="headerlink" title="在官网下载资料"></a><strong>在官网下载资料</strong></h2><p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B61.png" alt=""></p>
+<p>下载的 SecurityAuthorizationOpenSDK-2.0.rar 包里面提供了部分资料，但是《目录结构说明.txt》中提到的【华为证书HUAWEI.cer】和【MDMSample.apk】均没有提供。</p>
+<h3 id="coding-前"><a href="#coding-前" class="headerlink" title="coding 前"></a><strong>coding 前</strong></h3><p>1、开发指导书：<br>docs/HW安全类授权开放SDK开发指导书V2.0.pdf</p>
+<p>2、功能概述：<br>docs/功能简介V2.0.pdf<br>docs/HW安全类授权开放SDK功能介绍及展示文档V2.0.pdf</p>
+<p>3、demo（该项目直接导入 IDE 后不能正常使用，修改后的版本可<a href="https://github.com/weichao66666/MDMSample" title="https://github.com/weichao66666/MDMSample" target="_blank" rel="external">下载</a>）：<br>samples/MDMSample</p>
+<h3 id="coding-中"><a href="#coding-中" class="headerlink" title="coding 中"></a><strong>coding 中</strong></h3><p>1、调用华为接口所需的 jar 包：<br>libs/hwsdk-mdm-openapi-2.0.0.jar</p>
+<p>2、API：<br>docs/HW安全类授权开放SDK API接口(EMUI4.1-8.0)V2.0.pdf</p>
+<h3 id="coding-后"><a href="#coding-后" class="headerlink" title="coding 后"></a><strong>coding 后</strong></h3><p>1、APK 签名与华为证书签名要求：<br>docs/关于签名.pdf</p>
+<p>2、华为证书签名工具和使用说明：<br>tools/DevPack.exe<br>tools/Devpack使用说明.pdf</p>
+<h2 id="SDK-集成步骤"><a href="#SDK-集成步骤" class="headerlink" title="SDK 集成步骤"></a><strong>SDK 集成步骤</strong></h2><h3 id="添加基本权限"><a href="#添加基本权限" class="headerlink" title="添加基本权限"></a><strong>添加基本权限</strong></h3><p>在 AndroidManifest.xml 中添加：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"com.huawei.permission.sec.MDM"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="引入-jar-包"><a href="#引入-jar-包" class="headerlink" title="引入 jar 包"></a><strong>引入 jar 包</strong></h3><p>1、将 hwsdk-mdm-openapi-2.0.0.jar 放入 libs 目录。</p>
+<p>2、确保 build.gradle 中有：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">implementation <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])</div></pre></td></tr></table></figure>
+<p>或：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">implementation files(<span class="string">'libs/hwsdk-mdm-openapi-2.0.0.jar'</span>)</div></pre></td></tr></table></figure>
+<h3 id="调用接口（比如：最基本的静默激活管控）"><a href="#调用接口（比如：最基本的静默激活管控）" class="headerlink" title="调用接口（比如：最基本的静默激活管控）"></a><strong>调用接口（比如：最基本的静默激活管控）</strong></h3><p>1、创建 ComponentName 时可以添加回调：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleDeviceReceiver</span> <span class="keyword">extends</span> <span class="title">DeviceAdminReceiver</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"SampleDeviceReceiver"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEnabled</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        Log.v(TAG, <span class="string">"onEnabled()"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDisabled</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        Log.v(TAG, <span class="string">"onDisabled()"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> CharSequence <span class="title">onDisableRequested</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        Log.v(TAG, <span class="string">"onDisableRequested()"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="string">"onDisableRequested()"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、创建 ComponentName，调用接口静默激活管控：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">final</span> ComponentName componentName = <span class="keyword">new</span> ComponentName(<span class="keyword">this</span>, SampleDeviceReceiver.class);</div><div class="line">    DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);</div><div class="line">    <span class="keyword">if</span> (devicePolicyManager != <span class="keyword">null</span> &amp;&amp; !devicePolicyManager.isAdminActive(componentName)) &#123;</div><div class="line">        DeviceControlManager deviceControlManager = <span class="keyword">new</span> DeviceControlManager();</div><div class="line">        deviceControlManager.setSilentActiveAdmin(componentName);</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="避免混淆"><a href="#避免混淆" class="headerlink" title="避免混淆"></a><strong>避免混淆</strong></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-keep class com.huawei.android.app.**&#123;*;&#125;</div></pre></td></tr></table></figure>
+<h2 id="跳转到华为桌面"><a href="#跳转到华为桌面" class="headerlink" title="跳转到华为桌面"></a><strong>跳转到华为桌面</strong></h2><p>直接使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Intent intent = getPackageManager().getLaunchIntentForPackage(<span class="string">"com.huawei.android.launcher"</span>);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<p>返回的 intent 为 null。</p>
+<p>需要直接指定包名和类名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">intent.setClassName(<span class="string">"com.huawei.android.launcher"</span>, <span class="string">"com.huawei.android.launcher.unihome.UniHomeLauncher"</span>);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+<h2 id="打包时签名"><a href="#打包时签名" class="headerlink" title="打包时签名"></a><strong>打包时签名</strong></h2><p>打包时签名只使用 V1 签名，不使用 V2 签名：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B62.png" alt=""></p>
+<h2 id="华为证书签名"><a href="#华为证书签名" class="headerlink" title="华为证书签名"></a><strong>华为证书签名</strong></h2><p>首先需要一个华为开发者账号，这个账号和应用在华为应用市场上架是同一个。</p>
+<h3 id="证书申请"><a href="#证书申请" class="headerlink" title="证书申请"></a><strong>证书申请</strong></h3><p>1、在官网找到【权签】：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B63.png" alt=""></p>
+<p>2、申请权签服务（第一次申请的是开发证书）：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B64.png" alt=""></p>
+<p>3、与代理商签订《API授权证书申请承诺函》并将电子扫描件发送。</p>
+<p>该文件需要盖公章、骑缝章，法人授权代码签名。</p>
+<h4 id="开发证书申请"><a href="#开发证书申请" class="headerlink" title="开发证书申请"></a><strong>开发证书申请</strong></h4><p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B65.png" alt=""></p>
+<p>证书和设备绑定，在同一设备上可以正常使用开发证书签名后的任意版本的同一包名的 app，也就是实现了修改 app 后签名有效。<br>证书有效期最长半年。<br>审批时间大概 1 天。</p>
+<h4 id="商用证书申请"><a href="#商用证书申请" class="headerlink" title="商用证书申请"></a><strong>商用证书申请</strong></h4><p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B66.png" alt=""></p>
+<p>证书和 app 绑定，在任意设备上可以正常使用商用证书签名后的唯一 app，也就是实现了更换设备后签名有效。<br>证书有效期无限。<br>审批时间大概 3 天。</p>
+<h3 id="证书签名"><a href="#证书签名" class="headerlink" title="证书签名"></a><strong>证书签名</strong></h3><p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B67.png" alt=""></p>
+<hr>
+<h1 id="ROM-定制"><a href="#ROM-定制" class="headerlink" title="ROM 定制"></a><strong>ROM 定制</strong></h1><h2 id="开机动画前的-Logo"><a href="#开机动画前的-Logo" class="headerlink" title="开机动画前的 Logo"></a><strong>开机动画前的 Logo</strong></h2><p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B68.jpeg" alt=""></p>
+<p>仅支持修改黑色背景图。</p>
+<h2 id="开机动画"><a href="#开机动画" class="headerlink" title="开机动画"></a><strong>开机动画</strong></h2><p>需要提供 30~50 张 JPG 或 PNG 格式的图片，形成帧动画。<br>支持单次/循环播放。</p>
+<h2 id="开机向导界面裁剪"><a href="#开机向导界面裁剪" class="headerlink" title="开机向导界面裁剪"></a><strong>开机向导界面裁剪</strong></h2><p>最少保留：选择语言、协议与条款、应用权限开关说明。</p>
+<h2 id="预置-app-到-Pad-中"><a href="#预置-app-到-Pad-中" class="headerlink" title="预置 app 到 Pad 中"></a><strong>预置 app 到 Pad 中</strong></h2><p>1、填写《【开发者联盟专用】第三方应用安全自检checklist V2.1》并发送。</p>
+<p>2、与代理商签订《预置软件免责协议》并将电子扫描件发送。</p>
+<p>该文件需要盖公章、骑缝章，法人授权代码签名。</p>
+<h2 id="app-开机自启"><a href="#app-开机自启" class="headerlink" title="app 开机自启"></a><strong>app 开机自启</strong></h2><h2 id="硬件定制-Logo"><a href="#硬件定制-Logo" class="headerlink" title="硬件定制 Logo"></a><strong>硬件定制 Logo</strong></h2><p>需要找第三方厂商，需要单独收费，如果订货量在 3000 台以上厂商可以做。</p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/">华为开发者联盟 MDM 和 ROM 定制</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2018年08月16日 - 23:08</p>
+  <p><span>最后更新:</span>2018年08月16日 - 23:08</p>
+  <p><span>原始链接:</span><a href="/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/" title="华为开发者联盟 MDM 和 ROM 定制">http://www.weichao.io/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/" rel="next" title="腾讯浏览服务（TBS）bug 反馈流程">
+                <i class="fa fa-chevron-left"></i> 腾讯浏览服务（TBS）bug 反馈流程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MDM"><span class="nav-number">2.</span> <span class="nav-text">MDM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在官网下载资料"><span class="nav-number">2.1.</span> <span class="nav-text">在官网下载资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#coding-前"><span class="nav-number">2.1.1.</span> <span class="nav-text">coding 前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#coding-中"><span class="nav-number">2.1.2.</span> <span class="nav-text">coding 中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#coding-后"><span class="nav-number">2.1.3.</span> <span class="nav-text">coding 后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SDK-集成步骤"><span class="nav-number">2.2.</span> <span class="nav-text">SDK 集成步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加基本权限"><span class="nav-number">2.2.1.</span> <span class="nav-text">添加基本权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入-jar-包"><span class="nav-number">2.2.2.</span> <span class="nav-text">引入 jar 包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调用接口（比如：最基本的静默激活管控）"><span class="nav-number">2.2.3.</span> <span class="nav-text">调用接口（比如：最基本的静默激活管控）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免混淆"><span class="nav-number">2.2.4.</span> <span class="nav-text">避免混淆</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#跳转到华为桌面"><span class="nav-number">2.3.</span> <span class="nav-text">跳转到华为桌面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打包时签名"><span class="nav-number">2.4.</span> <span class="nav-text">打包时签名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#华为证书签名"><span class="nav-number">2.5.</span> <span class="nav-text">华为证书签名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#证书申请"><span class="nav-number">2.5.1.</span> <span class="nav-text">证书申请</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开发证书申请"><span class="nav-number">2.5.1.1.</span> <span class="nav-text">开发证书申请</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#商用证书申请"><span class="nav-number">2.5.1.2.</span> <span class="nav-text">商用证书申请</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证书签名"><span class="nav-number">2.5.2.</span> <span class="nav-text">证书签名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ROM-定制"><span class="nav-number">3.</span> <span class="nav-text">ROM 定制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#开机动画前的-Logo"><span class="nav-number">3.1.</span> <span class="nav-text">开机动画前的 Logo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机动画"><span class="nav-number">3.2.</span> <span class="nav-text">开机动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开机向导界面裁剪"><span class="nav-number">3.3.</span> <span class="nav-text">开机向导界面裁剪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预置-app-到-Pad-中"><span class="nav-number">3.4.</span> <span class="nav-text">预置 app 到 Pad 中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#app-开机自启"><span class="nav-number">3.5.</span> <span class="nav-text">app 开机自启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬件定制-Logo"><span class="nav-number">3.6.</span> <span class="nav-text">硬件定制 Logo</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 131.7k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

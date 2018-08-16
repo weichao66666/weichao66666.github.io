@@ -100,29 +100,30 @@
 
 
 
-<meta name="description" content="Reference Hexo Documentation node.js git 手把手教你用Hexo+Github 搭建属于自己的博客 window下配置SSH连接GitHub、GitHub配置ssh key NexT hexo的next主题个性化教程:打造炫酷网站 Hexo文章图片存储选七牛（当然支持MD都可以） Markdown 代码高亮   环境搭建安装 Node.js安装 Git安装 H">
+<meta name="description" content="Reference 腾讯浏览服务 QQ 浏览器移动产品论坛-X5专区   bug 示例快速点击按钮，两次加载同一 url，部分时候会出现：   确认 bug 是否由 TBS 导致确认 bug 是否属于原生打开【开发者选项】中的【显示布局边界】。  复现 bug 如果可以看见布局边框，说明 bug 属于原生，否则可能是原生自定义控件或前端页面。 确认 bug 在系统 WebView 中是否存在1、长">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo + GitHub Pages 搭建 blog">
-<meta property="og:url" content="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/index.html">
+<meta property="og:title" content="腾讯浏览服务（TBS）bug 反馈流程">
+<meta property="og:url" content="http://www.weichao.io/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/index.html">
 <meta property="og:site_name" content="『魏超』的 blog">
-<meta property="og:description" content="Reference Hexo Documentation node.js git 手把手教你用Hexo+Github 搭建属于自己的博客 window下配置SSH连接GitHub、GitHub配置ssh key NexT hexo的next主题个性化教程:打造炫酷网站 Hexo文章图片存储选七牛（当然支持MD都可以） Markdown 代码高亮   环境搭建安装 Node.js安装 Git安装 H">
+<meta property="og:description" content="Reference 腾讯浏览服务 QQ 浏览器移动产品论坛-X5专区   bug 示例快速点击按钮，两次加载同一 url，部分时候会出现：   确认 bug 是否由 TBS 导致确认 bug 是否属于原生打开【开发者选项】中的【显示布局边界】。  复现 bug 如果可以看见布局边框，说明 bug 属于原生，否则可能是原生自定义控件或前端页面。 确认 bug 在系统 WebView 中是否存在1、长">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ec.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ed.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e6.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ea.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008eb.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e5.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e7.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972ce32ab644125a100096c.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e9.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e8.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e4.png">
-<meta property="og:updated_time" content="2018-01-30T13:58:05.679Z">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B1.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B2.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8Bdemo480p.gif">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B3.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B4.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B5.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B6.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B7.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B8.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B9.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B10.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B11.png">
+<meta property="og:updated_time" content="2018-08-16T15:08:30.830Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo + GitHub Pages 搭建 blog">
-<meta name="twitter:description" content="Reference Hexo Documentation node.js git 手把手教你用Hexo+Github 搭建属于自己的博客 window下配置SSH连接GitHub、GitHub配置ssh key NexT hexo的next主题个性化教程:打造炫酷网站 Hexo文章图片存储选七牛（当然支持MD都可以） Markdown 代码高亮   环境搭建安装 Node.js安装 Git安装 H">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ec.png">
+<meta name="twitter:title" content="腾讯浏览服务（TBS）bug 反馈流程">
+<meta name="twitter:description" content="Reference 腾讯浏览服务 QQ 浏览器移动产品论坛-X5专区   bug 示例快速点击按钮，两次加载同一 url，部分时候会出现：   确认 bug 是否由 TBS 导致确认 bug 是否属于原生打开【开发者选项】中的【显示布局边界】。  复现 bug 如果可以看见布局边框，说明 bug 属于原生，否则可能是原生自定义控件或前端页面。 确认 bug 在系统 WebView 中是否存在1、长">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B1.png">
 
 
 
@@ -150,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/"/>
+  <link rel="canonical" href="http://www.weichao.io/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/"/>
 
 
 
 
 
-  <title>Hexo + GitHub Pages 搭建 blog | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>腾讯浏览服务（TBS）bug 反馈流程 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -277,7 +278,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魏超">
@@ -294,7 +295,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Hexo + GitHub Pages 搭建 blog</h2>
+          <h2 class="post-title" itemprop="name headline">腾讯浏览服务（TBS）bug 反馈流程</h2>
         
 
         <div class="post-meta">
@@ -306,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T12:14:46+08:00">
-                2017-07-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T23:03:09+08:00">
+                2018-08-16
               </time>
             
 
@@ -337,7 +338,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  500 字
+                  445 字
                 </span>
               
 
@@ -361,7 +362,7 @@
 
           
           
-             <span id="/2017/07/24/Hexo-GitHub-Pages-搭建-blog/" class="leancloud_visitors" data-flag-title="Hexo + GitHub Pages 搭建 blog">
+             <span id="/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/" class="leancloud_visitors" data-flag-title="腾讯浏览服务（TBS）bug 反馈流程">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -387,74 +388,45 @@
 
       
         <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
-<li><a href="https://hexo.io/docs/" title="https://hexo.io/docs/" target="_blank" rel="external">Hexo Documentation</a></li>
-<li><a href="https://nodejs.org/en/" title="https://nodejs.org/en/" target="_blank" rel="external">node.js</a></li>
-<li><a href="https://git-scm.com/" title="https://git-scm.com/" target="_blank" rel="external">git</a></li>
-<li><a href="http://blog.csdn.net/gdutxiaoxu/article/details/53576018" title="http://blog.csdn.net/gdutxiaoxu/article/details/53576018" target="_blank" rel="external">手把手教你用Hexo+Github 搭建属于自己的博客</a></li>
-<li><a href="https://jingyan.baidu.com/article/a65957f4e91ccf24e77f9b11.html" title="https://jingyan.baidu.com/article/a65957f4e91ccf24e77f9b11.html" target="_blank" rel="external">window下配置SSH连接GitHub、GitHub配置ssh key</a></li>
-<li><a href="http://theme-next.iissnan.com/getting-started.html" title="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">NexT</a></li>
-<li><a href="http://www.jianshu.com/p/f054333ac9e6" title="http://www.jianshu.com/p/f054333ac9e6" target="_blank" rel="external">hexo的next主题个性化教程:打造炫酷网站</a></li>
-<li><a href="http://www.jianshu.com/p/ec2c8acf63cd" title="http://www.jianshu.com/p/ec2c8acf63cd" target="_blank" rel="external">Hexo文章图片存储选七牛（当然支持MD都可以）</a></li>
-<li><a href="http://heckaitor.github.io/2014/04/10/hexo-markdown-code-highlight/" title="http://heckaitor.github.io/2014/04/10/hexo-markdown-code-highlight/" target="_blank" rel="external">Markdown 代码高亮</a></li>
+<li><a href="https://x5.tencent.com/" title="https://x5.tencent.com/" target="_blank" rel="external">腾讯浏览服务</a></li>
+<li><a href="http://bbs.mb.qq.com/forum-110-1.html" title="http://bbs.mb.qq.com/forum-110-1.html" target="_blank" rel="external">QQ 浏览器移动产品论坛-X5专区</a></li>
 </ul>
 <hr>
-<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a><strong>环境搭建</strong></h1><h2 id="安装-Node-js"><a href="#安装-Node-js" class="headerlink" title="安装 Node.js"></a><strong>安装 Node.js</strong></h2><h2 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a><strong>安装 Git</strong></h2><h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a><strong>安装 Hexo</strong></h2><p>在本地创建文件夹，比如 <code>D:\weichao\hexo</code></p>
-<p>windows + r 调出运行，输入 <code>cmd</code>，进入刚才创建的目录<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ec.png" alt=""></p>
-<p>输入<code>npm install -g hexo-cli</code><br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ed.png" alt=""><br>warn 不会影响正常使用</p>
-<p>输入<code>npm install hexo --save</code>，等待安装完成</p>
-<p>输入<code>hexo -v</code>，显示<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e6.png" alt=""><br>说明 Hexo 安装完成</p>
+<h1 id="bug-示例"><a href="#bug-示例" class="headerlink" title="bug 示例"></a><strong>bug 示例</strong></h1><p>快速点击按钮，两次加载同一 url，部分时候会出现：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B1.png" alt=""></p>
 <hr>
-<h1 id="clone-Hexo-项目"><a href="#clone-Hexo-项目" class="headerlink" title="clone Hexo 项目"></a><strong>clone Hexo 项目</strong></h1><p>在本地创建文件夹，比如 <code>D:\weichao\hexo\config</code></p>
-<p>windows + r 调出运行，输入 <code>cmd</code>，进入刚才创建的目录</p>
-<p>输入<code>hexo init</code></p>
-<p>输入<code>npm install</code></p>
-<p>输入<code>hexo g</code></p>
-<p>输入<code>hexo s</code>，会提示浏览器访问地址：<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008ea.png" alt=""></p>
-<p>在任意浏览器中输入该地址：<br><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008eb.png" alt=""></p>
+<h1 id="确认-bug-是否由-TBS-导致"><a href="#确认-bug-是否由-TBS-导致" class="headerlink" title="确认 bug 是否由 TBS 导致"></a><strong>确认 bug 是否由 TBS 导致</strong></h1><h2 id="确认-bug-是否属于原生"><a href="#确认-bug-是否属于原生" class="headerlink" title="确认 bug 是否属于原生"></a><strong>确认 bug 是否属于原生</strong></h2><p>打开【开发者选项】中的【显示布局边界】。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B2.png" alt=""></p>
+<h2 id="复现-bug"><a href="#复现-bug" class="headerlink" title="复现 bug"></a><strong>复现 bug</strong></h2><p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8Bdemo480p.gif" alt=""></p>
+<p>如果可以看见布局边框，说明 bug 属于原生，否则可能是原生自定义控件或前端页面。</p>
+<h2 id="确认-bug-在系统-WebView-中是否存在"><a href="#确认-bug-在系统-WebView-中是否存在" class="headerlink" title="确认 bug 在系统 WebView 中是否存在"></a><strong>确认 bug 在系统 WebView 中是否存在</strong></h2><p>1、长按 WebView 中的文字部分，如果未出现【选择复制】说明是系统 WebView（第一次启动app肯定是系统 WebView，如果第一次使用时间足够长，会将 TBS 下载到本地，从第二次开始 app 使用的就是 TBS）。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B3.png" alt=""></p>
+<p>在该场景下尝试复现 bug。</p>
+<p>2、长按 WebView 中的文字部分，如果出现【选择复制】说明是 TBS。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B4.png" alt=""></p>
+<p>在该场景下尝试复现 bug。</p>
 <hr>
-<h1 id="关联-Hexo-和-GitHub-Pages"><a href="#关联-Hexo-和-GitHub-Pages" class="headerlink" title="关联 Hexo 和 GitHub Pages"></a><strong>关联 Hexo 和 GitHub Pages</strong></h1><p>windows + r 调出运行，输入 <code>cmd</code>，进入 <code>D:\weichao\hexo\config</code></p>
-<h2 id="配置-Git"><a href="#配置-Git" class="headerlink" title="配置 Git"></a><strong>配置 Git</strong></h2><p>输入用户名、邮箱</p>
-<pre><code>git config --global user.name &quot;xx&quot;
-git config --global user.email &quot;xx@yy.com&quot;
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e5.png" alt=""></p>
-<p>修改 <code>D:\weichao\hexo\config\_config.yml</code></p>
-<pre><code>deploy:
-  type:
-</code></pre><p>为</p>
-<pre><code>deploy:
-  type: git
-  repo: git@github.com:yourname/yourname.github.io.git
-  branch: master
-</code></pre><h2 id="安装-git-扩展"><a href="#安装-git-扩展" class="headerlink" title="安装 git 扩展"></a><strong>安装 git 扩展</strong></h2><pre><code>npm install hexo-deployer-git --save
-</code></pre><h2 id="配置-SSH"><a href="#配置-SSH" class="headerlink" title="配置 SSH"></a><strong>配置 SSH</strong></h2><h3 id="生成密钥"><a href="#生成密钥" class="headerlink" title="生成密钥"></a><strong>生成密钥</strong></h3><p>进入 <code>C:\Users\itpiz\.ssh</code></p>
-<p>右键 -&gt; Git Bash Here</p>
-<pre><code>ssh-keygen -t rsa -C &quot;xx@yy.com&quot;
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e7.png" alt=""><br><code>id_rsa</code> 是密钥，<code>id_rsa.pub</code> 是公钥</p>
-<h3 id="添加密钥到-ssh-agent"><a href="#添加密钥到-ssh-agent" class="headerlink" title="添加密钥到 ssh-agent"></a><strong>添加密钥到 ssh-agent</strong></h3><pre><code>eval &quot;$(ssh-agent -s)&quot;
-ssh-add ~/.ssh/id_rsa
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972ce32ab644125a100096c.png" alt=""></p>
-<h3 id="添加密钥到-GitHub"><a href="#添加密钥到-GitHub" class="headerlink" title="添加密钥到 GitHub"></a><strong>添加密钥到 GitHub</strong></h3><p>复制 <code>id_rsa.pub</code> 中的内容</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e9.png" alt=""></p>
-<h3 id="测试-ssh-keys-是否设置成功"><a href="#测试-ssh-keys-是否设置成功" class="headerlink" title="测试 ssh keys 是否设置成功"></a><strong>测试 ssh keys 是否设置成功</strong></h3><p>输入 <code>ssh -T git@github.com</code></p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e8.png" alt=""></p>
+<h1 id="通过论坛反馈-bug"><a href="#通过论坛反馈-bug" class="headerlink" title="通过论坛反馈 bug"></a><strong>通过论坛反馈 bug</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B5.png" alt=""></p>
+<h2 id="生成网络日志"><a href="#生成网络日志" class="headerlink" title="生成网络日志"></a><strong>生成网络日志</strong></h2><p>参考官方文档<a href="http://bbs.mb.qq.com/thread-1945241-1-1.html" title="http://bbs.mb.qq.com/thread-1945241-1-1.html" target="_blank" rel="external">《合作方网络日志抓取方法（反馈时附带抓取的日志，可优先处理）》</a>。</p>
+<p>1、可以在 Log 层添加加载 <a href="http://debugx5.qq.com" target="_blank" rel="external">http://debugx5.qq.com</a> 的开关。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B6.png" alt=""></p>
+<p>2、如果本地没有 TBS，加载 <a href="http://debugx5.qq.com" target="_blank" rel="external">http://debugx5.qq.com</a> 时会有相关提示：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B7.png" alt=""></p>
+<p>3、点击【进入DebugTbs安装或打开X5内核】，安装线上内核。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B8.png" alt=""></p>
+<p>4、重启 app，再次加载 <a href="http://debugx5.qq.com。" target="_blank" rel="external">http://debugx5.qq.com。</a></p>
+<p>5、点击【日志功能开启】。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B9.png" alt=""></p>
+<p>6、点击 Log 层的 WebView 返回，再复现 bug。</p>
+<p>7、点击【日志功能关闭并上传】。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B10.png" alt=""></p>
+<p>8、记录 GUID，将 GUID 输入反馈页面的【操作步骤】中。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B11.png" alt=""></p>
 <hr>
-<h1 id="设置主题"><a href="#设置主题" class="headerlink" title="设置主题"></a><strong>设置主题</strong></h1><p>windows + r 调出运行，输入 <code>cmd</code></p>
-<p>进入 <code>D:\weichao\hexo\config</code></p>
-<h2 id="clone-主题"><a href="#clone-主题" class="headerlink" title="clone 主题"></a><strong>clone 主题</strong></h2><pre><code>git clone https://github.com/iissnan/hexo-theme-next themes/next
-</code></pre><h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a><strong>修改配置文件</strong></h2><p>修改 <code>D:\weichao\hexo\config\_config.yml</code></p>
-<pre><code>theme: landscape
-</code></pre><p>为</p>
-<pre><code>theme: next
-</code></pre><h2 id="清除缓存"><a href="#清除缓存" class="headerlink" title="清除缓存"></a><strong>清除缓存</strong></h2><pre><code>hexo clean
-</code></pre><h2 id="验证主题"><a href="#验证主题" class="headerlink" title="验证主题"></a><strong>验证主题</strong></h2><pre><code>hexo s -debug
-</code></pre><hr>
-<h1 id="创建文章并上传"><a href="#创建文章并上传" class="headerlink" title="创建文章并上传"></a><strong>创建文章并上传</strong></h1><p>windows + r 调出运行，输入 <code>cmd</code></p>
-<p>进入 <code>D:\weichao\hexo\config</code></p>
-<p>新建一篇博客：</p>
-<pre><code>hexo new post &quot;article title&quot;
-</code></pre><p>生成并部署</p>
-<pre><code>hexo d -g
-</code></pre><p><img src="http://otkw6sse5.bkt.clouddn.com/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog_files5972c794ab644125a10008e4.png" alt=""></p>
+<h1 id="等待客服人员联系"><a href="#等待客服人员联系" class="headerlink" title="等待客服人员联系"></a><strong>等待客服人员联系</strong></h1><p>联系我的时间在晚上 10 点左右。</p>
+<hr>
+<h1 id="bug-修复结果"><a href="#bug-修复结果" class="headerlink" title="bug 修复结果"></a><strong>bug 修复结果</strong></h1><p>bug 解决后在对应贴子下回复修复结果。</p>
+<hr>
 
       
     </div>
@@ -469,12 +441,12 @@ ssh-add ~/.ssh/id_rsa
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2017/07/24/Hexo-GitHub-Pages-搭建-blog/">Hexo + GitHub Pages 搭建 blog</a></p>
+  <p><span>本文标题:</span><a href="/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/">腾讯浏览服务（TBS）bug 反馈流程</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
-  <p><span>发布时间:</span>2017年07月24日 - 12:07</p>
-  <p><span>最后更新:</span>2018年01月30日 - 21:01</p>
-  <p><span>原始链接:</span><a href="/2017/07/24/Hexo-GitHub-Pages-搭建-blog/" title="Hexo + GitHub Pages 搭建 blog">http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-搭建-blog/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年08月16日 - 23:08</p>
+  <p><span>最后更新:</span>2018年08月16日 - 23:08</p>
+  <p><span>原始链接:</span><a href="/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/" title="腾讯浏览服务（TBS）bug 反馈流程">http://www.weichao.io/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/08/16/腾讯浏览服务（TBS）bug-反馈流程/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -538,14 +510,18 @@ ssh-add ~/.ssh/id_rsa
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/07/29/FFmpeg-录制-HTTP-流/" rel="next" title="FFmpeg 录制 HTTP 流">
+                <i class="fa fa-chevron-left"></i> FFmpeg 录制 HTTP 流
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/10/Pixel-XL-解锁/" rel="prev" title="Pixel XL 解锁">
-                Pixel XL 解锁 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/16/华为开发者联盟-MDM-和-ROM-定制/" rel="prev" title="华为开发者联盟 MDM 和 ROM 定制">
+                华为开发者联盟 MDM 和 ROM 定制 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -702,7 +678,7 @@ ssh-add ~/.ssh/id_rsa
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境搭建"><span class="nav-number">2.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Node-js"><span class="nav-number">2.1.</span> <span class="nav-text">安装 Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Git"><span class="nav-number">2.2.</span> <span class="nav-text">安装 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Hexo"><span class="nav-number">2.3.</span> <span class="nav-text">安装 Hexo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#clone-Hexo-项目"><span class="nav-number">3.</span> <span class="nav-text">clone Hexo 项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关联-Hexo-和-GitHub-Pages"><span class="nav-number">4.</span> <span class="nav-text">关联 Hexo 和 GitHub Pages</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-Git"><span class="nav-number">4.1.</span> <span class="nav-text">配置 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-git-扩展"><span class="nav-number">4.2.</span> <span class="nav-text">安装 git 扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-SSH"><span class="nav-number">4.3.</span> <span class="nav-text">配置 SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成密钥"><span class="nav-number">4.3.1.</span> <span class="nav-text">生成密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加密钥到-ssh-agent"><span class="nav-number">4.3.2.</span> <span class="nav-text">添加密钥到 ssh-agent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加密钥到-GitHub"><span class="nav-number">4.3.3.</span> <span class="nav-text">添加密钥到 GitHub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试-ssh-keys-是否设置成功"><span class="nav-number">4.3.4.</span> <span class="nav-text">测试 ssh keys 是否设置成功</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置主题"><span class="nav-number">5.</span> <span class="nav-text">设置主题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#clone-主题"><span class="nav-number">5.1.</span> <span class="nav-text">clone 主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改配置文件"><span class="nav-number">5.2.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清除缓存"><span class="nav-number">5.3.</span> <span class="nav-text">清除缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证主题"><span class="nav-number">5.4.</span> <span class="nav-text">验证主题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建文章并上传"><span class="nav-number">6.</span> <span class="nav-text">创建文章并上传</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bug-示例"><span class="nav-number">2.</span> <span class="nav-text">bug 示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#确认-bug-是否由-TBS-导致"><span class="nav-number">3.</span> <span class="nav-text">确认 bug 是否由 TBS 导致</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#确认-bug-是否属于原生"><span class="nav-number">3.1.</span> <span class="nav-text">确认 bug 是否属于原生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复现-bug"><span class="nav-number">3.2.</span> <span class="nav-text">复现 bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确认-bug-在系统-WebView-中是否存在"><span class="nav-number">3.3.</span> <span class="nav-text">确认 bug 在系统 WebView 中是否存在</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过论坛反馈-bug"><span class="nav-number">4.</span> <span class="nav-text">通过论坛反馈 bug</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成网络日志"><span class="nav-number">4.1.</span> <span class="nav-text">生成网络日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#等待客服人员联系"><span class="nav-number">5.</span> <span class="nav-text">等待客服人员联系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bug-修复结果"><span class="nav-number">6.</span> <span class="nav-text">bug 修复结果</span></a></li></ol></div>
             
 
           </div>
