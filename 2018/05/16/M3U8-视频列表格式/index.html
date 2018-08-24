@@ -430,7 +430,7 @@
 </tbody>
 </table>
 <p>示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">EXTM3U</span></div><div class="line"><span class="meta">#</span><span class="bash">EXT-X-VERSION：3</span></div><div class="line"><span class="meta">#</span><span class="bash">EXT-X-TARGETDURATION：4</span></div><div class="line"><span class="meta">#</span><span class="bash">EXT-X-MEDIA-SEQUENCE：0</span></div><div class="line"><span class="meta">#</span><span class="bash">EXTINF：3.760000，</span></div><div class="line">out0.ts</div><div class="line"><span class="meta">#</span><span class="bash">EXTINF：1.880000，</span></div><div class="line">out1.ts</div><div class="line"><span class="meta">#</span><span class="bash">EXTINF：1.760000，</span></div><div class="line">out2.ts</div><div class="line"><span class="meta">#</span><span class="bash">EXTINF：1.040000，</span></div><div class="line">out3.ts</div><div class="line"><span class="meta">#</span><span class="bash">EXTINF：1.560000，</span></div><div class="line">out4</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>EXTM3U</div><div class="line"><span class="meta">#</span>EXT-X-VERSION：3</div><div class="line"><span class="meta">#</span>EXT-X-TARGETDURATION：4</div><div class="line"><span class="meta">#</span>EXT-X-MEDIA-SEQUENCE：0</div><div class="line"><span class="meta">#</span>EXTINF：3.760000，</div><div class="line">out0.ts</div><div class="line"><span class="meta">#</span>EXTINF：1.880000，</div><div class="line">out1.ts</div><div class="line"><span class="meta">#</span>EXTINF：1.760000，</div><div class="line">out2.ts</div><div class="line"><span class="meta">#</span>EXTINF：1.040000，</div><div class="line">out3.ts</div><div class="line"><span class="meta">#</span>EXTINF：1.560000，</div><div class="line">out4</div></pre></td></tr></table></figure>
 <h2 id="EXT-X-STREAM-INF"><a href="#EXT-X-STREAM-INF" class="headerlink" title="EXT-X-STREAM-INF"></a><strong>EXT-X-STREAM-INF</strong></h2><table>
 <thead>
 <tr>
@@ -468,7 +468,7 @@
 </tbody>
 </table>
 <p>示例：使用4个 EXT-X-STREAM-INF 标签来标注子 M3U8 的属性——最高码率为 1.28M、平均码率为 1M 的 M3U8；最高码率为 2.56M、平均码率为 2M 的 M3U8；最高码率为 7.68M、平均码率为 6M 的 M3U8；以及只有 65K 的音频编码的 M3U8。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash">EXTM3U</span></div><div class="line"><span class="meta">#</span><span class="bash">EXT-X-STREAM-INF：BANDWIDTH=1280000，AVERAGE-BANDWIDTH=1000000</span></div><div class="line">http://example.com/low.m3u8</div><div class="line"><span class="meta">#</span><span class="bash">EXT-X-STREAM-INF：BANDWIDTH=2560000，AVERAGE-BANDWIDTH=2000000</span></div><div class="line">http://example.com/mid.m3u8</div><div class="line"><span class="meta">#</span><span class="bash">EXT-X-STREAM-INF：BANDWIDTH=7680000，AVERAGE-BANDWIDTH=6000000</span></div><div class="line">http://example.com/hi.m3u8</div><div class="line"><span class="meta">#</span><span class="bash">EXT-X-STREAM-INF：BANDWIDTH=65000，CODECS=<span class="string">"mp4a.40.5"</span></span></div><div class="line">http://example.com/audio-only.m3u8</div></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>EXTM3U</div><div class="line"><span class="meta">#</span>EXT-X-STREAM-INF：BANDWIDTH=1280000，AVERAGE-BANDWIDTH=1000000</div><div class="line">http://example.com/low.m3u8</div><div class="line"><span class="meta">#</span>EXT-X-STREAM-INF：BANDWIDTH=2560000，AVERAGE-BANDWIDTH=2000000</div><div class="line">http://example.com/mid.m3u8</div><div class="line"><span class="meta">#</span>EXT-X-STREAM-INF：BANDWIDTH=7680000，AVERAGE-BANDWIDTH=6000000</div><div class="line">http://example.com/hi.m3u8</div><div class="line"><span class="meta">#</span>EXT-X-STREAM-INF：BANDWIDTH=65000，CODECS="mp4a.40.5"</div><div class="line">http://example.com/audio-only.m3u8</div></pre></td></tr></table></figure>
 <hr>
 <h1 id="各版本区别"><a href="#各版本区别" class="headerlink" title="各版本区别"></a><strong>各版本区别</strong></h1><table>
 <thead>
@@ -704,7 +704,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -802,7 +802,7 @@
 <!--网站底部字数统计-->
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">本站总字数 131.7k 字 </span>
+  <span class="post-count">本站总字数 132.3k 字 </span>
 </div>
 
 <!--
