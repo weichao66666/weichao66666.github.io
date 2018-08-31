@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference U-Push集成文档   在控制台创建 app 导入 PushSDK1、工程添加仓库： 12345allprojects &amp;#123;    repositories &amp;#123;        mavenCentral()    &amp;#125;&amp;#125; 2、app 添加依赖： 12345dependencies &amp;#123;    implementation &apos;com.u">
+<meta property="og:type" content="article">
+<meta property="og:title" content="U-Push 集成">
+<meta property="og:url" content="http://www.weichao.io/2018/08/31/U-Push-集成/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference U-Push集成文档   在控制台创建 app 导入 PushSDK1、工程添加仓库： 12345allprojects &amp;#123;    repositories &amp;#123;        mavenCentral()    &amp;#125;&amp;#125; 2、app 添加依赖： 12345dependencies &amp;#123;    implementation &apos;com.u">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%901.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%902.jpeg">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%903.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%904.jpeg">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%905.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%906.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%907.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%908.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%909.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9010.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9011.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9012.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9013.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9014.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9015.png">
+<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9016.png">
+<meta property="og:updated_time" content="2018-08-31T14:18:34.777Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="U-Push 集成">
+<meta name="twitter:description" content="Reference U-Push集成文档   在控制台创建 app 导入 PushSDK1、工程添加仓库： 12345allprojects &amp;#123;    repositories &amp;#123;        mavenCentral()    &amp;#125;&amp;#125; 2、app 添加依赖： 12345dependencies &amp;#123;    implementation &apos;com.u">
+<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%901.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2018/08/31/U-Push-集成/"/>
+
+
+
+
+
+  <title>U-Push 集成 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2018/08/31/U-Push-集成/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">U-Push 集成</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-31T22:06:55+08:00">
+                2018-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  3,660 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  18 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2018/08/31/U-Push-集成/" class="leancloud_visitors" data-flag-title="U-Push 集成">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="https://developer.umeng.com/docs/66632/detail/66744#h1-u91CDu8981u66F4u65B02" title="https://developer.umeng.com/docs/66632/detail/66744#h1-u91CDu8981u66F4u65B02" target="_blank" rel="external">U-Push集成文档</a></li>
+</ul>
+<hr>
+<h1 id="在控制台创建-app"><a href="#在控制台创建-app" class="headerlink" title="在控制台创建 app"></a><strong>在控制台创建 app</strong></h1><hr>
+<h1 id="导入-PushSDK"><a href="#导入-PushSDK" class="headerlink" title="导入 PushSDK"></a><strong>导入 PushSDK</strong></h1><p>1、工程添加仓库：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">allprojects</span> &#123;</div><div class="line">    <span class="keyword">repositories</span> &#123;</div><div class="line">        mavenCentral()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、app 添加依赖：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    implementation <span class="string">'com.umeng.sdk:common:1.5.3'</span>     <span class="comment">// 友盟推送</span></div><div class="line">    implementation <span class="string">'com.umeng.sdk:utdid:1.1.5.3'</span></div><div class="line">    implementation <span class="string">'com.umeng.sdk:push:4.2.0'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3、如果运行时报错：</p>
+<blockquote>
+<p>Program type already present: com.alibaba.sdk.android.utils.AMSDevReporter<br>Message{kind=ERROR, text=Program type already present: com.alibaba.sdk.android.utils.AMSDevReporter, sources=[Unknown source file], tool name=Optional.of(D8)}</p>
+</blockquote>
+<p>说明存在 jar 包冲突，即引用了同一 jar 包的不同版本，解决方法是去掉其中一个 jar 包的引用，比如：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    implementation(<span class="string">'com.aliyun.ams:alicloud-android-hotfix:3.1.2'</span>) &#123;    <span class="comment">// 热修复</span></div><div class="line">        <span class="comment">// 关闭传递性依赖</span></div><div class="line">        <span class="keyword">exclude</span>(module: <span class="string">'alicloud-android-utdid'</span>)</div><div class="line">        <span class="keyword">exclude</span>(module: <span class="string">'alicloud-android-utils'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="初始化-PushSDK"><a href="#初始化-PushSDK" class="headerlink" title="初始化 PushSDK"></a><strong>初始化 PushSDK</strong></h1><p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate();</div><div class="line">    initUPush();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="统计应用启动数据"><a href="#统计应用启动数据" class="headerlink" title="统计应用启动数据"></a><strong>统计应用启动数据</strong></h1><p>修改 BaseActivity：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    Log.d(<span class="string">"life"</span>, TAG + <span class="string">" onCreate"</span>);</div><div class="line">    PushAgent.getInstance(<span class="keyword">this</span>).onAppStart();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果不调用此方法，不仅会导致按照“几天不活跃”条件来推送失效，还将导致广播发送不成功以及设备描述红色等问题发生。</p>
+<hr>
+<h1 id="混淆配置"><a href="#混淆配置" class="headerlink" title="混淆配置"></a><strong>混淆配置</strong></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-dontwarn com.umeng.**</div><div class="line">-dontwarn com.taobao.**</div><div class="line">-dontwarn anet.channel.**</div><div class="line">-dontwarn anetwork.channel.**</div><div class="line">-dontwarn org.android.**</div><div class="line">-dontwarn org.apache.thrift.**</div><div class="line">-dontwarn com.xiaomi.**</div><div class="line">-dontwarn com.huawei.**</div><div class="line">-dontwarn com.meizu.**</div></pre></td></tr></table></figure>
+<h1 id="功能集成"><a href="#功能集成" class="headerlink" title="功能集成"></a><strong>功能集成</strong></h1><h2 id="设置通知点击后的行为"><a href="#设置通知点击后的行为" class="headerlink" title="设置通知点击后的行为"></a><strong>设置通知点击后的行为</strong></h2><p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="comment">// 自定义行为的回调处理，参考文档：高级功能-通知的展示及提醒-自定义通知打开动作</span></div><div class="line">    <span class="comment">// UmengNotificationClickHandler是在BroadcastReceiver中被调用，故如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK</span></div><div class="line">    <span class="keyword">final</span> UmengNotificationClickHandler umengNotificationClickHandler = <span class="keyword">new</span> UmengNotificationClickHandler() &#123;</div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 启动 app</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">launchApp</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>.launchApp(context, msg);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 打开 URL</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">openUrl</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>.openUrl(context, msg);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 打开指定页面</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">openActivity</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>.openActivity(context, msg);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 自定义行为</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dealWithCustomAction</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (Constant.DEBUG) &#123;</div><div class="line">                Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    pushAgent.setNotificationClickHandler(umengNotificationClickHandler);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置是否展示通知"><a href="#设置是否展示通知" class="headerlink" title="设置是否展示通知"></a><strong>设置是否展示通知</strong></h2><p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">final</span> UmengMessageHandler umengMessageHandler = <span class="keyword">new</span> UmengMessageHandler() &#123;</div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 通知的回调方法，通知送达时触发</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dealWithNotificationMessage</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            <span class="comment">// 调用super，会展示通知；不调用super，则不展示通知。</span></div><div class="line">            <span class="keyword">super</span>.dealWithNotificationMessage(context, msg);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    pushAgent.setMessageHandler(umengMessageHandler);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置通知免打扰时间段"><a href="#设置通知免打扰时间段" class="headerlink" title="设置通知免打扰时间段"></a><strong>设置通知免打扰时间段</strong></h2><p>默认是 23:00~7:00。</p>
+<p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.setNoDisturbMode(<span class="number">23</span>, <span class="number">0</span>, <span class="number">7</span>, <span class="number">0</span>); <span class="comment">// 关闭免打扰：pushAgent.setNoDisturbMode(0, 0, 0, 0);</span></div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置通知冷却时间"><a href="#设置通知冷却时间" class="headerlink" title="设置通知冷却时间"></a><strong>设置通知冷却时间</strong></h2><p>默认是 60 秒。</p>
+<p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.setMuteDurationSeconds(<span class="number">10</span>);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置合并通知数"><a href="#设置合并通知数" class="headerlink" title="设置合并通知数"></a><strong>设置合并通知数</strong></h2><p>可以设置为 0~10 之间任意整数，默认是 1。</p>
+<p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.setDisplayNotificationNumber(<span class="number">2</span>); <span class="comment">// 参数为 0 时，表示不合并通知。</span></div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、效果</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%901.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%902.jpeg" alt=""></p>
+<h2 id="自定义通知栏图标"><a href="#自定义通知栏图标" class="headerlink" title="自定义通知栏图标"></a><strong>自定义通知栏图标</strong></h2><ul>
+<li>如果在发送后台没有指定通知栏图标，SDK 将使用本地的默认图标，其中，大图标默认使用 drawable 下的 umeng_push_notification_default_large_icon，小图标默认使用 drawable 下的 umeng_push_notification_default_small_icon。</li>
+<li><del>若开发者没有设置这两个图标，则默认使用应用的图标（&lt;application android:icon=”@mipmap/ic_launcher”&gt;&lt;/application&gt;）。</del></li>
+<li><del>若开发者在发送后台指定了图片的链接，则该链接将通过 Message 的 img 字段进行传输。当 SDK 接受到消息后，会先下载图片，下载成功后显示通知；若下载失败，会自动重试两次（总共下载 3 次）；若仍失败，则采用默认图片进行显示。</del></li>
+<li><del>如果使用 API 方式来发送消息, 可以指定 icon 和 largeIcon 字段，分别对应状态栏图标和通知栏下拉之后左侧大图标 id（[R.drawable].icon）, 请填写对应图片文件名，不包含扩展名。</del></li>
+<li><p>MIUI 暂时无法支持自定义通知栏图标，若开发者有需求，也可通过自定义通知栏样式来解决。</p>
+</li>
+<li><p>小图标 smallIcon：要求为 48*48 像素，图片各边至少留 1 个像素的透明，图标主体使用颜色，背景均使用透明。</p>
+</li>
+<li>大图标 largeIcon：要求为 64*64 像素。</li>
+<li>对于超高分辨率的机型的适配，可以适当提高图标的尺寸。</li>
+</ul>
+<h2 id="自定义通知栏样式"><a href="#自定义通知栏样式" class="headerlink" title="自定义通知栏样式"></a><strong>自定义通知栏样式</strong></h2><p>1、新建布局 notification.xml：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"64dp"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@drawable/bg_new_word_list_recyclerview"</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/notification_large_icon"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"64dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"64dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:scaleType</span>=<span class="string">"fitXY"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_launcher"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/notification_title"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginStart</span>=<span class="string">"10dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginTop</span>=<span class="string">"5dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toEndOf</span>=<span class="string">"@+id/notification_large_icon"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"Title"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textColor</span>=<span class="string">"@color/black"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/notification_text"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@+id/notification_title"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginStart</span>=<span class="string">"10dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toEndOf</span>=<span class="string">"@+id/notification_large_icon"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"Message"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textColor</span>=<span class="string">"@color/black"</span> /&gt;</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_below</span>=<span class="string">"@+id/notification_text"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginStart</span>=<span class="string">"10dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_toEndOf</span>=<span class="string">"@+id/notification_large_icon"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:text</span>=<span class="string">"(嘿嘿，偷偷听告诉你，我是自定义的)"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textColor</span>=<span class="string">"@color/black"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:textSize</span>=<span class="string">"12sp"</span> /&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line"><span class="tag">        <span class="attr">android:id</span>=<span class="string">"@+id/notification_small_icon"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"24dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"24dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentBottom</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_alignParentEnd</span>=<span class="string">"true"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginBottom</span>=<span class="string">"5dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:layout_marginEnd</span>=<span class="string">"5dp"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:scaleType</span>=<span class="string">"fitXY"</span></span></div><div class="line"><span class="tag">        <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_launcher"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>2、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">final</span> UmengMessageHandler umengMessageHandler = <span class="keyword">new</span> UmengMessageHandler() &#123;</div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 自定义通知栏样式的回调方法，通知展示到通知栏时触发</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Notification <span class="title">getNotification</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">switch</span> (msg.builder_id) &#123;</div><div class="line">                <span class="keyword">case</span> <span class="number">1</span>:</div><div class="line">                    <span class="keyword">final</span> Notification.Builder builder;</div><div class="line">                    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123;</div><div class="line">                        <span class="keyword">final</span> NotificationChannel channel = <span class="keyword">new</span> NotificationChannel(<span class="string">"channel_id"</span>, <span class="string">"channel_name"</span>, NotificationManager.IMPORTANCE_HIGH);</div><div class="line">                        <span class="keyword">final</span> NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);</div><div class="line">                        <span class="keyword">if</span> (manager != <span class="keyword">null</span>) &#123;</div><div class="line">                            manager.createNotificationChannel(channel);</div><div class="line">                        &#125;</div><div class="line">                        builder = <span class="keyword">new</span> Notification.Builder(context, <span class="string">"channel_id"</span>);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        builder = <span class="keyword">new</span> Notification.Builder(context);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">final</span> RemoteViews remoteViews = <span class="keyword">new</span> RemoteViews(context.getPackageName(), R.layout.notification);</div><div class="line">                    remoteViews.setTextViewText(R.id.notification_title, msg.title);</div><div class="line">                    remoteViews.setTextViewText(R.id.notification_text, msg.text);</div><div class="line">                    remoteViews.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));</div><div class="line">                    remoteViews.setImageViewResource(R.id.notification_small_icon, getSmallIconId(context, msg));</div><div class="line">                    <span class="keyword">return</span> builder.setContent(remoteViews)</div><div class="line">                            .setSmallIcon(getSmallIconId(context, msg))</div><div class="line">                            .setTicker(msg.ticker)</div><div class="line">                            .setAutoCancel(<span class="keyword">true</span>)</div><div class="line">                            .build();</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    <span class="comment">// 默认为0，若填写的builder_id并不存在，也使用默认。</span></div><div class="line">                    <span class="keyword">return</span> <span class="keyword">super</span>.getNotification(context, msg);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    pushAgent.setMessageHandler(umengMessageHandler);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3、效果</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%903.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%904.jpeg" alt=""></p>
+<h2 id="设置通知到达时响铃、震动、呼吸灯策略"><a href="#设置通知到达时响铃、震动、呼吸灯策略" class="headerlink" title="设置通知到达时响铃、震动、呼吸灯策略"></a><strong>设置通知到达时响铃、震动、呼吸灯策略</strong></h2><ul>
+<li>MsgConstant.NOTIFICATION_PLAY_SERVER：通过服务端推送状态来设置客户端响铃、震动、呼吸灯的状态。</li>
+<li>MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE：不关心服务端推送状态，客户端都会响铃、震动、呼吸灯亮。</li>
+<li>MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE：不关心服务端推送状态，客户端不会响铃、震动、呼吸灯亮。</li>
+</ul>
+<p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SERVER);       <span class="comment">// 声音</span></div><div class="line">    pushAgent.setNotificationPlayLights(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);  <span class="comment">// 呼吸灯</span></div><div class="line">    pushAgent.setNotificationPlayVibrate(MsgConstant.NOTIFICATION_PLAY_SDK_DISABLE);<span class="comment">// 振动</span></div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="自定义通知栏声音"><a href="#自定义通知栏声音" class="headerlink" title="自定义通知栏声音"></a><strong>自定义通知栏声音</strong></h2><p><em>TODO 适配 8.0+。</em></p>
+<ul>
+<li>如果在发送后台没有指定通知栏的声音，SDK 将采用本地默认的声音，即 res/raw/umeng_push_notification_default_sound。若无此文件，则默认使用系统的 Notification 声音。</li>
+<li>若需要在线配置声音，则需先将与配置的声音文件放置在 res/raw 下，然后自发送后台指定声音的 id，即 R.raw.[sound] 里的 sound。</li>
+</ul>
+<h2 id="设置应用在前台时是否显示通知"><a href="#设置应用在前台时是否显示通知" class="headerlink" title="设置应用在前台时是否显示通知"></a><strong>设置应用在前台时是否显示通知</strong></h2><p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.setNotificaitonOnForeground(<span class="keyword">false</span>);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="自定义消息"><a href="#自定义消息" class="headerlink" title="自定义消息"></a><strong>自定义消息</strong></h2><p>自定义消息的内容存放在 UMessage.custom 字段里。</p>
+<p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">final</span> UmengMessageHandler umengMessageHandler = <span class="keyword">new</span> UmengMessageHandler() &#123;</div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         * 自定义消息的回调方法，通知被点击时触发</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dealWithCustomMessage</span><span class="params">(<span class="keyword">final</span> Context context, <span class="keyword">final</span> UMessage msg)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"dealWithCustomMessage()"</span>);</div><div class="line">            <span class="keyword">if</span> (Constant.DEBUG) &#123;</div><div class="line">                Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    pushAgent.setMessageHandler(umengMessageHandler);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置用户标签（Tag）"><a href="#设置用户标签（Tag）" class="headerlink" title="设置用户标签（Tag）"></a><strong>设置用户标签（Tag）</strong></h2><p>方便推送时按标签过滤。</p>
+<h3 id="添加标签"><a href="#添加标签" class="headerlink" title="添加标签"></a><strong>添加标签</strong></h3><p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.getTagManager().addTags(<span class="keyword">new</span> TagManager.TCallBack() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> isSuccess, <span class="keyword">final</span> ITagManager.Result result)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"isSuccess: "</span> + isSuccess + <span class="string">";result: "</span> + result.toString());</div><div class="line">        &#125;</div><div class="line">    &#125;, <span class="string">"movie"</span>, <span class="string">"sport"</span>);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%905.png" alt=""></p>
+<p>3、添加完成后，如果之前没有用户添加过该标签，现在就可以从控制台可以看到该标签并可以按该标签推送了：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%906.png" alt=""></p>
+<h3 id="获取服务器端的所有标签"><a href="#获取服务器端的所有标签" class="headerlink" title="获取服务器端的所有标签"></a><strong>获取服务器端的所有标签</strong></h3><p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.getTagManager().getTags(<span class="keyword">new</span> TagManager.TagListCallBack() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(<span class="keyword">boolean</span> isSuccess, List&lt;String&gt; result)</span> </span>&#123;</div><div class="line">            Log.i(TAG, result.toString());</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%907.png" alt=""></p>
+<h3 id="删除标签"><a href="#删除标签" class="headerlink" title="删除标签"></a><strong>删除标签</strong></h3><p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.getTagManager().deleteTags(<span class="keyword">new</span> TagManager.TCallBack() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> isSuccess, <span class="keyword">final</span> ITagManager.Result result)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"isSuccess: "</span> + isSuccess + <span class="string">";result: "</span> + result.toString());</div><div class="line">        &#125;</div><div class="line">    &#125;, <span class="string">"movie"</span>);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%908.png" alt=""></p>
+<h2 id="设置用户加权标签（Weighted-Tag）"><a href="#设置用户加权标签（Weighted-Tag）" class="headerlink" title="设置用户加权标签（Weighted Tag）"></a><strong>设置用户加权标签（Weighted Tag）</strong></h2><p><em>TODO 该功能尚未开通。</em></p>
+<h3 id="添加加权标签"><a href="#添加加权标签" class="headerlink" title="添加加权标签"></a><strong>添加加权标签</strong></h3><p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">final</span> Hashtable&lt;String, Integer&gt; hashtable = <span class="keyword">new</span> Hashtable&lt;&gt;();</div><div class="line">    hashtable.put(<span class="string">"财经"</span>, <span class="number">5</span>);</div><div class="line">    pushAgent.getTagManager().addWeightedTags(<span class="keyword">new</span> TagManager.TCallBack() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(<span class="keyword">final</span> <span class="keyword">boolean</span> isSuccess, <span class="keyword">final</span> ITagManager.Result result)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"isSuccess: "</span> + isSuccess + <span class="string">";result: "</span> + result.toString());</div><div class="line">        &#125;</div><div class="line">    &#125;, hashtable);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%909.png" alt=""></p>
+<h3 id="获取服务器端的所有加权标签"><a href="#获取服务器端的所有加权标签" class="headerlink" title="获取服务器端的所有加权标签"></a><strong>获取服务器端的所有加权标签</strong></h3><h3 id="删除加权标签"><a href="#删除加权标签" class="headerlink" title="删除加权标签"></a><strong>删除加权标签</strong></h3><h2 id="设置用户别名（Alias）"><a href="#设置用户别名（Alias）" class="headerlink" title="设置用户别名（Alias）"></a><strong>设置用户别名（Alias）</strong></h2><p>如果你的应用有自有的用户 id 体系，可以 在SDK 中通过 Alias 字段上传自有用户 id，按用户 id 向用户推送消息。<br>方便推送时按别名过滤（单点推送）。</p>
+<h3 id="添加用户别名"><a href="#添加用户别名" class="headerlink" title="添加用户别名"></a><strong>添加用户别名</strong></h3><p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.addAlias(<span class="string">"659xxx"</span>, <span class="string">"ALIAS_TYPE_DEMO"</span>, <span class="keyword">new</span> UTrack.ICallBack() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(<span class="keyword">boolean</span> isSuccess, String message)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"isSuccess: "</span> + isSuccess + <span class="string">";message: "</span> + message);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9010.png" alt=""></p>
+<h3 id="删除用户别名"><a href="#删除用户别名" class="headerlink" title="删除用户别名"></a><strong>删除用户别名</strong></h3><p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.deleteAlias(<span class="string">"659xxx"</span>, <span class="string">"ALIAS_TYPE_DEMO"</span>, <span class="keyword">new</span> UTrack.ICallBack() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(<span class="keyword">boolean</span> isSuccess, String message)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"isSuccess: "</span> + isSuccess + <span class="string">";message: "</span> + message);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9011.png" alt=""></p>
+<h2 id="自定义参数"><a href="#自定义参数" class="headerlink" title="自定义参数"></a><strong>自定义参数</strong></h2><h3 id="SDK-回调"><a href="#SDK-回调" class="headerlink" title="SDK 回调"></a><strong>SDK 回调</strong></h3><h4 id="getNotification-Context-context-UMessage-msg"><a href="#getNotification-Context-context-UMessage-msg" class="headerlink" title="getNotification(Context context, UMessage msg)"></a><strong>getNotification(Context context, UMessage msg)</strong></h4><p>通知展示到通知栏时触发。</p>
+<p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">final</span> UmengMessageHandler umengMessageHandler = <span class="keyword">new</span> UmengMessageHandler() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Notification <span class="title">getNotification</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"getNotification()"</span>);</div><div class="line">            <span class="keyword">if</span> (msg != <span class="keyword">null</span> &amp;&amp; msg.extra != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">for</span> (Map.Entry&lt;String, String&gt; entry : msg.extra.entrySet()) &#123;</div><div class="line">                    <span class="keyword">final</span> String key = entry.getKey();</div><div class="line">                    <span class="keyword">final</span> String value = entry.getValue();</div><div class="line">                    Log.i(TAG, <span class="string">"key: "</span> + key + <span class="string">";value: "</span> + value);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    pushAgent.setMessageHandler(umengMessageHandler);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、Logcat 查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9012.png" alt=""></p>
+<h4 id="dealWithCustomAction-Context-context-UMessage-msg"><a href="#dealWithCustomAction-Context-context-UMessage-msg" class="headerlink" title="dealWithCustomAction(Context context, UMessage msg)"></a><strong>dealWithCustomAction(Context context, UMessage msg)</strong></h4><p>通知被点击时触发。</p>
+<p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">final</span> UmengNotificationClickHandler umengNotificationClickHandler = <span class="keyword">new</span> UmengNotificationClickHandler() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dealWithCustomAction</span><span class="params">(Context context, UMessage msg)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"dealWithCustomAction()"</span>);</div><div class="line">            <span class="keyword">if</span> (msg != <span class="keyword">null</span> &amp;&amp; msg.extra != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">for</span> (Map.Entry&lt;String, String&gt; entry : msg.extra.entrySet()) &#123;</div><div class="line">                    <span class="keyword">final</span> String key = entry.getKey();</div><div class="line">                    <span class="keyword">final</span> String value = entry.getValue();</div><div class="line">                    Log.i(TAG, <span class="string">"key: "</span> + key + <span class="string">";value: "</span> + value);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">    pushAgent.setNotificationClickHandler(umengNotificationClickHandler);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Intent-回调"><a href="#Intent-回调" class="headerlink" title="Intent 回调"></a><strong>Intent 回调</strong></h3><p>1、修改 Activity：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onResume();</div><div class="line">    <span class="keyword">final</span> Bundle bundle = getIntent().getExtras();</div><div class="line">    <span class="keyword">if</span> (bundle != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">final</span> Set&lt;String&gt; keySet = bundle.keySet();</div><div class="line">        <span class="keyword">for</span> (String key : keySet) &#123;</div><div class="line">            <span class="keyword">final</span> String value = bundle.getString(key);</div><div class="line">            Log.i(TAG, <span class="string">"key: "</span> + key + <span class="string">";value: "</span> + value);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onNewIntent</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onNewIntent(intent);</div><div class="line">    setIntent(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、修改 Activity 启动方式为 singleTask。</p>
+<p>3、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9013.png" alt=""></p>
+<h2 id="自定义资源包名"><a href="#自定义资源包名" class="headerlink" title="自定义资源包名"></a><strong>自定义资源包名</strong></h2><p>修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initUPush</span><span class="params">()</span> </span>&#123;</div><div class="line">    UMConfigure.init(<span class="keyword">this</span>, <span class="string">"5xxxxxxxxxxxxxxxxxxxxxx0"</span>, AppUtil.getMetaDataValueFromApplication(<span class="keyword">this</span>, <span class="string">"UMENG_CHANNEL"</span>), UMConfigure.DEVICE_TYPE_PHONE, <span class="string">"4xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx3"</span>);</div><div class="line">    <span class="keyword">final</span> PushAgent pushAgent = PushAgent.getInstance(<span class="keyword">this</span>);</div><div class="line">    pushAgent.setResourcePackageName(<span class="string">"com.xx.xx"</span>);</div><div class="line">    <span class="comment">// 注册</span></div><div class="line">    pushAgent.register(<span class="keyword">new</span> IUmengRegisterCallback() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(String deviceToken)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"device token: "</span> + deviceToken);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">            Log.i(TAG, <span class="string">"register failed: "</span> + s + <span class="string">" "</span> + s1);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="关闭推送"><a href="#关闭推送" class="headerlink" title="关闭推送"></a><strong>关闭推送</strong></h2><p>不能在刚刚注册后开启或关闭推送。</p>
+<p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">pushAgent.disable(<span class="keyword">new</span> IUmengCallback() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</div><div class="line">        Log.i(TAG, <span class="string">"onSuccess()"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">        Log.i(TAG, <span class="string">"onFailure(s"</span> + s + <span class="string">", "</span> + s1 + <span class="string">")"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9014.png" alt=""></p>
+<h2 id="开启推送"><a href="#开启推送" class="headerlink" title="开启推送"></a><strong>开启推送</strong></h2><p>不能在刚刚注册后开启或关闭推送。</p>
+<p>1、修改 Application：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">pushAgent.enable(<span class="keyword">new</span> IUmengCallback() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">()</span> </span>&#123;</div><div class="line">        Log.i(TAG, <span class="string">"onSuccess()"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(String s, String s1)</span> </span>&#123;</div><div class="line">        Log.i(TAG, <span class="string">"onFailure(s"</span> + s + <span class="string">", "</span> + s1 + <span class="string">")"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>2、断点查看：</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9015.png" alt=""></p>
+<h2 id="支持多包名"><a href="#支持多包名" class="headerlink" title="支持多包名"></a><strong>支持多包名</strong></h2><p>若一个 APP 针对不同渠道有不同的包名，则可通过开通多包名支持一个 AppKey 对应多个包名发送消息。<br>如果同一设备安装同一应用的不同包名的多个安装包，只有最后安装的应用可以正常收到推送消息。</p>
+<p><img src="http://otkw6sse5.bkt.clouddn.com/U-Push-%E9%9B%86%E6%88%9016.png" alt=""></p>
+<h2 id="完全自定义处理（透传）"><a href="#完全自定义处理（透传）" class="headerlink" title="完全自定义处理（透传）"></a><strong>完全自定义处理（透传）</strong></h2><p><em>TODO 未实现。</em></p>
+<p>使用完全自定义处理后，PushSDK 只负责下发消息体且只统计送达数，展示逻辑需由开发者自己写代码实现，点击数和忽略数需由开发者调用 UTrack 类的 trackMsgClick 和 trackMsgDismissed 方法进行统计。</p>
+<h2 id="应用内消息"><a href="#应用内消息" class="headerlink" title="应用内消息"></a><strong>应用内消息</strong></h2><h3 id="全屏消息"><a href="#全屏消息" class="headerlink" title="全屏消息"></a><strong>全屏消息</strong></h3><p><em>TODO 未实现。</em></p>
+<p>Activity 需要继承 UmengSplashMessageActivity，而不是实现某个接口。</p>
+<h3 id="插屏消息"><a href="#插屏消息" class="headerlink" title="插屏消息"></a><strong>插屏消息</strong></h3><p><em>TODO 未实现。</em></p>
+<h3 id="自定义插屏"><a href="#自定义插屏" class="headerlink" title="自定义插屏"></a><strong>自定义插屏</strong></h3><p><em>TODO 未实现。</em></p>
+<h3 id="纯文本"><a href="#纯文本" class="headerlink" title="纯文本"></a><strong>纯文本</strong></h3><p><em>TODO 未实现。</em></p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/08/31/U-Push-集成/">U-Push 集成</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2018年08月31日 - 22:08</p>
+  <p><span>最后更新:</span>2018年08月31日 - 22:08</p>
+  <p><span>原始链接:</span><a href="/2018/08/31/U-Push-集成/" title="U-Push 集成">http://www.weichao.io/2018/08/31/U-Push-集成/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/08/31/U-Push-集成/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/24/U-Push-控制台可配置参数及其对应效果的测试/" rel="next" title="U-Push 控制台可配置参数及其对应效果的测试">
+                <i class="fa fa-chevron-left"></i> U-Push 控制台可配置参数及其对应效果的测试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在控制台创建-app"><span class="nav-number">2.</span> <span class="nav-text">在控制台创建 app</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#导入-PushSDK"><span class="nav-number">3.</span> <span class="nav-text">导入 PushSDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化-PushSDK"><span class="nav-number">4.</span> <span class="nav-text">初始化 PushSDK</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#统计应用启动数据"><span class="nav-number">5.</span> <span class="nav-text">统计应用启动数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#混淆配置"><span class="nav-number">6.</span> <span class="nav-text">混淆配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#功能集成"><span class="nav-number">7.</span> <span class="nav-text">功能集成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#设置通知点击后的行为"><span class="nav-number">7.1.</span> <span class="nav-text">设置通知点击后的行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置是否展示通知"><span class="nav-number">7.2.</span> <span class="nav-text">设置是否展示通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置通知免打扰时间段"><span class="nav-number">7.3.</span> <span class="nav-text">设置通知免打扰时间段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置通知冷却时间"><span class="nav-number">7.4.</span> <span class="nav-text">设置通知冷却时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置合并通知数"><span class="nav-number">7.5.</span> <span class="nav-text">设置合并通知数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义通知栏图标"><span class="nav-number">7.6.</span> <span class="nav-text">自定义通知栏图标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义通知栏样式"><span class="nav-number">7.7.</span> <span class="nav-text">自定义通知栏样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置通知到达时响铃、震动、呼吸灯策略"><span class="nav-number">7.8.</span> <span class="nav-text">设置通知到达时响铃、震动、呼吸灯策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义通知栏声音"><span class="nav-number">7.9.</span> <span class="nav-text">自定义通知栏声音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置应用在前台时是否显示通知"><span class="nav-number">7.10.</span> <span class="nav-text">设置应用在前台时是否显示通知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义消息"><span class="nav-number">7.11.</span> <span class="nav-text">自定义消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置用户标签（Tag）"><span class="nav-number">7.12.</span> <span class="nav-text">设置用户标签（Tag）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加标签"><span class="nav-number">7.12.1.</span> <span class="nav-text">添加标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取服务器端的所有标签"><span class="nav-number">7.12.2.</span> <span class="nav-text">获取服务器端的所有标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除标签"><span class="nav-number">7.12.3.</span> <span class="nav-text">删除标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置用户加权标签（Weighted-Tag）"><span class="nav-number">7.13.</span> <span class="nav-text">设置用户加权标签（Weighted Tag）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加加权标签"><span class="nav-number">7.13.1.</span> <span class="nav-text">添加加权标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取服务器端的所有加权标签"><span class="nav-number">7.13.2.</span> <span class="nav-text">获取服务器端的所有加权标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除加权标签"><span class="nav-number">7.13.3.</span> <span class="nav-text">删除加权标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置用户别名（Alias）"><span class="nav-number">7.14.</span> <span class="nav-text">设置用户别名（Alias）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加用户别名"><span class="nav-number">7.14.1.</span> <span class="nav-text">添加用户别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除用户别名"><span class="nav-number">7.14.2.</span> <span class="nav-text">删除用户别名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义参数"><span class="nav-number">7.15.</span> <span class="nav-text">自定义参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SDK-回调"><span class="nav-number">7.15.1.</span> <span class="nav-text">SDK 回调</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getNotification-Context-context-UMessage-msg"><span class="nav-number">7.15.1.1.</span> <span class="nav-text">getNotification(Context context, UMessage msg)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dealWithCustomAction-Context-context-UMessage-msg"><span class="nav-number">7.15.1.2.</span> <span class="nav-text">dealWithCustomAction(Context context, UMessage msg)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Intent-回调"><span class="nav-number">7.15.2.</span> <span class="nav-text">Intent 回调</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义资源包名"><span class="nav-number">7.16.</span> <span class="nav-text">自定义资源包名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭推送"><span class="nav-number">7.17.</span> <span class="nav-text">关闭推送</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启推送"><span class="nav-number">7.18.</span> <span class="nav-text">开启推送</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持多包名"><span class="nav-number">7.19.</span> <span class="nav-text">支持多包名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完全自定义处理（透传）"><span class="nav-number">7.20.</span> <span class="nav-text">完全自定义处理（透传）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用内消息"><span class="nav-number">7.21.</span> <span class="nav-text">应用内消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全屏消息"><span class="nav-number">7.21.1.</span> <span class="nav-text">全屏消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插屏消息"><span class="nav-number">7.21.2.</span> <span class="nav-text">插屏消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义插屏"><span class="nav-number">7.21.3.</span> <span class="nav-text">自定义插屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#纯文本"><span class="nav-number">7.21.4.</span> <span class="nav-text">纯文本</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 136.0k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
