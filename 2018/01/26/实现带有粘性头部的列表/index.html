@@ -107,16 +107,16 @@
 <meta property="og:site_name" content="『魏超』的 blog">
 <meta property="og:description" content="Reference Android-使用 RecyclerView 的 ItemDecoration 实现炫酷的吸顶效果   实现效果  实现过程获取数据例如使用 Retrofit 访问接口获取数据：http://api.meituan.com/mmdb/movie/v2/list/rt/order/coming.json?ci=1&amp;amp;limit=12&amp;amp;token=&amp;amp;__vh">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a69f98ffbfdc162c1000000.gif">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a14b2fbfdc162c1000004.jpg">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1dcdfbfdc162c1000006.jpg">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1d2cfbfdc162c1000005.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1e68fbfdc162c1000007.jpg">
-<meta property="og:updated_time" content="2018-01-30T14:32:47.161Z">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a69f98ffbfdc162c1000000.gif">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a14b2fbfdc162c1000004.jpg">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1dcdfbfdc162c1000006.jpg">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1d2cfbfdc162c1000005.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1e68fbfdc162c1000007.jpg">
+<meta property="og:updated_time" content="2018-12-07T11:03:52.473Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现带有粘性头部的列表">
 <meta name="twitter:description" content="Reference Android-使用 RecyclerView 的 ItemDecoration 实现炫酷的吸顶效果   实现效果  实现过程获取数据例如使用 Retrofit 访问接口获取数据：http://api.meituan.com/mmdb/movie/v2/list/rt/order/coming.json?ci=1&amp;amp;limit=12&amp;amp;token=&amp;amp;__vh">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a69f98ffbfdc162c1000000.gif">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a69f98ffbfdc162c1000000.gif">
 
 
 
@@ -384,7 +384,7 @@
 <li><a href="http://blog.csdn.net/cjm2484836553/article/details/53453982" title="http://blog.csdn.net/cjm2484836553/article/details/53453982" target="_blank" rel="external">Android-使用 RecyclerView 的 ItemDecoration 实现炫酷的吸顶效果</a></li>
 </ul>
 <hr>
-<h1 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a><strong>实现效果</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a69f98ffbfdc162c1000000.gif" alt=""></p>
+<h1 id="实现效果"><a href="#实现效果" class="headerlink" title="实现效果"></a><strong>实现效果</strong></h1><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a69f98ffbfdc162c1000000.gif" alt=""></p>
 <hr>
 <h1 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a><strong>实现过程</strong></h1><h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a><strong>获取数据</strong></h2><p>例如使用 Retrofit 访问接口获取数据：<a href="http://api.meituan.com/mmdb/movie/v2/list/rt/order/coming.json?ci=1&amp;limit=12&amp;token=&amp;__vhost=api.maoyan.com&amp;utm_campaign=AmovieBmovieCD-1&amp;movieBundleVersion=6801&amp;utm_source=xiaomi&amp;utm_medium=android&amp;utm_term=6.8.0&amp;utm_content=868030022327462&amp;net=255&amp;dModel=MI%205&amp;uuid=0894DE03C76F6045D55977B6D4E32B7F3C6AAB02F9CEA042987B380EC5687C43&amp;lat=40.100673&amp;lng=116.378619&amp;__skck=6a375bce8c66a0dc293860dfa83833ef&amp;__skts=1463704714271&amp;__skua=7e01cf8dd30a179800a7a93979b430b2&amp;__skno=1a0b4a9b-44ec-42fc-b110-ead68bcc2824&amp;__skcy=sXcDKbGi20CGXQPPZvhCU3%2FkzdE%3D" target="_blank" rel="external">http://api.meituan.com/mmdb/movie/v2/list/rt/order/coming.json?ci=1&amp;limit=12&amp;token=&amp;__vhost=api.maoyan.com&amp;utm_campaign=AmovieBmovieCD-1&amp;movieBundleVersion=6801&amp;utm_source=xiaomi&amp;utm_medium=android&amp;utm_term=6.8.0&amp;utm_content=868030022327462&amp;net=255&amp;dModel=MI%205&amp;uuid=0894DE03C76F6045D55977B6D4E32B7F3C6AAB02F9CEA042987B380EC5687C43&amp;lat=40.100673&amp;lng=116.378619&amp;__skck=6a375bce8c66a0dc293860dfa83833ef&amp;__skts=1463704714271&amp;__skua=7e01cf8dd30a179800a7a93979b430b2&amp;__skno=1a0b4a9b-44ec-42fc-b110-ead68bcc2824&amp;__skcy=sXcDKbGi20CGXQPPZvhCU3%2FkzdE%3D</a></p>
 <p>同时可以将获取到的 JSON 格式的数据封装成 Bean 对象。</p>
@@ -407,16 +407,16 @@
 <p>遍历 RecyclerView 上能显示出的所有元素：</p>
 <p>（1）第一个元素</p>
 <p>判断该元素是不是该组的最后一个元素，并且其剩余高度已经小于悬浮栏的高度，对应的状态是：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a14b2fbfdc162c1000004.jpg" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a14b2fbfdc162c1000004.jpg" alt=""></p>
 <p>悬浮栏绘制的高度不变，依然是 barTopGap，但是绘制的上下界变了，上界从 RecyclerView 外的区域开始绘制。</p>
 <p>否则，保持在 RecyclerView 的顶部有一高度为 barTopGap 的悬浮栏，对应的状态是：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1dcdfbfdc162c1000006.jpg" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1dcdfbfdc162c1000006.jpg" alt=""></p>
 <p>（2）非第一个元素</p>
 <p>判断该元素是不适该组的第一个元素，对应的状态是：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1d2cfbfdc162c1000005.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1d2cfbfdc162c1000005.png" alt=""></p>
 <p>显示标题，标题对应的悬浮栏位置在该元素的上方，高度为 barTopGap。</p>
 <p>否则，不需要处理，对应的状态是：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1e68fbfdc162c1000007.jpg" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A85a6a1e68fbfdc162c1000007.jpg" alt=""></p>
 <p>2、判断当前位置的元素是否为该组的最后一个元素的方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isLastInGroup</span><span class="params">(<span class="keyword">int</span> pos)</span> </span>&#123;</div><div class="line">    String groupId = mCallback.getGroupId(pos);<span class="comment">// 当前这个 item 的 id</span></div><div class="line">    String nextGroupId = mCallback.getGroupId(pos + <span class="number">1</span>);<span class="comment">// 后一个 item 的 id</span></div><div class="line">    Log.d(TAG, <span class="string">"pos:"</span> + pos + <span class="string">", "</span> + <span class="string">"groupId:"</span> + groupId + <span class="string">", "</span> + <span class="string">"nextGroupId:"</span> + nextGroupId);</div><div class="line">    <span class="keyword">return</span> !groupId.equals(nextGroupId);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <hr>
@@ -439,7 +439,7 @@
   <p><span>本文标题:</span><a href="/2018/01/26/实现带有粘性头部的列表/">实现带有粘性头部的列表</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2018年01月26日 - 02:01</p>
-  <p><span>最后更新:</span>2018年01月30日 - 22:01</p>
+  <p><span>最后更新:</span>2018年12月07日 - 19:12</p>
   <p><span>原始链接:</span><a href="/2018/01/26/实现带有粘性头部的列表/" title="实现带有粘性头部的列表">http://www.weichao.io/2018/01/26/实现带有粘性头部的列表/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/01/26/实现带有粘性头部的列表/"  aria-label="复制成功！"></i></span>
   </p>

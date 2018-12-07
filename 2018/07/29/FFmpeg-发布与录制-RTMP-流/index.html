@@ -107,17 +107,17 @@
 <meta property="og:site_name" content="『魏超』的 blog">
 <meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTMP 的参数   参数 类型 说明     rtmp_app 字符串 RTMP 流发布点，又称 APP   rtmp_buffer 整数 客户端 buffer 大小（单位：毫秒），默认为 3 秒   rtmp_conn 字符串 在 RTMP 的 Connect 命令中增加自定义 AMF 数据   rtmp_flashv">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%812.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%813.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%814.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%815.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%816.png">
-<meta property="og:updated_time" content="2018-07-29T07:38:03.035Z">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%812.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%813.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%814.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%815.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%816.png">
+<meta property="og:updated_time" content="2018-12-07T11:03:51.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFmpeg 发布与录制 RTMP 流">
 <meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   FFmpeg 操作 RTMP 的参数   参数 类型 说明     rtmp_app 字符串 RTMP 流发布点，又称 APP   rtmp_buffer 整数 客户端 buffer 大小（单位：毫秒），默认为 3 秒   rtmp_conn 字符串 在 RTMP 的 Connect 命令中增加自定义 AMF 数据   rtmp_flashv">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png">
 
 
 
@@ -480,27 +480,27 @@
 <h1 id="参数使用示例"><a href="#参数使用示例" class="headerlink" title="参数使用示例"></a><strong>参数使用示例</strong></h1><h2 id="rtmp-app"><a href="#rtmp-app" class="headerlink" title="rtmp_app"></a><strong>rtmp_app</strong></h2><h3 id="推流"><a href="#推流" class="headerlink" title="推流"></a><strong>推流</strong></h3><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -re -i sample.mp4 -c copy -f flv -rtmp_app live rtmp://publish.chinaffmpeg.com</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%811.png" alt=""></p>
 <h3 id="拉流"><a href="#拉流" class="headerlink" title="拉流"></a><strong>拉流</strong></h3><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -rtmp_app live -i rtmp://publish.chinaffmpeg.com -c copy -f flv output.flv</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%812.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%812.png" alt=""></p>
 <h2 id="rtmp-playpath"><a href="#rtmp-playpath" class="headerlink" title="rtmp_playpath"></a><strong>rtmp_playpath</strong></h2><h3 id="推流-1"><a href="#推流-1" class="headerlink" title="推流"></a><strong>推流</strong></h3><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -re -i guibu.flv -c copy -f flv -rtmp_app live -rtmp_playpath class rtmp://publish.chinaffmpeg.com</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%813.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%813.png" alt=""></p>
 <h3 id="拉流-1"><a href="#拉流-1" class="headerlink" title="拉流"></a><strong>拉流</strong></h3><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -rtmp_app live -rtmp_playpath class -i rtmp://publish.chinaffmpeg.com -c copy -f flv output.flv</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%814.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%814.png" alt=""></p>
 <h2 id="省略-rtmp-app-和-rtmp-playpath-的写法"><a href="#省略-rtmp-app-和-rtmp-playpath-的写法" class="headerlink" title="省略 rtmp_app 和 rtmp_playpath 的写法"></a><strong>省略 rtmp_app 和 rtmp_playpath 的写法</strong></h2><h3 id="推流-2"><a href="#推流-2" class="headerlink" title="推流"></a><strong>推流</strong></h3><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i guibu.flv -c copy -f flv rtmp://publish.chinaffmpeg.com/live/class</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%815.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%815.png" alt=""></p>
 <h3 id="拉流-2"><a href="#拉流-2" class="headerlink" title="拉流"></a><strong>拉流</strong></h3><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i rtmp://publish.chinaffmpeg.com/live/class -c copy -f flv output.flv</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%816.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%816.png" alt=""></p>
 <hr>
 
       
@@ -519,7 +519,7 @@
   <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-发布与录制-RTMP-流/">FFmpeg 发布与录制 RTMP 流</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2018年07月29日 - 15:07</p>
-  <p><span>最后更新:</span>2018年07月29日 - 15:07</p>
+  <p><span>最后更新:</span>2018年12月07日 - 19:12</p>
   <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-发布与录制-RTMP-流/" title="FFmpeg 发布与录制 RTMP 流">http://www.weichao.io/2018/07/29/FFmpeg-发布与录制-RTMP-流/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-发布与录制-RTMP-流/"  aria-label="复制成功！"></i></span>
   </p>

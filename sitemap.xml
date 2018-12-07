@@ -2,23 +2,240 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.weichao.io/2018/12/06/Flutter-%E5%AD%A6%E4%B9%A0%EF%BC%880%EF%BC%89/</loc>
+    <loc>http://www.weichao.io/2018/03/04/%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6/</loc>
     
-    <lastmod>2018-12-06T13:52:02.055Z</lastmod>
+    <lastmod>2018-12-07T11:03:52.531Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/08/16/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.487Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2017/10/15/%E7%BC%96%E8%AF%91%E3%80%81%E8%BF%90%E8%A1%8C%E6%BA%90%E7%A0%81/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.486Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2017/10/22/%E7%9B%B8%E6%9C%BA%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.484Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/02/12/%E7%99%BE%E5%88%86%E6%AF%94%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.478Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/02/07/%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8D%A2%E8%A1%8C%E8%A7%84%E5%88%99%E7%9A%84%E6%96%87%E6%9C%AC%E6%A1%86/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.475Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/01/26/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A8/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.473Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/02/04/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E5%88%86%E9%9A%94%E7%BA%BF%E7%9A%84%E6%B5%81%E5%B8%83%E5%B1%80/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.440Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/02/24/%E5%AE%9E%E7%8E%B0%E5%90%8C%E5%B1%8F/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.384Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/08/16/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B6/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.380Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2017/11/15/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.367Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/05/13/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.366Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/05/12/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.364Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.weichao.io/2018/08/31/U-Push-%E9%9B%86%E6%88%90/</loc>
     
-    <lastmod>2018-08-31T14:18:34.777Z</lastmod>
+    <lastmod>2018-12-07T11:03:52.362Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.weichao.io/2018/08/24/U-Push-%E6%8E%A7%E5%88%B6%E5%8F%B0%E5%8F%AF%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%E5%8F%8A%E5%85%B6%E5%AF%B9%E5%BA%94%E6%95%88%E6%9E%9C%E7%9A%84%E6%B5%8B%E8%AF%95/</loc>
     
-    <lastmod>2018-08-24T13:22:39.727Z</lastmod>
+    <lastmod>2018-12-07T11:03:52.360Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/02/27/ScreenRecorder-%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.324Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2017/10/10/Pixel-XL-%E8%A7%A3%E9%94%81/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.320Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2017/10/11/Pixel-XL-%E5%88%B7%E6%9C%BA/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.279Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/05/16/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.277Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/01/23/Hybrid-App-%E8%BF%94%E5%9B%9E%E9%94%AE%E5%A4%84%E7%90%86/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.248Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.168Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/03/03/HTTP-%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.161Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/05/20/HLS-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.085Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2017/12/31/Fragment-%E8%BF%94%E5%9B%9E%E9%94%AE%E5%A4%84%E7%90%86/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.076Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/12/06/Flutter-%E5%AD%A6%E4%B9%A0%EF%BC%880%EF%BC%89/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.070Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/02/28/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F/</loc>
+    
+    <lastmod>2018-12-07T11:03:52.067Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E8%BE%93%E5%87%BA-MP3/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.968Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E8%BE%93%E5%87%BA-AAC/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.966Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/05/27/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H265/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.964Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/05/11/FFmpeg-%E7%AE%80%E4%BB%8B/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.962Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E5%BD%95%E5%88%B6-RTSP-%E6%B5%81/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.871Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%81/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.867Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%81/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.866Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.weichao.io/2018/02/10/ConstraintLayout-%E5%AD%A6%E4%B9%A0/</loc>
+    
+    <lastmod>2018-12-07T11:03:51.807Z</lastmod>
     
   </url>
   
@@ -30,107 +247,9 @@
   </url>
   
   <url>
-    <loc>http://www.weichao.io/2018/08/16/%E5%8D%8E%E4%B8%BA%E5%BC%80%E5%8F%91%E8%80%85%E8%81%94%E7%9B%9F-MDM-%E5%92%8C-ROM-%E5%AE%9A%E5%88%B6/</loc>
-    
-    <lastmod>2018-08-16T15:22:11.385Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/08/16/%E8%85%BE%E8%AE%AF%E6%B5%8F%E8%A7%88%E6%9C%8D%E5%8A%A1%EF%BC%88TBS%EF%BC%89bug-%E5%8F%8D%E9%A6%88%E6%B5%81%E7%A8%8B/</loc>
-    
-    <lastmod>2018-08-16T15:08:30.830Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E8%BE%93%E5%87%BA-AAC/</loc>
-    
-    <lastmod>2018-07-29T07:55:56.964Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E5%BD%95%E5%88%B6-HTTP-%E6%B5%81/</loc>
-    
-    <lastmod>2018-07-29T07:44:51.746Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E5%BD%95%E5%88%B6-RTSP-%E6%B5%81/</loc>
-    
-    <lastmod>2018-07-29T07:40:41.702Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E5%8F%91%E5%B8%83%E4%B8%8E%E5%BD%95%E5%88%B6-RTMP-%E6%B5%81/</loc>
-    
-    <lastmod>2018-07-29T07:38:03.035Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/07/29/FFmpeg-%E8%BE%93%E5%87%BA-MP3/</loc>
-    
-    <lastmod>2018-07-29T03:18:28.948Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/05/27/FFmpeg-%E8%BD%AF%E7%BC%96%E7%A0%81-H264%E3%80%81H265/</loc>
-    
-    <lastmod>2018-05-27T08:47:25.948Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/05/12/ffmpeg-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/</loc>
-    
-    <lastmod>2018-05-22T16:02:37.341Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/05/20/HLS-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F/</loc>
-    
-    <lastmod>2018-05-20T15:18:42.303Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/02/28/FLV-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F/</loc>
-    
-    <lastmod>2018-05-19T14:41:25.875Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/05/16/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F/</loc>
-    
-    <lastmod>2018-05-17T14:57:24.002Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.weichao.io/2018/05/16/M3U8-%E8%A7%86%E9%A2%91%E5%88%97%E8%A1%A8%E6%A0%BC%E5%BC%8F/</loc>
     
     <lastmod>2018-05-16T15:55:30.094Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/05/13/ffplay-%E5%91%BD%E4%BB%A4%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD/</loc>
-    
-    <lastmod>2018-05-13T05:19:22.662Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/05/11/FFmpeg-%E7%AE%80%E4%BB%8B/</loc>
-    
-    <lastmod>2018-05-13T05:07:36.984Z</lastmod>
     
   </url>
   
@@ -149,128 +268,9 @@
   </url>
   
   <url>
-    <loc>http://www.weichao.io/2018/03/04/%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E6%9C%BA%E5%88%B6/</loc>
-    
-    <lastmod>2018-03-11T01:11:22.561Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/03/03/HTTP-%E5%AD%A6%E4%B9%A0/</loc>
-    
-    <lastmod>2018-03-03T09:50:54.973Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/02/27/ScreenRecorder-%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/</loc>
-    
-    <lastmod>2018-02-28T14:38:54.873Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/02/24/%E5%AE%9E%E7%8E%B0%E5%90%8C%E5%B1%8F/</loc>
-    
-    <lastmod>2018-02-24T16:05:07.610Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/02/12/%E7%99%BE%E5%88%86%E6%AF%94%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%88%E5%AF%B9%E6%AF%94/</loc>
-    
-    <lastmod>2018-02-16T10:29:40.803Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.weichao.io/2018/02/16/AutoLayout-%E4%BB%A3%E7%A0%81%E8%A7%A3%E8%AF%BB/</loc>
     
     <lastmod>2018-02-16T08:12:33.192Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/02/10/ConstraintLayout-%E5%AD%A6%E4%B9%A0/</loc>
-    
-    <lastmod>2018-02-09T17:59:05.146Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/02/07/%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8D%A2%E8%A1%8C%E8%A7%84%E5%88%99%E7%9A%84%E6%96%87%E6%9C%AC%E6%A1%86/</loc>
-    
-    <lastmod>2018-02-08T14:11:58.055Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/02/04/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E5%88%86%E9%9A%94%E7%BA%BF%E7%9A%84%E6%B5%81%E5%B8%83%E5%B1%80/</loc>
-    
-    <lastmod>2018-02-06T14:08:32.169Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2017/10/22/%E7%9B%B8%E6%9C%BA%E7%9A%84%E5%88%86%E8%BE%A8%E7%8E%87/</loc>
-    
-    <lastmod>2018-01-30T14:42:50.614Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2017/11/15/%E4%BD%BF%E7%94%A8-Service-%E8%A7%A3%E8%80%A6-Activity/</loc>
-    
-    <lastmod>2018-01-30T14:36:55.215Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/01/23/Hybrid-App-%E8%BF%94%E5%9B%9E%E9%94%AE%E5%A4%84%E7%90%86/</loc>
-    
-    <lastmod>2018-01-30T14:36:08.253Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2018/01/26/%E5%AE%9E%E7%8E%B0%E5%B8%A6%E6%9C%89%E7%B2%98%E6%80%A7%E5%A4%B4%E9%83%A8%E7%9A%84%E5%88%97%E8%A1%A8/</loc>
-    
-    <lastmod>2018-01-30T14:32:47.161Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2017/12/31/Fragment-%E8%BF%94%E5%9B%9E%E9%94%AE%E5%A4%84%E7%90%86/</loc>
-    
-    <lastmod>2018-01-30T14:07:15.376Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2017/07/24/Hexo-GitHub-Pages-%E6%90%AD%E5%BB%BA-blog/</loc>
-    
-    <lastmod>2018-01-30T13:58:05.679Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2017/10/15/%E7%BC%96%E8%AF%91%E3%80%81%E8%BF%90%E8%A1%8C%E6%BA%90%E7%A0%81/</loc>
-    
-    <lastmod>2017-10-23T14:21:04.161Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2017/10/10/Pixel-XL-%E8%A7%A3%E9%94%81/</loc>
-    
-    <lastmod>2017-10-23T14:21:04.158Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.weichao.io/2017/10/11/Pixel-XL-%E5%88%B7%E6%9C%BA/</loc>
-    
-    <lastmod>2017-10-23T14:21:04.157Z</lastmod>
     
   </url>
   

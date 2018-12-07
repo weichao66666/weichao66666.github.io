@@ -107,15 +107,15 @@
 <meta property="og:site_name" content="『魏超』的 blog">
 <meta property="og:description" content="Reference 《FFmpeg 从入门到精通》 Mp4文件格式解析 ffmpeg demux mp4   MP4 的 box 树 MP4 常用参考标准排列方式：    一级 二级 三级 四级 五级 六级 必须性 说明     ftyp      是 文件类型   pdin      否 下载进度信息   moov      是 音视频数据的 metadata 信息如果希望在视频点播中 MP4">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F2.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F3.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F4.png">
-<meta property="og:updated_time" content="2018-05-17T14:57:24.002Z">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F2.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F3.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F4.png">
+<meta property="og:updated_time" content="2018-12-07T11:03:52.277Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MP4 封装格式">
 <meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》 Mp4文件格式解析 ffmpeg demux mp4   MP4 的 box 树 MP4 常用参考标准排列方式：    一级 二级 三级 四级 五级 六级 必须性 说明     ftyp      是 文件类型   pdin      否 下载进度信息   moov      是 音视频数据的 metadata 信息如果希望在视频点播中 MP4">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png">
 
 
 
@@ -385,7 +385,7 @@
 <li><a href="https://blog.csdn.net/wenmang1977/article/details/7736238" title="https://blog.csdn.net/wenmang1977/article/details/7736238" target="_blank" rel="external">ffmpeg demux mp4</a></li>
 </ul>
 <hr>
-<h1 id="MP4-的-box-树"><a href="#MP4-的-box-树" class="headerlink" title="MP4 的 box 树"></a><strong>MP4 的 box 树</strong></h1><p><img src="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png" alt=""></p>
+<h1 id="MP4-的-box-树"><a href="#MP4-的-box-树" class="headerlink" title="MP4 的 box 树"></a><strong>MP4 的 box 树</strong></h1><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F1.png" alt=""></p>
 <p>MP4 常用参考标准排列方式：</p>
 <table>
 <thead>
@@ -1216,7 +1216,7 @@
 <p>一个 box 是由 box header 和 box 里面包含的数据组成。</p>
 <h2 id="box-header"><a href="#box-header" class="headerlink" title="box header"></a><strong>box header</strong></h2><p>box header 中包含了 box 的大小（size）和类型（type）等信息。<br>其中，size 指明了整个 box 所占用的大小（包括 header 部分）：<br>（1）size = 0 表示该 box 是最后一个 box；<br>（2）如果 box 很大（例如存放具体视频数据的 mdat box），超过了 uint32 的最大数值，size 就被设置为 1，并用接下来的 uint64 的 largesize 来存放大小。<br>type = uuid 表示该 box 中的数据是用户自定义扩展类型。<br>box 中的字节序为网络字节序，也就是大端字节序（Big-Endian）。</p>
 <p>box 根据 header 部分包含的信息的不同可以分为 Box 和 Full Box：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F2.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F2.png" alt=""></p>
 <p>Box 定义：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">aligned(8) class Box (unsigned int(32) boxtype, optional unsigned int(8)[16] extended_type) </div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> size</span>;</div><div class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">32</span>)</span> type </span>= boxtype;</div><div class="line">    <span class="keyword">if</span> (size==<span class="number">1</span>) </div><div class="line">    &#123;</div><div class="line">        <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span><span class="params">(<span class="number">64</span>)</span> largesize</span>;</div><div class="line">    &#125; </div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (size==<span class="number">0</span>) </div><div class="line">    &#123;</div><div class="line">        <span class="comment">// box extends to end of file</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (boxtype==‘uuid’) </div><div class="line">    &#123;</div><div class="line">        <span class="keyword">unsigned</span> <span class="keyword">int</span>(<span class="number">8</span>)[<span class="number">16</span>] usertype = extended_type;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>Full Box 定义：</p>
@@ -1984,9 +1984,9 @@
 <h2 id="将-moov-移动到-mdat-前面"><a href="#将-moov-移动到-mdat-前面" class="headerlink" title="将 moov 移动到 mdat 前面"></a><strong>将 moov 移动到 mdat 前面</strong></h2><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -c copy -f mp4 -movflags faststart sample_faststart.mp4</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F3.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F3.png" alt=""></p>
 <p>3、通过 mp4info 查看 box 树：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F4.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/MP4-%E5%B0%81%E8%A3%85%E6%A0%BC%E5%BC%8F4.png" alt=""></p>
 <hr>
 
       
@@ -2005,7 +2005,7 @@
   <p><span>本文标题:</span><a href="/2018/05/16/MP4-封装格式/">MP4 封装格式</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2018年05月16日 - 23:05</p>
-  <p><span>最后更新:</span>2018年05月17日 - 22:05</p>
+  <p><span>最后更新:</span>2018年12月07日 - 19:12</p>
   <p><span>原始链接:</span><a href="/2018/05/16/MP4-封装格式/" title="MP4 封装格式">http://www.weichao.io/2018/05/16/MP4-封装格式/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/05/16/MP4-封装格式/"  aria-label="复制成功！"></i></span>
   </p>

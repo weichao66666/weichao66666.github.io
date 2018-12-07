@@ -107,14 +107,14 @@
 <meta property="og:site_name" content="『魏超』的 blog">
 <meta property="og:description" content="Reference 《FFmpeg 从入门到精通》 Compile FFmpeg for Ubuntu, Debian, or Mint Ubuntu 16.04安装编译FFmpeg 在ubuntu16.04下测试ffplay程序   基本组成 封装模块 AVFormat； 编解码模块 AVCodec； 滤镜模块 AVFilter； 输入输出设备模块 AVDevice； 工具模块 AVUtil；">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E7%AE%80%E4%BB%8B1526187550322_2.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E7%AE%80%E4%BB%8B1526187551920_4.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E7%AE%80%E4%BB%8B1526045783703_2.png">
-<meta property="og:updated_time" content="2018-05-13T05:07:36.984Z">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E7%AE%80%E4%BB%8B1526187550322_2.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E7%AE%80%E4%BB%8B1526187551920_4.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E7%AE%80%E4%BB%8B1526045783703_2.png">
+<meta property="og:updated_time" content="2018-12-07T11:03:51.962Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFmpeg 简介">
 <meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》 Compile FFmpeg for Ubuntu, Debian, or Mint Ubuntu 16.04安装编译FFmpeg 在ubuntu16.04下测试ffplay程序   基本组成 封装模块 AVFormat； 编解码模块 AVCodec； 滤镜模块 AVFilter； 输入输出设备模块 AVDevice； 工具模块 AVUtil；">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E7%AE%80%E4%BB%8B1526187550322_2.png">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E7%AE%80%E4%BB%8B1526187550322_2.png">
 
 
 
@@ -413,9 +413,9 @@
 <h3 id="libmp3lame"><a href="#libmp3lame" class="headerlink" title="libmp3lame"></a><strong>libmp3lame</strong></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libmp3lame-dev</div></pre></td></tr></table></figure>
 <h3 id="libopus"><a href="#libopus" class="headerlink" title="libopus"></a><strong>libopus</strong></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install libopus-dev</div></pre></td></tr></table></figure>
 <h2 id="安装-SDL2"><a href="#安装-SDL2" class="headerlink" title="安装 SDL2"></a><strong>安装 SDL2</strong></h2><p>否则无法使用 ffplay 命令，使用时会报错：<code>The program &#39;ffplay&#39; is currently not installed.</code></p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E7%AE%80%E4%BB%8B1526187550322_2.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E7%AE%80%E4%BB%8B1526187550322_2.png" alt=""></p>
 <h3 id="下载-SDL2-源代码"><a href="#下载-SDL2-源代码" class="headerlink" title="下载 SDL2 源代码"></a><strong>下载 SDL2 源代码</strong></h3><p>在 <a href="https://www.libsdl.org/download-2.0.php" title="https://www.libsdl.org/download-2.0.php" target="_blank" rel="external">SDL 官网</a>下载 SDL2</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E7%AE%80%E4%BB%8B1526187551920_4.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E7%AE%80%E4%BB%8B1526187551920_4.png" alt=""></p>
 <h3 id="编译-SDL2"><a href="#编译-SDL2" class="headerlink" title="编译 SDL2"></a><strong>编译 SDL2</strong></h3><p>1、解压缩 SDL2-2.0.8.tar.gz</p>
 <p>2、编译 SDL2</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd ~/Downloads/SDL2-2.0.8</div><div class="line">./configure</div><div class="line">make</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
@@ -423,7 +423,7 @@
 <h2 id="让-ffmpeg-命令立刻生效"><a href="#让-ffmpeg-命令立刻生效" class="headerlink" title="让 ffmpeg 命令立刻生效"></a><strong>让 ffmpeg 命令立刻生效</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.profile</div></pre></td></tr></table></figure>
 <p><strong>注：ffplay 命令需要手动配置 FFmpeg 环境变量并重启 PC</strong></p>
 <h2 id="查看-ffmpeg-版本"><a href="#查看-ffmpeg-版本" class="headerlink" title="查看 ffmpeg 版本"></a><strong>查看 ffmpeg 版本</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -version</div></pre></td></tr></table></figure>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E7%AE%80%E4%BB%8B1526045783703_2.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E7%AE%80%E4%BB%8B1526045783703_2.png" alt=""></p>
 <hr>
 
       
@@ -442,7 +442,7 @@
   <p><span>本文标题:</span><a href="/2018/05/11/FFmpeg-简介/">FFmpeg 简介</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2018年05月11日 - 22:05</p>
-  <p><span>最后更新:</span>2018年05月13日 - 13:05</p>
+  <p><span>最后更新:</span>2018年12月07日 - 19:12</p>
   <p><span>原始链接:</span><a href="/2018/05/11/FFmpeg-简介/" title="FFmpeg 简介">http://www.weichao.io/2018/05/11/FFmpeg-简介/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/05/11/FFmpeg-简介/"  aria-label="复制成功！"></i></span>
   </p>

@@ -107,18 +107,18 @@
 <meta property="og:site_name" content="『魏超』的 blog">
 <meta property="og:description" content="Reference 《FFmpeg 从入门到精通》   AAC与 MP3 相比，AAC 是一种编码效率更高、编码音质更好的音频编码格式，常见的使用 AAC 编码后的文件存储格式为 m4a。  抽取 MP4 文件中的音频为 AAC1、输入命令： 1ffmpeg -i sample.mp4 -c:a aac -b:a 160k output.aac 2、输出结果：  使用 q 参数q 表示 qscal">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC1.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC2.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC3.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC4.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC5.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC6.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC7.png">
-<meta property="og:updated_time" content="2018-07-29T07:55:56.964Z">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC1.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC2.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC3.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC4.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC5.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC6.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC7.png">
+<meta property="og:updated_time" content="2018-12-07T11:03:51.966Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFmpeg 输出 AAC">
 <meta name="twitter:description" content="Reference 《FFmpeg 从入门到精通》   AAC与 MP3 相比，AAC 是一种编码效率更高、编码音质更好的音频编码格式，常见的使用 AAC 编码后的文件存储格式为 m4a。  抽取 MP4 文件中的音频为 AAC1、输入命令： 1ffmpeg -i sample.mp4 -c:a aac -b:a 160k output.aac 2、输出结果：  使用 q 参数q 表示 qscal">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC1.png">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC1.png">
 
 
 
@@ -391,18 +391,18 @@
 <h1 id="抽取-MP4-文件中的音频为-AAC"><a href="#抽取-MP4-文件中的音频为-AAC" class="headerlink" title="抽取 MP4 文件中的音频为 AAC"></a><strong>抽取 MP4 文件中的音频为 AAC</strong></h1><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -c:a aac -b:a 160k output.aac</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC1.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC1.png" alt=""></p>
 <h2 id="使用-q-参数"><a href="#使用-q-参数" class="headerlink" title="使用 q 参数"></a><strong>使用 q 参数</strong></h2><p>q 表示 qscale，有效范围为 0.1~2，用于设置 AAC 音频的 VBR 质量。</p>
 <p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -c:a aac -q:a 2 output.aac</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC2.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC2.png" alt=""></p>
 <hr>
 <h1 id="FDK-AAC-第三方的-AAC-编解码-Codec-库"><a href="#FDK-AAC-第三方的-AAC-编解码-Codec-库" class="headerlink" title="FDK AAC 第三方的 AAC 编解码 Codec 库"></a><strong>FDK AAC 第三方的 AAC 编解码 Codec 库</strong></h1><p>FDK AAC 是 FFmpeg 支持的第三方编码库中质量最高的 AAC 编码库。</p>
 <h2 id="恒定码率（CBR）模式"><a href="#恒定码率（CBR）模式" class="headerlink" title="恒定码率（CBR）模式"></a><strong>恒定码率（CBR）模式</strong></h2><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -c:a libfdk_aac -b:a 128k output.aac</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC3.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC3.png" alt=""></p>
 <h2 id="动态码率（VBR）模式"><a href="#动态码率（VBR）模式" class="headerlink" title="动态码率（VBR）模式"></a><strong>动态码率（VBR）模式</strong></h2><table>
 <thead>
 <tr>
@@ -449,15 +449,15 @@
 <h2 id="压缩为-AAC-编码的-m4a-容器"><a href="#压缩为-AAC-编码的-m4a-容器" class="headerlink" title="压缩为 AAC 编码的 m4a 容器"></a><strong>压缩为 AAC 编码的 m4a 容器</strong></h2><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -c:a libfdk_aac output.m4a</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC4.png" alt=""><br><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC5.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC4.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC5.png" alt=""></p>
 <h3 id="高质量-AAC-设置"><a href="#高质量-AAC-设置" class="headerlink" title="高质量 AAC 设置"></a><strong>高质量 AAC 设置</strong></h3><h4 id="HE-AAC-音频编码设置"><a href="#HE-AAC-音频编码设置" class="headerlink" title="HE-AAC 音频编码设置"></a><strong>HE-AAC 音频编码设置</strong></h4><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -c:a libfdk_aac -profile:a aac_he -b:a 64k output.aac</div></pre></td></tr></table></figure>
 <p>2、输出结果：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC6.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC6.png" alt=""></p>
 <h4 id="HEv2-AAC-音频编码设置"><a href="#HEv2-AAC-音频编码设置" class="headerlink" title="HEv2-AAC 音频编码设置"></a><strong>HEv2-AAC 音频编码设置</strong></h4><p>1、输入命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg -i sample.mp4 -c:a libfdk_aac -profile:a aac_he_v2 -b:a 32k output.aac</div></pre></td></tr></table></figure>
 <p>2、输出结果（失败）：</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/FFmpeg-%E8%BE%93%E5%87%BA-AAC7.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/FFmpeg-%E8%BE%93%E5%87%BA-AAC7.png" alt=""></p>
 <hr>
 
       
@@ -476,7 +476,7 @@
   <p><span>本文标题:</span><a href="/2018/07/29/FFmpeg-输出-AAC/">FFmpeg 输出 AAC</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2018年07月29日 - 15:07</p>
-  <p><span>最后更新:</span>2018年07月29日 - 15:07</p>
+  <p><span>最后更新:</span>2018年12月07日 - 19:12</p>
   <p><span>原始链接:</span><a href="/2018/07/29/FFmpeg-输出-AAC/" title="FFmpeg 输出 AAC">http://www.weichao.io/2018/07/29/FFmpeg-输出-AAC/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2018/07/29/FFmpeg-输出-AAC/"  aria-label="复制成功！"></i></span>
   </p>

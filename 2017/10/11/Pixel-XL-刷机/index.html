@@ -107,16 +107,16 @@
 <meta property="og:site_name" content="『魏超』的 blog">
 <meta property="og:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png">
-<meta property="og:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png">
-<meta property="og:updated_time" content="2017-10-23T14:21:04.157Z">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png">
+<meta property="og:updated_time" content="2018-12-07T11:03:52.279Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pixel XL 刷机">
 <meta name="twitter:description" content="Reference 从 Bootloader 解锁到必备应用推荐：我的 Google Pixel 折腾手记   手动刷入工厂镜像操作步骤下载文件 从工厂镜像官网下载对应版本的 zip 文件    刷机 解压 zip 文件  比如将 zip 文件解压到 f 盘根目录。    修改文件，用于刷机时保留系统数据  使用文本编辑器修改 flash-all.bat 中的 fastboot -w update">
-<meta name="twitter:image" content="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png">
 
 
 
@@ -386,13 +386,13 @@
 <hr>
 <h1 id="手动刷入工厂镜像"><a href="#手动刷入工厂镜像" class="headerlink" title="手动刷入工厂镜像"></a><strong>手动刷入工厂镜像</strong></h1><h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a><strong>操作步骤</strong></h2><h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a><strong>下载文件</strong></h3><ol>
 <li><p>从<a href="https://developers.google.cn/android/images" title="https://developers.google.cn/android/images" target="_blank" rel="external">工厂镜像官网</a>下载对应版本的 zip 文件</p>
-<p><img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_1.png" alt=""></p>
 </li>
 </ol>
 <h3 id="刷机"><a href="#刷机" class="headerlink" title="刷机"></a><strong>刷机</strong></h3><ol>
 <li><p>解压 zip 文件</p>
 <p> 比如将 zip 文件解压到 f 盘根目录。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png" alt=""></p>
+<p> <img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_2.png" alt=""></p>
 </li>
 <li><p>修改文件，用于刷机时保留系统数据</p>
 <p> 使用文本编辑器修改 <code>flash-all.bat</code> 中的 <code>fastboot -w update image-marlin-opr3.170623.008.zip</code> 为 <code>fastboot update image-marlin-opr3.170623.008.zip</code>，即去掉 <code>-w</code>。</p>
@@ -403,12 +403,12 @@
 <p> 在命令行中执行<code>adb reboot bootloader</code>。</p>
 </li>
 <li><p>进入 <code>flash-all.bat</code> 所在目录</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png" alt=""></p>
+<p> <img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_3.png" alt=""></p>
 </li>
 <li><p>执行 <code>flash-all.bat</code>，等待刷机完成</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png" alt=""></p>
+<p> <img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_4.png" alt=""></p>
 <p> 重启后进入<code>设置</code>-&gt;<code>系统</code>可以看到系统版本。</p>
-<p> <img src="http://otkw6sse5.bkt.clouddn.com/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png" alt=""></p>
+<p> <img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/Pixel-XL-%E5%88%B7%E6%9C%BA_5.png" alt=""></p>
 </li>
 </ol>
 <hr>
@@ -429,7 +429,7 @@
   <p><span>本文标题:</span><a href="/2017/10/11/Pixel-XL-刷机/">Pixel XL 刷机</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
   <p><span>发布时间:</span>2017年10月11日 - 20:10</p>
-  <p><span>最后更新:</span>2017年10月23日 - 22:10</p>
+  <p><span>最后更新:</span>2018年12月07日 - 19:12</p>
   <p><span>原始链接:</span><a href="/2017/10/11/Pixel-XL-刷机/" title="Pixel XL 刷机">http://www.weichao.io/2017/10/11/Pixel-XL-刷机/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2017/10/11/Pixel-XL-刷机/"  aria-label="复制成功！"></i></span>
   </p>
