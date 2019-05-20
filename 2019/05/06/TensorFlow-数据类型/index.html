@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference 深度学习与 TensorFlow 2 入门实战 TensorFlow-2.x-Tutorials   list12[1, 1.2, &apos;Hello&apos;, (1, 2), layers][64, 32, 32, 3]  np.array1[64, 224, 224, 3] 解决同类型数据运算。 深度计算之前已经设计好的科学计算库，不支持 GPU，不支持自动求导。TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow 数据类型">
+<meta property="og:url" content="http://www.weichao.io/2019/05/06/TensorFlow-数据类型/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference 深度学习与 TensorFlow 2 入门实战 TensorFlow-2.x-Tutorials   list12[1, 1.2, &apos;Hello&apos;, (1, 2), layers][64, 32, 32, 3]  np.array1[64, 224, 224, 3] 解决同类型数据运算。 深度计算之前已经设计好的科学计算库，不支持 GPU，不支持自动求导。TensorFlow">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-20T01:27:46.631Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow 数据类型">
+<meta name="twitter:description" content="Reference 深度学习与 TensorFlow 2 入门实战 TensorFlow-2.x-Tutorials   list12[1, 1.2, &apos;Hello&apos;, (1, 2), layers][64, 32, 32, 3]  np.array1[64, 224, 224, 3] 解决同类型数据运算。 深度计算之前已经设计好的科学计算库，不支持 GPU，不支持自动求导。TensorFlow">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2019/05/06/TensorFlow-数据类型/"/>
+
+
+
+
+
+  <title>TensorFlow 数据类型 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2019/05/06/TensorFlow-数据类型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">TensorFlow 数据类型</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-06T09:23:38+08:00">
+                2019-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,064 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2019/05/06/TensorFlow-数据类型/" class="leancloud_visitors" data-flag-title="TensorFlow 数据类型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="https://study.163.com/course/courseMain.htm?courseId=1209092816&amp;share=1&amp;shareId=1143588469" title="https://study.163.com/course/courseMain.htm?courseId=1209092816&amp;share=1&amp;shareId=1143588469" target="_blank" rel="external">深度学习与 TensorFlow 2 入门实战</a></li>
+<li><a href="https://github.com/dragen1860/TensorFlow-2.x-Tutorials" title="https://github.com/dragen1860/TensorFlow-2.x-Tutorials" target="_blank" rel="external">TensorFlow-2.x-Tutorials</a></li>
+</ul>
+<hr>
+<h1 id="list"><a href="#list" class="headerlink" title="list"></a><strong>list</strong></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">1.2</span>, <span class="string">'Hello'</span>, (<span class="number">1</span>, <span class="number">2</span>), layers]</div><div class="line">[<span class="number">64</span>, <span class="number">32</span>, <span class="number">32</span>, <span class="number">3</span>]</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="np-array"><a href="#np-array" class="headerlink" title="np.array"></a><strong>np.array</strong></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="number">64</span>, <span class="number">224</span>, <span class="number">224</span>, <span class="number">3</span>]</div></pre></td></tr></table></figure>
+<p>解决同类型数据运算。</p>
+<p>深度计算之前已经设计好的科学计算库，不支持 GPU，不支持自动求导。TensorFlow 解决了这一问题。</p>
+<hr>
+<h1 id="tf-Tensor"><a href="#tf-Tensor" class="headerlink" title="tf.Tensor"></a><strong>tf.Tensor</strong></h1><h2 id="int-float-double-bool-string"><a href="#int-float-double-bool-string" class="headerlink" title="int, float, double, bool, string"></a><strong>int, float, double, bool, string</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">a = tf.constant(<span class="number">1</span>)</div><div class="line">print(a) <span class="comment"># tf.Tensor(1, shape=(), dtype=int32)</span></div><div class="line"></div><div class="line">a = tf.constant(<span class="number">1.</span>)</div><div class="line">print(a) <span class="comment"># tf.Tensor(1.0, shape=(), dtype=float32)</span></div><div class="line"></div><div class="line">a = tf.constant(<span class="number">2.2</span>, dtype=tf.int32)</div><div class="line">print(a) <span class="comment"># TypeError: Cannot convert provided value to EagerTensor. Provided value: 2.2 Requested dtype: int32</span></div><div class="line"></div><div class="line">a = tf.constant(<span class="number">2.2</span>, dtype=tf.double)</div><div class="line">print(a) <span class="comment"># tf.Tensor(2.2, shape=(), dtype=float64)</span></div><div class="line"></div><div class="line">a = tf.constant([<span class="keyword">True</span>, <span class="keyword">False</span>])</div><div class="line">print(a) <span class="comment"># tf.Tensor([ True False], shape=(2,), dtype=bool)</span></div><div class="line"></div><div class="line">a = tf.constant(<span class="string">'Hello, world!'</span>)</div><div class="line">print(a) <span class="comment"># tf.Tensor(b'Hello, world!', shape=(), dtype=string)</span></div></pre></td></tr></table></figure>
+<h2 id="scalar"><a href="#scalar" class="headerlink" title="scalar"></a><strong>scalar</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">1.1</span></div></pre></td></tr></table></figure>
+<h2 id="vector"><a href="#vector" class="headerlink" title="vector"></a><strong>vector</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1.1</span>], [<span class="number">1.1</span>, <span class="number">1.2</span>]</div></pre></td></tr></table></figure>
+<h2 id="matrix"><a href="#matrix" class="headerlink" title="matrix"></a><strong>matrix</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="number">1.1</span>, <span class="number">2.2</span>], [<span class="number">3.3</span>, <span class="number">4.4</span>], [<span class="number">5.5</span>, <span class="number">6.6</span>]]</div></pre></td></tr></table></figure>
+<h2 id="tensor"><a href="#tensor" class="headerlink" title="tensor"></a><strong>tensor</strong></h2><p>rank &gt; 2</p>
+<hr>
+<h1 id="Tensor-Property"><a href="#Tensor-Property" class="headerlink" title="Tensor Property"></a><strong>Tensor Property</strong></h1><h2 id="切换-Tensor-到-CPU-或-GPU"><a href="#切换-Tensor-到-CPU-或-GPU" class="headerlink" title="切换 Tensor 到 CPU 或 GPU"></a><strong>切换 Tensor 到 CPU 或 GPU</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> tf.device(<span class="string">"cpu"</span>):</div><div class="line">    a = tf.constant([<span class="number">1</span>])</div><div class="line"><span class="keyword">with</span> tf.device(<span class="string">"gpu"</span>):</div><div class="line">    b = tf.range(<span class="number">4</span>)</div><div class="line">print(a.device) <span class="comment"># /job:localhost/replica:0/task:0/device:CPU:0</span></div><div class="line">print(b.device) <span class="comment"># /job:localhost/replica:0/task:0/device:GPU:0</span></div><div class="line"></div><div class="line">aa = a.gpu()</div><div class="line">bb = b.cpu()</div><div class="line">print(aa.device) <span class="comment"># /job:localhost/replica:0/task:0/device:GPU:0</span></div><div class="line">print(bb.device) <span class="comment"># /job:localhost/replica:0/task:0/device:CPU:0</span></div></pre></td></tr></table></figure>
+<h2 id="Tensor-转-numpy"><a href="#Tensor-转-numpy" class="headerlink" title="Tensor 转 numpy"></a><strong>Tensor 转 numpy</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">b = tf.range(<span class="number">4</span>)</div><div class="line">bb = b.numpy()</div><div class="line">print(b) <span class="comment"># tf.Tensor([0 1 2 3], shape=(4,), dtype=int32)</span></div><div class="line">print(bb) <span class="comment"># [0 1 2 3]</span></div></pre></td></tr></table></figure>
+<h2 id="numpy-转-Tensor"><a href="#numpy-转-Tensor" class="headerlink" title="numpy 转 Tensor"></a><strong>numpy 转 Tensor</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">a = np.arange(<span class="number">5</span>)</div><div class="line">a1 = a.dtype</div><div class="line">a2 = tf.convert_to_tensor(a)</div><div class="line">a3 = tf.convert_to_tensor(a, dtype=tf.int64)</div><div class="line">print(a1) <span class="comment"># int32</span></div><div class="line">print(a2) <span class="comment"># tf.Tensor([0 1 2 3 4], shape=(5,), dtype=int32)</span></div><div class="line">print(a3) <span class="comment"># tf.Tensor([0 1 2 3 4], shape=(5,), dtype=int64)</span></div></pre></td></tr></table></figure>
+<h2 id="int32-转-float32-double-int64"><a href="#int32-转-float32-double-int64" class="headerlink" title="int32 转 float32/double/int64"></a><strong>int32 转 float32/double/int64</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">b = tf.range(<span class="number">4</span>)</div><div class="line">b1 = tf.cast(b, dtype=tf.float32)</div><div class="line">b2 = tf.cast(b, dtype=tf.double)</div><div class="line">b3 = tf.cast(b, dtype=tf.int64)</div><div class="line">print(b) <span class="comment"># tf.Tensor([0 1 2 3], shape=(4,), dtype=int32)</span></div><div class="line">print(b1) <span class="comment"># tf.Tensor([0. 1. 2. 3.], shape=(4,), dtype=float32)</span></div><div class="line">print(b2) <span class="comment"># tf.Tensor([0. 1. 2. 3.], shape=(4,), dtype=float64)</span></div><div class="line">print(b3) <span class="comment"># tf.Tensor([0 1 2 3], shape=(4,), dtype=int64)</span></div><div class="line"></div><div class="line">a = tf.ones([])</div><div class="line">a1 = int(a)</div><div class="line">a2 = float(a)</div><div class="line">print(a) <span class="comment"># tf.Tensor(1.0, shape=(), dtype=float32)</span></div><div class="line">print(a1) <span class="comment"># 1</span></div><div class="line">print(a2) <span class="comment"># 1.0</span></div></pre></td></tr></table></figure>
+<h2 id="int32-和-bool-的相互转换"><a href="#int32-和-bool-的相互转换" class="headerlink" title="int32 和 bool 的相互转换"></a><strong>int32 和 bool 的相互转换</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">b = tf.constant([<span class="number">0</span>, <span class="number">1</span>])</div><div class="line">b1 = tf.cast(b, dtype=tf.bool)</div><div class="line">b2 = tf.cast(b1, dtype=tf.int32)</div><div class="line">print(b1) <span class="comment"># tf.Tensor([False  True], shape=(2,), dtype=bool)</span></div><div class="line">print(b2) <span class="comment"># tf.Tensor([0 1], shape=(2,), dtype=int32)</span></div></pre></td></tr></table></figure>
+<h2 id="Tensor-转-Variable"><a href="#Tensor-转-Variable" class="headerlink" title="Tensor 转 Variable"></a><strong>Tensor 转 Variable</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">a = tf.range(<span class="number">5</span>)</div><div class="line">b = tf.Variable(a)</div><div class="line">print(b.trainable) <span class="comment"># True</span></div><div class="line"></div><div class="line">b1 = isinstance(b, tf.Tensor)</div><div class="line">b2 = isinstance(b, tf.Variable)</div><div class="line">b3 = tf.is_tensor(b)</div><div class="line">print(b1) <span class="comment"># False</span></div><div class="line">print(b2) <span class="comment"># True</span></div><div class="line">print(b3) <span class="comment"># True</span></div></pre></td></tr></table></figure>
+<h2 id="获取-Tensor-的-rank"><a href="#获取-Tensor-的-rank" class="headerlink" title="获取 Tensor 的 rank"></a><strong>获取 Tensor 的 rank</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">a = tf.constant(<span class="number">1.1</span>)</div><div class="line">b = tf.constant([<span class="number">1.1</span>])</div><div class="line">print(a.ndim) <span class="comment"># 0</span></div><div class="line">print(b.ndim) <span class="comment"># 1</span></div><div class="line">print(tf.rank(a)) <span class="comment"># tf.Tensor(0, shape=(), dtype=int32)</span></div><div class="line">print(tf.rank(b)) <span class="comment"># tf.Tensor(1, shape=(), dtype=int32)</span></div></pre></td></tr></table></figure>
+<h2 id="判断是否为-Tensor"><a href="#判断是否为-Tensor" class="headerlink" title="判断是否为 Tensor"></a><strong>判断是否为 Tensor</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">a = tf.constant([<span class="number">1.</span>])</div><div class="line">d = np.arange(<span class="number">4</span>)</div><div class="line">a1 = isinstance(a, tf.Tensor)</div><div class="line">a2 = tf.is_tensor(a)</div><div class="line">d1 = isinstance(d, tf.Tensor)</div><div class="line">d2 = tf.is_tensor(d)</div><div class="line">print(a1) <span class="comment"># True</span></div><div class="line">print(a2) <span class="comment"># True</span></div><div class="line">print(d1) <span class="comment"># False</span></div><div class="line">print(d2) <span class="comment"># False</span></div></pre></td></tr></table></figure>
+<h2 id="获取-Tensor-的数据类型"><a href="#获取-Tensor-的数据类型" class="headerlink" title="获取 Tensor 的数据类型"></a><strong>获取 Tensor 的数据类型</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a = tf.constant([<span class="number">1.</span>])</div><div class="line">d = np.arange(<span class="number">4</span>)</div><div class="line">print(a.dtype) <span class="comment"># &lt;dtype: 'float32'&gt;</span></div><div class="line">print(d.dtype) <span class="comment"># int32</span></div></pre></td></tr></table></figure>
+<h2 id="判断-Tensor-是否为指定的数据类型"><a href="#判断-Tensor-是否为指定的数据类型" class="headerlink" title="判断 Tensor 是否为指定的数据类型"></a><strong>判断 Tensor 是否为指定的数据类型</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a = tf.constant([<span class="number">1.</span>])</div><div class="line">d = np.arange(<span class="number">4</span>)</div><div class="line">print(a.dtype == tf.float32) <span class="comment"># True</span></div><div class="line">print(d.dtype == np.int32) <span class="comment"># True</span></div></pre></td></tr></table></figure>
+<hr>
+<h1 id="Tensor-初始化"><a href="#Tensor-初始化" class="headerlink" title="Tensor 初始化"></a><strong>Tensor 初始化</strong></h1><h2 id="from-numpy-list"><a href="#from-numpy-list" class="headerlink" title="from numpy, list"></a><strong>from numpy, list</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">t1 = tf.convert_to_tensor(np.ones([<span class="number">2</span>, <span class="number">3</span>]))</div><div class="line">t2 = tf.convert_to_tensor([<span class="number">2</span>, <span class="number">3</span>])</div><div class="line">print(t1) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[1. 1. 1.]</span></div><div class="line">          <span class="comment">#  [1. 1. 1.]], shape=(2, 3), dtype=float64)</span></div><div class="line">print(t2) <span class="comment"># tf.Tensor([2 3], shape=(2,), dtype=int32)</span></div></pre></td></tr></table></figure>
+<h2 id="zeros"><a href="#zeros" class="headerlink" title="zeros"></a><strong>zeros</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">t1 = tf.zeros([<span class="number">2</span>, <span class="number">3</span>])</div><div class="line">print(t1) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[0. 0. 0.]</span></div><div class="line">          <span class="comment">#  [0. 0. 0.]], shape=(2, 3), dtype=float32)</span></div></pre></td></tr></table></figure>
+<h2 id="ones"><a href="#ones" class="headerlink" title="ones"></a><strong>ones</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">t1 = tf.ones([<span class="number">2</span>, <span class="number">3</span>])</div><div class="line">print(t1) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[1. 1. 1.]</span></div><div class="line">          <span class="comment">#  [1. 1. 1.]], shape=(2, 3), dtype=float32)</span></div></pre></td></tr></table></figure>
+<h2 id="fill"><a href="#fill" class="headerlink" title="fill"></a><strong>fill</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">t1 = tf.fill([<span class="number">2</span>, <span class="number">3</span>], <span class="number">3.14</span>)</div><div class="line">print(t1) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[3.14 3.14 3.14]</span></div><div class="line">          <span class="comment">#  [3.14 3.14 3.14]], shape=(2, 3), dtype=float32)</span></div></pre></td></tr></table></figure>
+<h2 id="random"><a href="#random" class="headerlink" title="random"></a><strong>random</strong></h2><h3 id="normal-truncated-normal"><a href="#normal-truncated-normal" class="headerlink" title="normal, truncated_normal"></a><strong>normal, truncated_normal</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">t1 = tf.random.normal([<span class="number">2</span>, <span class="number">3</span>], mean=<span class="number">1</span>, stddev=<span class="number">1</span>)</div><div class="line">t2 = tf.random.normal([<span class="number">2</span>, <span class="number">3</span>], mean=<span class="number">1</span>, stddev=<span class="number">1</span>)</div><div class="line">t3 = tf.random.truncated_normal([<span class="number">2</span>, <span class="number">3</span>], mean=<span class="number">1</span>, stddev=<span class="number">1</span>)</div><div class="line">print(t1) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[1.2308737 0.8250756 2.6446304]</span></div><div class="line">          <span class="comment">#  [2.714213  2.0199542 1.3591613]], shape=(2, 3), dtype=float32)</span></div><div class="line">print(t2) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[ 1.5890408  -0.8608984   1.7205659 ]</span></div><div class="line">          <span class="comment">#  [ 1.9205048   0.7741975   0.73170424]], shape=(2, 3), dtype=float32)</span></div><div class="line">print(t3) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[ 1.3489898 -0.4739654  0.5768948]</span></div><div class="line">          <span class="comment">#  [ 2.3000512  0.7400613  1.8497746]], shape=(2, 3), dtype=float32)</span></div></pre></td></tr></table></figure>
+<h3 id="uniform"><a href="#uniform" class="headerlink" title="uniform"></a><strong>uniform</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">t1 = tf.random.uniform([<span class="number">2</span>, <span class="number">3</span>], minval=<span class="number">0</span>, maxval=<span class="number">100</span>)</div><div class="line">print(t1) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[19.821571  44.24106   29.511225 ]</span></div><div class="line">          <span class="comment">#  [ 0.7015109  7.66474    5.251384 ]], shape=(2, 3), dtype=float32)</span></div></pre></td></tr></table></figure>
+<h3 id="shuffle"><a href="#shuffle" class="headerlink" title="shuffle"></a><strong>shuffle</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">id = tf.range(<span class="number">10</span>)</div><div class="line">id1 = tf.random.shuffle(id)</div><div class="line">print(id) <span class="comment"># tf.Tensor([0 1 2 3 4 5 6 7 8 9], shape=(10,), dtype=int32)</span></div><div class="line">print(id1) <span class="comment"># tf.Tensor([8 1 4 0 7 2 5 3 9 6], shape=(10,), dtype=int32)</span></div></pre></td></tr></table></figure>
+<h2 id="constant"><a href="#constant" class="headerlink" title="constant"></a><strong>constant</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">t1 = tf.constant(<span class="number">1</span>)</div><div class="line">print(t1) <span class="comment"># tf.Tensor(1, shape=(), dtype=int32)</span></div></pre></td></tr></table></figure>
+<h2 id="range"><a href="#range" class="headerlink" title="range"></a><strong>range</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">t1 = tf.range(<span class="number">4</span>)</div><div class="line">t2 = tf.one_hot(t1, <span class="number">6</span>)</div><div class="line">print(t1) <span class="comment"># tf.Tensor([0 1 2 3], shape=(4,), dtype=int32)</span></div><div class="line">print(t2) <span class="comment"># tf.Tensor(</span></div><div class="line">          <span class="comment"># [[1. 0. 0. 0. 0. 0.]</span></div><div class="line">          <span class="comment">#  [0. 1. 0. 0. 0. 0.]</span></div><div class="line">          <span class="comment">#  [0. 0. 1. 0. 0. 0.]</span></div><div class="line">          <span class="comment">#  [0. 0. 0. 1. 0. 0.]], shape=(4, 6), dtype=float32)</span></div></pre></td></tr></table></figure>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2019/05/06/TensorFlow-数据类型/">TensorFlow 数据类型</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2019年05月06日 - 09:05</p>
+  <p><span>最后更新:</span>2019年05月20日 - 09:05</p>
+  <p><span>原始链接:</span><a href="/2019/05/06/TensorFlow-数据类型/" title="TensorFlow 数据类型">http://www.weichao.io/2019/05/06/TensorFlow-数据类型/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2019/05/06/TensorFlow-数据类型/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/06/Flutter-学习（0）/" rel="next" title="Flutter 学习（0）">
+                <i class="fa fa-chevron-left"></i> Flutter 学习（0）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/09/TensorFlow-索引与切片/" rel="prev" title="TensorFlow 索引与切片">
+                TensorFlow 索引与切片 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#list"><span class="nav-number">2.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#np-array"><span class="nav-number">3.</span> <span class="nav-text">np.array</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tf-Tensor"><span class="nav-number">4.</span> <span class="nav-text">tf.Tensor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#int-float-double-bool-string"><span class="nav-number">4.1.</span> <span class="nav-text">int, float, double, bool, string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scalar"><span class="nav-number">4.2.</span> <span class="nav-text">scalar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector"><span class="nav-number">4.3.</span> <span class="nav-text">vector</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matrix"><span class="nav-number">4.4.</span> <span class="nav-text">matrix</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tensor"><span class="nav-number">4.5.</span> <span class="nav-text">tensor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tensor-Property"><span class="nav-number">5.</span> <span class="nav-text">Tensor Property</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#切换-Tensor-到-CPU-或-GPU"><span class="nav-number">5.1.</span> <span class="nav-text">切换 Tensor 到 CPU 或 GPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensor-转-numpy"><span class="nav-number">5.2.</span> <span class="nav-text">Tensor 转 numpy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#numpy-转-Tensor"><span class="nav-number">5.3.</span> <span class="nav-text">numpy 转 Tensor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#int32-转-float32-double-int64"><span class="nav-number">5.4.</span> <span class="nav-text">int32 转 float32/double/int64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#int32-和-bool-的相互转换"><span class="nav-number">5.5.</span> <span class="nav-text">int32 和 bool 的相互转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensor-转-Variable"><span class="nav-number">5.6.</span> <span class="nav-text">Tensor 转 Variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-Tensor-的-rank"><span class="nav-number">5.7.</span> <span class="nav-text">获取 Tensor 的 rank</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断是否为-Tensor"><span class="nav-number">5.8.</span> <span class="nav-text">判断是否为 Tensor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取-Tensor-的数据类型"><span class="nav-number">5.9.</span> <span class="nav-text">获取 Tensor 的数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断-Tensor-是否为指定的数据类型"><span class="nav-number">5.10.</span> <span class="nav-text">判断 Tensor 是否为指定的数据类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tensor-初始化"><span class="nav-number">6.</span> <span class="nav-text">Tensor 初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#from-numpy-list"><span class="nav-number">6.1.</span> <span class="nav-text">from numpy, list</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zeros"><span class="nav-number">6.2.</span> <span class="nav-text">zeros</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ones"><span class="nav-number">6.3.</span> <span class="nav-text">ones</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fill"><span class="nav-number">6.4.</span> <span class="nav-text">fill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#random"><span class="nav-number">6.5.</span> <span class="nav-text">random</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#normal-truncated-normal"><span class="nav-number">6.5.1.</span> <span class="nav-text">normal, truncated_normal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uniform"><span class="nav-number">6.5.2.</span> <span class="nav-text">uniform</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shuffle"><span class="nav-number">6.5.3.</span> <span class="nav-text">shuffle</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#constant"><span class="nav-number">6.6.</span> <span class="nav-text">constant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#range"><span class="nav-number">6.7.</span> <span class="nav-text">range</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 140.9k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
