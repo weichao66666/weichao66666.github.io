@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference 全面解析 Android 热修复原理 基于QZone dex分包技术的热修复插件详解   与插件化区别补丁包中的类和资源在宿主中已经存在，只是有 bug 需要被修复。  各框架实现原理 Andfix（兼容复杂已废弃）Java 中的类，方法，变量，对应到虚拟机里的实现是 Class，ArtMethod，ArtField。Andfix 是把旧方法的 ArtMethod 内容替换成新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="热修复">
+<meta property="og:url" content="http://www.weichao.io/2020/04/13/热修复/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference 全面解析 Android 热修复原理 基于QZone dex分包技术的热修复插件详解   与插件化区别补丁包中的类和资源在宿主中已经存在，只是有 bug 需要被修复。  各框架实现原理 Andfix（兼容复杂已废弃）Java 中的类，方法，变量，对应到虚拟机里的实现是 Class，ArtMethod，ArtField。Andfix 是把旧方法的 ArtMethod 内容替换成新">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-04-13T15:05:50.559Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="热修复">
+<meta name="twitter:description" content="Reference 全面解析 Android 热修复原理 基于QZone dex分包技术的热修复插件详解   与插件化区别补丁包中的类和资源在宿主中已经存在，只是有 bug 需要被修复。  各框架实现原理 Andfix（兼容复杂已废弃）Java 中的类，方法，变量，对应到虚拟机里的实现是 Class，ArtMethod，ArtField。Andfix 是把旧方法的 ArtMethod 内容替换成新">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2020/04/13/热修复/"/>
+
+
+
+
+
+  <title>热修复 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2020/04/13/热修复/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">热修复</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T23:01:33+08:00">
+                2020-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,704 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  13 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2020/04/13/热修复/" class="leancloud_visitors" data-flag-title="热修复">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/75465215" title="https://zhuanlan.zhihu.com/p/75465215" target="_blank" rel="external">全面解析 Android 热修复原理</a></li>
+<li><a href="https://www.lizenghai.com/archives/36469.html#311_Dalvik_dex" title="https://www.lizenghai.com/archives/36469.html#311_Dalvik_dex" target="_blank" rel="external">基于QZone dex分包技术的热修复插件详解</a></li>
+</ul>
+<hr>
+<h1 id="与插件化区别"><a href="#与插件化区别" class="headerlink" title="与插件化区别"></a><strong>与插件化区别</strong></h1><p>补丁包中的类和资源在宿主中已经存在，只是有 bug 需要被修复。</p>
+<hr>
+<h1 id="各框架实现原理"><a href="#各框架实现原理" class="headerlink" title="各框架实现原理"></a><strong>各框架实现原理</strong></h1><blockquote>
+<p><del>Andfix</del>（兼容复杂已废弃）<br>Java 中的类，方法，变量，对应到虚拟机里的实现是 Class，ArtMethod，ArtField。Andfix 是把旧方法的 ArtMethod 内容替换成新方法的 ArtMethod 内容，再次调用旧方法，就会跳转到新方法的入口。</p>
+<p>Qzone（dex 插桩）<br>Qzone 基于的是 dex 分包方案。把有 bug 的方法修复以后，放到一个单独的 dex 补丁文件，让程序运行期间加载 dex 补丁，执行修复后的方法。</p>
+<p>Robust（方法重定向）<br>对每个函数都在编译打包阶段自动的插入了一段代码。类似于代理，将方法执行的代码重定向到其他方法中。</p>
+<p>Tinker<br>Tinker 通过计算对比指定的 base apk 中的 dex 与修改后的 apk 中的 dex 的区别，补丁包中的内容即为两者差分的描述。运行时将 base apk 中的 dex 与补丁包进行合成，重启后加载全新的合成后的 dex 文件。</p>
+</blockquote>
+<hr>
+<h1 id="Qzone-需要解决的问题"><a href="#Qzone-需要解决的问题" class="headerlink" title="Qzone 需要解决的问题"></a><strong>Qzone 需要解决的问题</strong></h1><h2 id="Dalvik-虚拟机中-CLASS-ISPREVERIFIED-导致的校验失败"><a href="#Dalvik-虚拟机中-CLASS-ISPREVERIFIED-导致的校验失败" class="headerlink" title="Dalvik 虚拟机中 CLASS_ISPREVERIFIED 导致的校验失败"></a><strong>Dalvik 虚拟机中 CLASS_ISPREVERIFIED 导致的校验失败</strong></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">E/AndroidRuntime(<span class="number">20525</span>): FATAL EXCEPTION: main</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): java.lang.IllegalAccessError: Class ref in pre-verified <span class="class"><span class="keyword">class</span> <span class="title">resolved</span> <span class="title">to</span> <span class="title">unexpected</span> <span class="title">implementation</span></span></div><div class="line">E/AndroidRuntime(20525): at zeus.test.hotfix.TestHotFixActivity.onCreate(Unknown Source)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.app.Activity.performCreate(Activity.java:<span class="number">5188</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:<span class="number">1094</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:<span class="number">2074</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:<span class="number">2135</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.app.ActivityThread.access$<span class="number">700</span>(ActivityThread.java:<span class="number">140</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.app.ActivityThread$H.handleMessage(ActivityThread.java:<span class="number">1237</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.os.Handler.dispatchMessage(Handler.java:<span class="number">99</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.os.Looper.loop(Looper.java:<span class="number">137</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at android.app.ActivityThread.main(ActivityThread.java:<span class="number">4921</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at java.lang.reflect.Method.invokeNative(Native Method)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at java.lang.reflect.Method.invoke(Method.java:<span class="number">511</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:<span class="number">1038</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:<span class="number">805</span>)</div><div class="line">E/AndroidRuntime(<span class="number">20525</span>): at dalvik.system.NativeStart.main(Native Method)</div></pre></td></tr></table></figure>
+<p>如果一个类和它直接引用的类都在同一个 dex 中的话，那么这个类就会被打上 CLASS_ISPREVERIFIED 标记，而补丁包中的类存在于另一个 dex，不能满足 CLASS_ISPREVERIFIED 导致校验失败，所以需要避免类被打上 CLASS_ISPREVERIFIED 标记。</p>
+<p>解决办法：</p>
+<p>1、创建一个 dex；</p>
+<p>比如随便创建一个 AntilazyLoad.java。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AntilazyLoad</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>make module 将 java 文件编译成 class 文件。</p>
+<p>执行命令编译成 dex 文件。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dx --dex --output=hack.dex com\enjoy\patch\hack\AntilazyLoad.class</div></pre></td></tr></table></figure></p>
+<p>2、让每个类都引用这个 dex。</p>
+<p>将 hack.dex 放入 assets 目录。</p>
+<p>借助 gradle，在 compileDebugJavaWithJavac 任务后，且在 transformClassesWithDexBuilderForDebug 任务前，修改每个类。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//gradle 执行会解析 build.gradle 文件，afterEvaluate 表示在解析完成之后再执行我们的代码</span></div><div class="line">afterEvaluate (&#123;</div><div class="line">    android.getApplicationVariants.all &#123;</div><div class="line">        variant-&gt;</div><div class="line">        <span class="comment">//获得 debug/release</span></div><div class="line">        String variantName = variant.getName()</div><div class="line">        <span class="comment">//首字母大写</span></div><div class="line">        String capitalizedName = variantName.capitalize()</div><div class="line">        <span class="comment">//通过任务名字找到打包 dex 的任务</span></div><div class="line">        <span class="keyword">Task</span> dexTask = <span class="keyword">project</span>.getTasks().findByName(<span class="string">"transformClassesWithDexBuilderFor"</span> + capitalizedName)</div><div class="line">        <span class="comment">//定义 doFirst()</span></div><div class="line">        dexTask.<span class="keyword">doFirst</span> &#123;</div><div class="line">            <span class="comment">//获取 .class 文件集合</span></div><div class="line">            Set&lt;<span class="keyword">File</span>&gt; files = dexTask.getInputs().getFiles().getFiles()</div><div class="line">            <span class="comment">//遍历</span></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">File</span> <span class="keyword">file</span> : files) &#123;</div><div class="line">                String filePath = <span class="keyword">file</span>.getAbsolutePath()</div><div class="line">                <span class="comment">//依赖的库会以 .jar 包形式传过来，对依赖库也执行插桩</span></div><div class="line">                <span class="keyword">if</span> (filePath.endsWith(<span class="string">".jar"</span>)) &#123;</div><div class="line">                    processJar(<span class="keyword">file</span>)</div><div class="line">                <span class="comment">//主要是我们的业务字节码 .class 文件</span></div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (filePath.endsWith(<span class="string">".class"</span>)) &#123;</div><div class="line">                    processClass(variant.getDirName(), <span class="keyword">file</span>)</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> processClass(String dirName, <span class="keyword">File</span> <span class="keyword">file</span>) &#123;</div><div class="line">    <span class="comment">//获取文件的绝对路径</span></div><div class="line">    String filePath = <span class="keyword">file</span>.getAbsolutePath()</div><div class="line">    <span class="comment">//去掉目录名，保留包名+类名</span></div><div class="line">    String className = filePath.split(dirName)[<span class="number">1</span>].subString(<span class="number">1</span>)</div><div class="line">    <span class="comment">//控制台打印</span></div><div class="line">    <span class="keyword">println</span> className</div><div class="line">    <span class="keyword">if</span> (className.startsWith(<span class="string">"com\\hotfix\\MyApplication"</span>) || isAndroidClass(className))&#123;</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">        <span class="comment">//执行插桩，插桩之后的 .class 数据用 byte[] 保存</span></div><div class="line">        FileInputStream is = <span class="keyword">new</span> FileInputStream(filePath)</div><div class="line">        <span class="keyword">byte</span>[] byteCode = referHackWhenInit(is)</div><div class="line">        is.close()</div><div class="line">        <span class="comment">//用插桩之后的字节码数据覆盖掉插桩之前的字节码数据</span></div><div class="line">        FileOutputStream os = <span class="keyword">new</span> FileOutputStream(filePath)</div><div class="line">        os.<span class="keyword">write</span>(byteCode)</div><div class="line">        os.close()</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        e.printStackTrace()</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//执行插桩的核心代码</span></div><div class="line"><span class="keyword">static</span> <span class="keyword">byte</span>[] referHackWhenInit(InputStream inputStream) <span class="keyword">throws</span> IOException &#123;</div><div class="line">    <span class="comment">//class 文件解析器</span></div><div class="line">    ClassReader cr = <span class="keyword">new</span> ClassReader(inputStream)</div><div class="line">    <span class="comment">//class 文件输出器</span></div><div class="line">    ClassWriter cw = <span class="keyword">new</span> ClassWirter(cr, <span class="number">0</span>)</div><div class="line">    <span class="comment">//class 文件访问者，相当于操作回调</span></div><div class="line">    ClassVisitor cv = <span class="keyword">new</span> ClassVisitor(Opcodes.ASM5, cw) &#123;</div><div class="line">        @Overide</div><div class="line">        <span class="keyword">public</span> MethodVisitor visitMethod(<span class="keyword">int</span> access, <span class="keyword">final</span> String name, String desc,</div><div class="line">                                         String signature, String[] exceptions) &#123;</div><div class="line">            MethodVisitor mv = <span class="keyword">super</span>.visitMethod(access, name, desc, signature, exceptions)</div><div class="line">            mv = <span class="keyword">new</span> MethodVisitor(Opcodes.ASM5, mv) &#123;</div><div class="line">                @Override</div><div class="line">                <span class="keyword">public</span> <span class="keyword">void</span> visitInsn(<span class="keyword">int</span> opcode) &#123;</div><div class="line">                    <span class="comment">//若当前访问的方法是构造方法，则在构造方法 return 之前插入字节码</span></div><div class="line">                    <span class="keyword">if</span> (<span class="string">"&lt;init&gt;"</span>.equals(name) &amp;&amp; opcode == Opcodes.<span class="keyword">RETURN</span>) &#123;</div><div class="line">                        <span class="keyword">super</span>.visitInsn(Type.getType(<span class="string">"LpackageName/AntilazyLoad;"</span>))</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">super</span>.visitInsn(opcode)</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> mv</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//解析器启动解析</span></div><div class="line">    cr.accept(cv, <span class="number">0</span>)</div><div class="line">    <span class="keyword">return</span> cw.toByteArray()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="自定义插件实现插桩并生成补丁包"><a href="#自定义插件实现插桩并生成补丁包" class="headerlink" title="自定义插件实现插桩并生成补丁包"></a><strong>自定义插件实现插桩并生成补丁包</strong></h3><p>1、在 project 下新建名为 buildSrc 的 Directory（不是新建 Module）；</p>
+<p>2、build 编译项目后，会在 buildSrc 下生成 .gradle 文件夹和 build 文件夹；</p>
+<p>3、拷贝一个 Module 的 build.gradle 文件放入 buildSrc 文件夹，并引入 gradleApi；<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">apply plugin: <span class="string">'java-library'</span></div><div class="line"></div><div class="line"><span class="keyword">dependencies</span> &#123;</div><div class="line">    implementation <span class="keyword">fileTree</span>(dir: <span class="string">'libs'</span>, <span class="keyword">include</span>: [<span class="string">'*.jar'</span>])</div><div class="line">    <span class="comment">// 引入 gradleApi</span></div><div class="line">    implementation gradleApi()</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">sourceCompatibility</span> = <span class="string">"1.7"</span></div><div class="line"><span class="keyword">targetCompatibility</span> = <span class="string">"1.7"</span></div></pre></td></tr></table></figure></p>
+<p>4、在 buildSrc 下新建 src/main/java 目录，用于存放插件的 Java 源代码；接着在该 src/main/java 目录下新建一个 Java 包，比如 com.enjoy.plugin 包；接着创建一个 PatchPlugin 类，PatchPlugin 作为插件类须实现 Plugin<project> 接口，并实现 apply() 方法；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.enjoy.plugin;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.gradle.api.Plugin;</div><div class="line"><span class="keyword">import</span> org.gradle.api.Project;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PatchPlugin</span> <span class="keyword">implements</span> <span class="title">Plugin</span>&lt;<span class="title">Project</span>&gt; </span>&#123;</div><div class="line">    <span class="meta">@Oveerride</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">apply</span><span class="params">(Project project)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!project.getPlugins().hasPlugin(AppPlugin.class)) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> GradleException(<span class="string">"无法在非android application插件中使用热修复插件"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//创建一个patch&#123;&#125;配置</span></div><div class="line">        <span class="comment">//就和引入了 apply plugin: 'com.android.application' 一样，可以配置android&#123;&#125;</span></div><div class="line">        project.getExtensions().create(<span class="string">"patch"</span>, PatchExtension.class);</div><div class="line"></div><div class="line">        <span class="comment">//gradle执行会解析build.gradle文件，afterEvaluate表示在解析完成之后再执行我们的代码</span></div><div class="line">        project.afterEvaluate(<span class="keyword">new</span> Action&lt;Project&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(<span class="keyword">final</span> Project project)</span> </span>&#123;</div><div class="line">                <span class="keyword">final</span> PatchExtension patchExtension =</div><div class="line">                        project.getExtensions().findByType(PatchExtension.class);</div><div class="line">                <span class="comment">//获得用户的配置，在debug模式下是否开启热修复</span></div><div class="line">                <span class="keyword">final</span> <span class="keyword">boolean</span> debugOn = patchExtension.debugOn;</div><div class="line">                <span class="comment">//得到android的配置</span></div><div class="line">                AppExtension android = project.getExtensions().getByType(AppExtension.class);</div><div class="line">                <span class="comment">// android项目默认会有 debug和release，</span></div><div class="line">                <span class="comment">// 那么getApplicationVariants就是包含了debug和release的集合，all表示对集合进行遍历</span></div><div class="line">                android.getApplicationVariants().all(<span class="keyword">new</span> Action&lt;ApplicationVariant&gt;() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(ApplicationVariant applicationVariant)</span> </span>&#123;</div><div class="line">                        <span class="comment">//当前用户是debug模式，并且没有配置debug运行执行热修复</span></div><div class="line">                        <span class="keyword">if</span> (applicationVariant.getName().contains(<span class="string">"debug"</span>) &amp;&amp; !debugOn) &#123;</div><div class="line">                            <span class="keyword">return</span>;</div><div class="line">                        &#125;</div><div class="line">                        <span class="comment">//配置热修复插件生成补丁的一系列任务</span></div><div class="line">                        configTasks(project, applicationVariant,</div><div class="line">                                patchExtension);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></project></p>
+<p>5、在 app/build.gradle 中引用插件后，gradle 编译时就会执行插件的 apply() 方法；<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">apply plugin: com.enjoy.patch.plugin.PatchPlugin</div></pre></td></tr></table></figure></p>
+<p>6、暴露一些用户可配置的参数；</p>
+<p>新建 PatchExtension 类。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PatchExtension</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span> debugOn;</div><div class="line">    String output;</div><div class="line">    String applicationName;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PatchExtension</span><span class="params">()</span> </span>&#123;</div><div class="line">        debugOn = <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDebugOn</span><span class="params">(<span class="keyword">boolean</span> debugOn)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.debugOn = debugOn;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOutput</span><span class="params">(String output)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.output = output;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationName</span><span class="params">(String applicationName)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.applicationName = applicationName;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 gradle 中使用。<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">patch &#123;</div><div class="line">    debugOn <span class="keyword">true</span></div><div class="line">    applicationName <span class="string">'com.enjoy.qzonefix.MyApplication'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>PatchPlugin 设置 JavaBean 为 PatchExtension，并使用传递进来的参数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">project.getExtensions().create(<span class="string">"patch"</span>, PatchExtension.class);</div><div class="line"></div><div class="line"><span class="keyword">final</span> PatchExtension patchExtension = project.getExtensions().findByType(PatchExtension.class);</div></pre></td></tr></table></figure></p>
+<p>7、保存 mapping 文件，给以后补丁包用；<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获得android的混淆任务</span></div><div class="line"><span class="keyword">final</span> Task proguardTask =</div><div class="line">        project.getTasks().findByName(<span class="string">"transformClassesAndResourcesWithProguardFor"</span> + capitalizeName);</div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 备份本次的mapping文件</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">final</span> File mappingBak = <span class="keyword">new</span> File(outputDir, <span class="string">"mapping.txt"</span>);</div><div class="line"><span class="comment">//如果没开启混淆，则为null，不需要备份mapping</span></div><div class="line"><span class="keyword">if</span> (proguardTask != <span class="keyword">null</span>) &#123;</div><div class="line">    <span class="comment">// dolast：在这个任务之后再干一些事情</span></div><div class="line">    <span class="comment">// 在混淆后备份mapping</span></div><div class="line">    proguardTask.doLast(<span class="keyword">new</span> Action&lt;Task&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Task task)</span> </span>&#123;</div><div class="line">            <span class="comment">//混淆任务输出的所有文件</span></div><div class="line">            TaskOutputs outputs = proguardTask.getOutputs();</div><div class="line">            Set&lt;File&gt; files = outputs.getFiles().getFiles();</div><div class="line">            <span class="keyword">for</span> (File file : files) &#123;</div><div class="line">                <span class="comment">//把mapping文件备份</span></div><div class="line">                <span class="keyword">if</span> (file.getName().endsWith(<span class="string">"mapping.txt"</span>)) &#123;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        FileUtils.copyFile(file, mappingBak);</div><div class="line">                        project.getLogger().error(<span class="string">"备份混淆mapping文件:"</span> + mappingBak.getCanonicalPath());</div><div class="line">                    &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"><span class="comment">//将上次混淆的mapping应用到本次,如果没有上次的混淆文件就没操作</span></div><div class="line"><span class="keyword">if</span> (mappingBak.exists() &amp;&amp; proguardTask != <span class="keyword">null</span>) &#123;</div><div class="line">    TransformTask task = (TransformTask) proguardTask;</div><div class="line">    ProGuardTransform transform = (ProGuardTransform) task.getTransform();</div><div class="line">    transform.applyTestedMapping(mappingBak);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>8、记录 MD5，并生成补丁包。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 在混淆后 记录类的hash值，并生成补丁包</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">final</span> File hexFile = <span class="keyword">new</span> File(outputDir, <span class="string">"hex.txt"</span>);</div><div class="line"></div><div class="line"><span class="comment">// 需要打包补丁的类的jar包</span></div><div class="line"><span class="keyword">final</span> File patchClassFile = <span class="keyword">new</span> File(outputDir, <span class="string">"patchClass.jar"</span>);</div><div class="line"><span class="comment">// 用dx打包后的jar包</span></div><div class="line"><span class="keyword">final</span> File patchFile = <span class="keyword">new</span> File(outputDir, <span class="string">"patch.jar"</span>);</div><div class="line"></div><div class="line"><span class="comment">//打包dex任务</span></div><div class="line"><span class="keyword">final</span> Task dexTask =</div><div class="line">        project.getTasks().findByName(<span class="string">"transformClassesWithDexBuilderFor"</span> + capitalizeName);</div><div class="line"></div><div class="line"><span class="comment">//dofirst：在任务之前干一些事情</span></div><div class="line"><span class="comment">// 在把class打包dex之前，插桩并记录每个class的md5 hash值</span></div><div class="line">dexTask.doFirst(<span class="keyword">new</span> Action&lt;Task&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Task task)</span> </span>&#123;</div><div class="line">        <span class="comment">/**</span></div><div class="line"><span class="comment">         *  插桩 记录md5并对比</span></div><div class="line"><span class="comment">         */</span></div><div class="line">        PatchGenerator patchGenerator = <span class="keyword">new</span> PatchGenerator(project, patchFile,</div><div class="line">                patchClassFile, hexFile);</div><div class="line">        <span class="comment">//用户配置的application，实际上可以解析manifest自动获取，但是java实现太麻烦了，干脆让用户自己配置</span></div><div class="line">        String applicationName = patchExtension.applicationName;</div><div class="line">        <span class="comment">//windows下 目录输出是  xx\xx\  ,linux下是  /xx/xx ,把 . 替换成平台相关的斜杠</span></div><div class="line">        applicationName = applicationName.replaceAll(<span class="string">"\\."</span>,</div><div class="line">                Matcher.quoteReplacement(File.separator));</div><div class="line">        <span class="comment">//记录类的md5</span></div><div class="line">        Map&lt;String, String&gt; newHexs = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        <span class="comment">//任务的输入，dex打包任务要输入什么？ 自然是所有的class与jar包了！</span></div><div class="line">        Set&lt;File&gt; files = dexTask.getInputs().getFiles().getFiles();</div><div class="line">        <span class="keyword">for</span> (File file : files) &#123;</div><div class="line">            String filePath = file.getAbsolutePath();</div><div class="line">            <span class="keyword">if</span> (filePath.endsWith(<span class="string">".jar"</span>)) &#123;</div><div class="line">                processJar(applicationName, file, newHexs, patchGenerator);</div><div class="line"></div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (filePath.endsWith(<span class="string">".class"</span>)) &#123;</div><div class="line">                processClass(applicationName, variant.getDirName(), file, newHexs,</div><div class="line">                        patchGenerator);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        <span class="comment">//类的md5集合 写入到文件</span></div><div class="line">        Utils.writeHex(newHexs, hexFile);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">//生成补丁</span></div><div class="line">            patchGenerator.generate();</div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * /xxxxx/app/build/intermediates/classes/debug/com/enjoy/qzonefix/MainActivity.class</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> file</span></div><div class="line"><span class="comment"> * <span class="doctag">@param</span> hexs</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">processClass</span><span class="params">(String applicationName, String dirName, File file,</span></span></div><div class="line"><span class="function"><span class="params">                         Map&lt;String, String&gt; hexs,</span></span></div><div class="line"><span class="function"><span class="params">                         PatchGenerator patchGenerator)</span> </span>&#123;</div><div class="line"></div><div class="line">    String filePath = file.getAbsolutePath();</div><div class="line">    <span class="comment">//注意这里的filePath包含了目录+包名+类名，所以去掉目录</span></div><div class="line">    String className = filePath.split(dirName)[<span class="number">1</span>].substring(<span class="number">1</span>);</div><div class="line">    <span class="comment">//application或者android support我们不管</span></div><div class="line">    <span class="keyword">if</span> (className.startsWith(applicationName) || Utils.isAndroidClass(className)) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        FileInputStream is = <span class="keyword">new</span> FileInputStream(filePath);</div><div class="line">        <span class="comment">//执行插桩</span></div><div class="line">        <span class="keyword">byte</span>[] byteCode = ClassUtils.referHackWhenInit(is);</div><div class="line">        String hex = Utils.hex(byteCode);</div><div class="line">        is.close();</div><div class="line"></div><div class="line">        FileOutputStream os = <span class="keyword">new</span> FileOutputStream(filePath);</div><div class="line">        os.write(byteCode);</div><div class="line">        os.close();</div><div class="line"></div><div class="line">        hexs.put(className, hex);</div><div class="line">        <span class="comment">//对比缓存的md5，不一致则放入补丁</span></div><div class="line">        patchGenerator.checkClass(className, hex, byteCode);</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">processJar</span><span class="params">(String applicationName, File file, Map&lt;String, String&gt; hexs,</span></span></div><div class="line"><span class="function"><span class="params">                       PatchGenerator patchGenerator)</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">//  无论是windows还是linux jar包都是 /</span></div><div class="line">        applicationName = applicationName.replaceAll(Matcher.quoteReplacement(File.separator),</div><div class="line">                <span class="string">"/"</span>);</div><div class="line">        File bakJar = <span class="keyword">new</span> File(file.getParent(), file.getName() + <span class="string">".bak"</span>);</div><div class="line">        JarOutputStream jarOutputStream = <span class="keyword">new</span> JarOutputStream(<span class="keyword">new</span> FileOutputStream(bakJar));</div><div class="line"></div><div class="line">        JarFile jarFile = <span class="keyword">new</span> JarFile(file);</div><div class="line">        Enumeration&lt;JarEntry&gt; entries = jarFile.entries();</div><div class="line">        <span class="keyword">while</span> (entries.hasMoreElements()) &#123;</div><div class="line">            JarEntry jarEntry = entries.nextElement();</div><div class="line"></div><div class="line">            jarOutputStream.putNextEntry(<span class="keyword">new</span> JarEntry(jarEntry.getName()));</div><div class="line">            InputStream is = jarFile.getInputStream(jarEntry);</div><div class="line"></div><div class="line">            String className = jarEntry.getName();</div><div class="line">            <span class="keyword">if</span> (className.endsWith(<span class="string">".class"</span>) &amp;&amp; !className.startsWith(applicationName)</div><div class="line">                    &amp;&amp; !Utils.isAndroidClass(className) &amp;&amp; !className.startsWith(<span class="string">"com/enjoy"</span> +</div><div class="line">                    <span class="string">"/patch"</span>)) &#123;</div><div class="line">                <span class="keyword">byte</span>[] byteCode = ClassUtils.referHackWhenInit(is);</div><div class="line">                String hex = Utils.hex(byteCode);</div><div class="line">                is.close();</div><div class="line">                hexs.put(className, hex);</div><div class="line">                <span class="comment">//对比缓存的md5，不一致则放入补丁</span></div><div class="line">                patchGenerator.checkClass(className, hex, byteCode);</div><div class="line">                jarOutputStream.write(byteCode);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">//输出到临时文件</span></div><div class="line">                jarOutputStream.write(IOUtils.toByteArray(is));</div><div class="line">            &#125;</div><div class="line">            jarOutputStream.closeEntry();</div><div class="line">        &#125;</div><div class="line">        jarOutputStream.close();</div><div class="line">        jarFile.close();</div><div class="line">        file.delete();</div><div class="line">        bakJar.renameTo(file);</div><div class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="ART-虚拟机在-Android-7-0-时因优化安装速度导致的无法插桩"><a href="#ART-虚拟机在-Android-7-0-时因优化安装速度导致的无法插桩" class="headerlink" title="ART 虚拟机在 Android 7.0 时因优化安装速度导致的无法插桩"></a><strong>ART 虚拟机在 Android 7.0 时因优化安装速度导致的无法插桩</strong></h2><p>应用在安装时不做编译，而是运行时解释字节码，同时在 JIT 编译了一些热点代码后将这些代码信息记录至 Profile 文件，等到设备空闲的时候使用 AOT（All-Of-the-Time compilation：全时段编译）编译生成称为 app_image 的 base.art（类对象映像）文件，这个 art 文件会在 app 启动时自动加载（相当于缓存）。根据类加载原理，类被加载后无法被替换，即无法修复。</p>
+<p>解决办法：<br>1、因为 app_image 中的 class 会插入到 PathClassloader，所以不使用 PathClassloader，而是自定义 Classloader，并通过反射修改引用 PathClassloader 的地方为自定义的 Classloader；</p>
+<p>2、参考 app_image 生成方式，生成修复后的 app_image。</p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2020/04/13/热修复/">热修复</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2020年04月13日 - 23:04</p>
+  <p><span>最后更新:</span>2020年04月13日 - 23:04</p>
+  <p><span>原始链接:</span><a href="/2020/04/13/热修复/" title="热修复">http://www.weichao.io/2020/04/13/热修复/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2020/04/13/热修复/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/09/插件化/" rel="next" title="插件化">
+                <i class="fa fa-chevron-left"></i> 插件化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与插件化区别"><span class="nav-number">2.</span> <span class="nav-text">与插件化区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各框架实现原理"><span class="nav-number">3.</span> <span class="nav-text">各框架实现原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Qzone-需要解决的问题"><span class="nav-number">4.</span> <span class="nav-text">Qzone 需要解决的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dalvik-虚拟机中-CLASS-ISPREVERIFIED-导致的校验失败"><span class="nav-number">4.1.</span> <span class="nav-text">Dalvik 虚拟机中 CLASS_ISPREVERIFIED 导致的校验失败</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义插件实现插桩并生成补丁包"><span class="nav-number">4.1.1.</span> <span class="nav-text">自定义插件实现插桩并生成补丁包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ART-虚拟机在-Android-7-0-时因优化安装速度导致的无法插桩"><span class="nav-number">4.2.</span> <span class="nav-text">ART 虚拟机在 Android 7.0 时因优化安装速度导致的无法插桩</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 172.0k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
