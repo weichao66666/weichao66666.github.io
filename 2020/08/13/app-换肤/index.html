@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference Android资源篇1：资源编译与打包 Android进阶——从源文件到APK背后的所有主要流程小结 Android资源查找分析   需求 替换 res 目录中的资源； 不重启； 无闪烁。   换肤原理1、设置 Activity 的 LayoutInflater 为自定义的 Factory2，这样当调用 Activity#setContentView() 方法时会接管创建 Vi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="app 换肤">
+<meta property="og:url" content="http://www.weichao.io/2020/08/13/app-换肤/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference Android资源篇1：资源编译与打包 Android进阶——从源文件到APK背后的所有主要流程小结 Android资源查找分析   需求 替换 res 目录中的资源； 不重启； 无闪烁。   换肤原理1、设置 Activity 的 LayoutInflater 为自定义的 Factory2，这样当调用 Activity#setContentView() 方法时会接管创建 Vi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/1.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/2.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/3.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/4.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/5.gif">
+<meta property="og:updated_time" content="2020-08-13T01:40:17.656Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="app 换肤">
+<meta name="twitter:description" content="Reference Android资源篇1：资源编译与打包 Android进阶——从源文件到APK背后的所有主要流程小结 Android资源查找分析   需求 替换 res 目录中的资源； 不重启； 无闪烁。   换肤原理1、设置 Activity 的 LayoutInflater 为自定义的 Factory2，这样当调用 Activity#setContentView() 方法时会接管创建 Vi">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2020/08/13/app-换肤/"/>
+
+
+
+
+
+  <title>app 换肤 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2020/08/13/app-换肤/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">app 换肤</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-13T09:22:52+08:00">
+                2020-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,573 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2020/08/13/app-换肤/" class="leancloud_visitors" data-flag-title="app 换肤">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="https://www.jianshu.com/p/d487f0aa9818" title="https://www.jianshu.com/p/d487f0aa9818" target="_blank" rel="external">Android资源篇1：资源编译与打包</a></li>
+<li><a href="https://blog.csdn.net/CrazyMo_/article/details/94741088" title="https://blog.csdn.net/CrazyMo_/article/details/94741088" target="_blank" rel="external">Android进阶——从源文件到APK背后的所有主要流程小结</a></li>
+<li><a href="https://www.jianshu.com/p/ef64106ca1d3" title="https://www.jianshu.com/p/ef64106ca1d3" target="_blank" rel="external">Android资源查找分析</a></li>
+</ul>
+<hr>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h1><ol>
+<li>替换 res 目录中的资源；</li>
+<li>不重启；</li>
+<li>无闪烁。</li>
+</ol>
+<hr>
+<h1 id="换肤原理"><a href="#换肤原理" class="headerlink" title="换肤原理"></a><strong>换肤原理</strong></h1><p>1、设置 Activity 的 LayoutInflater 为自定义的 Factory2，这样当调用 Activity#setContentView() 方法时会接管创建 View 的操作；<br>2、在创建 View 成功后，查看 View 是否包含在换肤范围内的属性，如果有，就将 View 存起来；<br>3、当执行换肤时，会先下载皮肤包，然后将皮肤包中的资源合并到宿主 app 的资源中，形成新的资源包；遍历（2）中保存的 View，将资源替换为新的资源包中的资源。</p>
+<p>源码：<a href="http://colors.black:10086/0/skin_demo" title="http://colors.black:10086/0/skin_demo" target="_blank" rel="external">skin_demo</a></p>
+<hr>
+<h1 id="资源"><a href="#资源" class="headerlink" title="资源"></a><strong>资源</strong></h1><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a><strong>分类</strong></h2><h3 id="assets"><a href="#assets" class="headerlink" title="assets"></a><strong>assets</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/1.png" alt=""></p>
+<h3 id="res"><a href="#res" class="headerlink" title="res"></a><strong>res</strong></h3><ul>
+<li>animator：属性动画 XML 文件</li>
+<li>anim：视图动画 XML 文件</li>
+<li>color：颜色 XML 文件</li>
+<li>drawable：drawable XML 文件、Bitmap 文件（.png、.9.png、.jpg、.gif 等）</li>
+<li>layout：布局 XML 文件</li>
+<li>menu：菜单 XML 文件</li>
+<li>raw：原始资源文件</li>
+<li>values：字符串、颜色、尺寸、样式、属性等 XML 文件</li>
+<li>xml：XML 文件</li>
+</ul>
+<h2 id="资源打包流程"><a href="#资源打包流程" class="headerlink" title="资源打包流程"></a><strong>资源打包流程</strong></h2><p>资源打包是由 AAPT 工具完成，assert、res/raw、Bitmap 文件会被原封不动地打包到 APK 里，XML 会被编译成二进制文件，最终生成 R.java 和 resources.arsc。</p>
+<p>详细流程：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/2.png" alt=""></p>
+<p>R.java 存储资源 ID（系统资源以 0x01 开头，应用资源以 0x7f 开头）：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/3.png" alt=""></p>
+<p>resources.arsc 存储资源 ID 和文件的映射关系：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/4.png" alt=""></p>
+<h2 id="布局-XML-解析流程"><a href="#布局-XML-解析流程" class="headerlink" title="布局 XML 解析流程"></a><strong>布局 XML 解析流程</strong></h2><h3 id="在-Activity-中加载布局-XML-文件"><a href="#在-Activity-中加载布局-XML-文件" class="headerlink" title="在 Activity 中加载布局 XML 文件"></a><strong>在 Activity 中加载布局 XML 文件</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Activity：直接交给-Window-处理"><a href="#Activity：直接交给-Window-处理" class="headerlink" title="Activity：直接交给 Window 处理"></a><strong>Activity：直接交给 Window 处理</strong></h3><p>此处的 Window 是 PhoneWindow。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public void setContentView(@LayoutRes int layoutResID) &#123;</div><div class="line">    getWindow().setContentView(layoutResID);</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="PhoneWindow：创建-DecorView"><a href="#PhoneWindow：创建-DecorView" class="headerlink" title="PhoneWindow：创建 DecorView"></a><strong>PhoneWindow：创建 DecorView</strong></h3><p>创建 DecorView 作为 Window 的顶层 View，然后交给 LayoutInflater 处理，同时 DecorView 作为 parent。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(<span class="keyword">int</span> layoutResID)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mContentParent == <span class="keyword">null</span>) &#123;</div><div class="line">        installDecor();</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">    mLayoutInflater.inflate(layoutResID, mContentParent);</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="LayoutInflater-处理"><a href="#LayoutInflater-处理" class="headerlink" title="LayoutInflater 处理"></a><strong>LayoutInflater 处理</strong></h3><p>1、获取 Context 绑定的 Resources；<br>2、创建 XML 资源解析器，解析 XML；<br>3、通过 createViewFromTag() 方法创建 View。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">inflate</span><span class="params">(@LayoutRes <span class="keyword">int</span> resource, @Nullable ViewGroup root, <span class="keyword">boolean</span> attachToRoot)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Resources res = getContext().getResources();</div><div class="line">    <span class="keyword">final</span> XmlResourceParser parser = res.getLayout(resource);</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">return</span> inflate(parser, root, attachToRoot);</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        parser.close();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">inflate</span><span class="params">(XmlPullParser parser, @Nullable ViewGroup root, <span class="keyword">boolean</span> attachToRoot)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    View result = root;</div><div class="line">    ...</div><div class="line">    <span class="keyword">final</span> String name = parser.getName();</div><div class="line">    ...</div><div class="line">    <span class="keyword">final</span> View temp = createViewFromTag(root, name, inflaterContext, attrs);</div><div class="line"></div><div class="line">    ViewGroup.LayoutParams params = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</div><div class="line">        params = root.generateLayoutParams(attrs);</div><div class="line">        <span class="keyword">if</span> (!attachToRoot) &#123;</div><div class="line">            temp.setLayoutParams(params);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    rInflateChildren(parser, temp, attrs, <span class="keyword">true</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (root != <span class="keyword">null</span> &amp;&amp; attachToRoot) &#123;</div><div class="line">        root.addView(temp, params);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (root == <span class="keyword">null</span> || !attachToRoot) &#123;</div><div class="line">        result = temp;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function">View <span class="title">createViewFromTag</span><span class="params">(View parent, String name, Context context, AttributeSet attrs, <span class="keyword">boolean</span> ignoreThemeAttr)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    View view;</div><div class="line">    <span class="comment">// view 创建顺序是 mFactory2、mFactory、mPrivateFactory、onCreateView、createView</span></div><div class="line">    <span class="keyword">if</span> (mFactory2 != <span class="keyword">null</span>) &#123;</div><div class="line">        view = mFactory2.onCreateView(parent, name, context, attrs);</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mFactory != <span class="keyword">null</span>) &#123;</div><div class="line">        view = mFactory.onCreateView(name, context, attrs);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        view = <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (view == <span class="keyword">null</span> &amp;&amp; mPrivateFactory != <span class="keyword">null</span>) &#123;</div><div class="line">        view = mPrivateFactory.onCreateView(parent, name, context, attrs);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (view == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">final</span> Object lastContext = mConstructorArgs[<span class="number">0</span>];</div><div class="line">        mConstructorArgs[<span class="number">0</span>] = context;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">if</span> (-<span class="number">1</span> == name.indexOf(<span class="string">'.'</span>)) &#123;</div><div class="line">                view = onCreateView(parent, name, attrs);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                view = createView(name, <span class="keyword">null</span>, attrs);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            mConstructorArgs[<span class="number">0</span>] = lastContext;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> view;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以自定义 Factory2 就可以实现抢在系统之前创建 View。</p>
+<h2 id="Resources-初始化流程"><a href="#Resources-初始化流程" class="headerlink" title="Resources 初始化流程"></a><strong>Resources 初始化流程</strong></h2><p>在 app 启动流程中，当 zygote fork 出 app 进程后，会在 app 进程执行 ActivityThread#main() 方法。</p>
+<h3 id="ActivityThread：除了启动主线程-Looper，还创建了-ContextImpl-对象"><a href="#ActivityThread：除了启动主线程-Looper，还创建了-ContextImpl-对象" class="headerlink" title="ActivityThread：除了启动主线程 Looper，还创建了 ContextImpl 对象"></a><strong>ActivityThread：除了启动主线程 Looper，还创建了 ContextImpl 对象</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    </div><div class="line">    Looper.prepareMainLooper();</div><div class="line">    </div><div class="line">    ...</div><div class="line">    </div><div class="line">    ActivityThread thread = <span class="keyword">new</span> ActivityThread();</div><div class="line">    thread.attach(<span class="keyword">false</span>, startSeq);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (sMainThreadHandler == <span class="keyword">null</span>) &#123;</div><div class="line">        sMainThreadHandler = thread.getHandler();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">    </div><div class="line">    Looper.loop();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(<span class="keyword">boolean</span> system, <span class="keyword">long</span> startSeq)</span> </span>&#123;</div><div class="line">    sCurrentActivityThread = <span class="keyword">this</span>;</div><div class="line">    mSystemThread = system;</div><div class="line">    </div><div class="line">    ...</div><div class="line">    </div><div class="line">    mInstrumentation = <span class="keyword">new</span> Instrumentation();</div><div class="line">    mInstrumentation.basicInit(<span class="keyword">this</span>);</div><div class="line">    ContextImpl context = ContextImpl.createAppContext(<span class="keyword">this</span>, getSystemContext().mPackageInfo);</div><div class="line">    mInitialApplication = context.mPackageInfo.makeApplication(<span class="keyword">true</span>, <span class="keyword">null</span>);</div><div class="line">    mInitialApplication.onCreate();</div><div class="line">    </div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ContextImpl：通过-LoadedApk-获取-Resources，并绑定"><a href="#ContextImpl：通过-LoadedApk-获取-Resources，并绑定" class="headerlink" title="ContextImpl：通过 LoadedApk 获取 Resources，并绑定"></a><strong>ContextImpl：通过 LoadedApk 获取 Resources，并绑定</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> ContextImpl <span class="title">createAppContext</span><span class="params">(ActivityThread mainThread, LoadedApk packageInfo)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    </div><div class="line">    ContextImpl context = <span class="keyword">new</span> ContextImpl(<span class="keyword">null</span>, mainThread, packageInfo, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="number">0</span>, <span class="keyword">null</span>);</div><div class="line">    context.setResources(packageInfo.getResources());</div><div class="line">    <span class="keyword">return</span> context;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="LoadedApk：将获取-Resources-的工作转给-ResourcesManager"><a href="#LoadedApk：将获取-Resources-的工作转给-ResourcesManager" class="headerlink" title="LoadedApk：将获取 Resources 的工作转给 ResourcesManager"></a><strong>LoadedApk：将获取 Resources 的工作转给 ResourcesManager</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Resources <span class="title">getResources</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mResources == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">final</span> String[] splitPaths;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            splitPaths = getSplitPaths(<span class="keyword">null</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (NameNotFoundException e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(<span class="string">"null split not found"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        mResources = ResourcesManager.getInstance().getResources(<span class="keyword">null</span>, mResDir, splitPaths, mOverlayDirs, mApplicationInfo.sharedLibraryFiles, Display.DEFAULT_DISPLAY, <span class="keyword">null</span>, getCompatibilityInfo(), getClassLoader());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mResources;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ResourcesManager：创建-ResourcesImpl-中的-AssetManager；创建-ResourcesImpl"><a href="#ResourcesManager：创建-ResourcesImpl-中的-AssetManager；创建-ResourcesImpl" class="headerlink" title="ResourcesManager：创建 ResourcesImpl 中的 AssetManager；创建 ResourcesImpl"></a><strong>ResourcesManager：创建 ResourcesImpl 中的 AssetManager；创建 ResourcesImpl</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="meta">@Nullable</span> <span class="function">Resources <span class="title">getResources</span><span class="params">(@Nullable IBinder activityToken, @Nullable String resDir, @Nullable String[] splitResDirs, @Nullable String[] overlayDirs, @Nullable String[] libDirs, <span class="keyword">int</span> displayId, @Nullable Configuration overrideConfig, @NonNull CompatibilityInfo compatInfo, @Nullable ClassLoader classLoader)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> ResourcesKey key = <span class="keyword">new</span> ResourcesKey(resDir, splitResDirs, overlayDirs, libDirs, displayId, overrideConfig != <span class="keyword">null</span> ? <span class="keyword">new</span> Configuration(overrideConfig) : <span class="keyword">null</span>, compatInfo);</div><div class="line">    classLoader = classLoader != <span class="keyword">null</span> ? classLoader : ClassLoader.getSystemClassLoader();</div><div class="line">    <span class="keyword">return</span> getOrCreateResources(activityToken, key, classLoader);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="meta">@Nullable</span> <span class="function">Resources <span class="title">getOrCreateResources</span><span class="params">(@Nullable IBinder activityToken, @NonNull ResourcesKey key, @NonNull ClassLoader classLoader)</span> </span>&#123;</div><div class="line">    ...</div><div class="line">    </div><div class="line">    ResourcesImpl resourcesImpl = createResourcesImpl(key);</div><div class="line">    <span class="keyword">if</span> (resourcesImpl == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="keyword">final</span> Resources resources;</div><div class="line">    <span class="keyword">if</span> (activityToken != <span class="keyword">null</span>) &#123;</div><div class="line">        resources = getOrCreateResourcesForActivityLocked(activityToken, classLoader, resourcesImpl, key.mCompatInfo);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        resources = getOrCreateResourcesLocked(classLoader, resourcesImpl, key.mCompatInfo);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> resources;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="meta">@Nullable</span> <span class="function">ResourcesImpl <span class="title">createResourcesImpl</span><span class="params">(@NonNull ResourcesKey key)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> DisplayAdjustments daj = <span class="keyword">new</span> DisplayAdjustments(key.mOverrideConfiguration);</div><div class="line">    daj.setCompatibilityInfo(key.mCompatInfo);</div><div class="line"></div><div class="line">    <span class="keyword">final</span> AssetManager assets = createAssetManager(key);</div><div class="line">    <span class="keyword">if</span> (assets == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">final</span> DisplayMetrics dm = getDisplayMetrics(key.mDisplayId, daj);</div><div class="line">    <span class="keyword">final</span> Configuration config = generateConfig(key, dm);</div><div class="line">    <span class="keyword">final</span> ResourcesImpl impl = <span class="keyword">new</span> ResourcesImpl(assets, dm, config, daj);</div><div class="line">    <span class="keyword">return</span> impl;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@VisibleForTesting</span></div><div class="line"><span class="keyword">protected</span> <span class="meta">@Nullable</span> <span class="function">AssetManager <span class="title">createAssetManager</span><span class="params">(@NonNull <span class="keyword">final</span> ResourcesKey key)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> AssetManager.Builder builder = <span class="keyword">new</span> AssetManager.Builder();</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (key.mResDir != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            builder.addApkAssets(loadApkAssets(key.mResDir, <span class="keyword">false</span> <span class="comment">/*sharedLib*/</span>, <span class="keyword">false</span> <span class="comment">/*overlay*/</span>));</div><div class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">            Log.e(TAG, <span class="string">"failed to add asset path "</span> + key.mResDir);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (key.mSplitResDirs != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">final</span> String splitResDir : key.mSplitResDirs) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                builder.addApkAssets(loadApkAssets(splitResDir, <span class="keyword">false</span> <span class="comment">/*sharedLib*/</span>, <span class="keyword">false</span> <span class="comment">/*overlay*/</span>));</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                Log.e(TAG, <span class="string">"failed to add split asset path "</span> + splitResDir);</div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (key.mOverlayDirs != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">final</span> String idmapPath : key.mOverlayDirs) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                builder.addApkAssets(loadApkAssets(idmapPath, <span class="keyword">false</span> <span class="comment">/*sharedLib*/</span>, <span class="keyword">true</span> <span class="comment">/*overlay*/</span>));</div><div class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                Log.w(TAG, <span class="string">"failed to add overlay path "</span> + idmapPath);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (key.mLibDirs != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">final</span> String libDir : key.mLibDirs) &#123;</div><div class="line">            <span class="keyword">if</span> (libDir.endsWith(<span class="string">".apk"</span>)) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    builder.addApkAssets(loadApkAssets(libDir, <span class="keyword">true</span> <span class="comment">/*sharedLib*/</span>, <span class="keyword">false</span> <span class="comment">/*overlay*/</span>));</div><div class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                    Log.w(TAG, <span class="string">"Asset path '"</span> + libDir +</div><div class="line">                            <span class="string">"' does not exist or contains no resources."</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> builder.build();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="AssetManager：将系统资源和用户资源合并"><a href="#AssetManager：将系统资源和用户资源合并" class="headerlink" title="AssetManager：将系统资源和用户资源合并"></a><strong>AssetManager：将系统资源和用户资源合并</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> ArrayList&lt;ApkAssets&gt; mUserApkAssets = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Builder <span class="title">addApkAssets</span><span class="params">(ApkAssets apkAssets)</span> </span>&#123;</div><div class="line">        mUserApkAssets.add(apkAssets);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> AssetManager <span class="title">build</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> ApkAssets[] systemApkAssets = getSystem().getApkAssets();</div><div class="line"></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalApkAssetCount = systemApkAssets.length + mUserApkAssets.size();</div><div class="line">        <span class="keyword">final</span> ApkAssets[] apkAssets = <span class="keyword">new</span> ApkAssets[totalApkAssetCount];</div><div class="line"></div><div class="line">        System.arraycopy(systemApkAssets, <span class="number">0</span>, apkAssets, <span class="number">0</span>, systemApkAssets.length);</div><div class="line"></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> userApkAssetCount = mUserApkAssets.size();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; userApkAssetCount; i++) &#123;</div><div class="line">            apkAssets[i + systemApkAssets.length] = mUserApkAssets.get(i);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> AssetManager assetManager = <span class="keyword">new</span> AssetManager(<span class="keyword">false</span> <span class="comment">/*sentinel*/</span>);</div><div class="line">        assetManager.mApkAssets = apkAssets;</div><div class="line">        AssetManager.nativeSetApkAssets(assetManager.mObject, apkAssets, <span class="keyword">false</span> <span class="comment">/*invalidateCaches*/</span>);</div><div class="line">        <span class="keyword">return</span> assetManager;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="资源查找流程"><a href="#资源查找流程" class="headerlink" title="资源查找流程"></a><strong>资源查找流程</strong></h2><p>以查找字符串为例，依次经过 Context -&gt; ContextImpl-&gt; Resources -&gt; ResourcesImpl -&gt; AssetManager，其中 ContextImpl、ResourcesImpl、AssetManager 在 app 启动时初始化 Resource 时创建。<br>AssetManager 调用 native 层代码会获取 ResTable 资源表，然后根据机器配置在 ResTable 的 mPackageGroups 数组中查找到一个最合适的值。详细流程参考<a href="https://www.jianshu.com/p/ef64106ca1d3" title="https://www.jianshu.com/p/ef64106ca1d3" target="_blank" rel="external">Android资源查找分析</a>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getString(R.string.app_name);</div></pre></td></tr></table></figure></p>
+<h3 id="Context"><a href="#Context" class="headerlink" title="Context"></a><strong>Context</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@NonNull</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">getString</span><span class="params">(@StringRes <span class="keyword">int</span> resId)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> getResources().getString(resId);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ContextImpl"><a href="#ContextImpl" class="headerlink" title="ContextImpl"></a><strong>ContextImpl</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> Resources <span class="title">getResources</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> mResources;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a><strong>Resources</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@NonNull</span></div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getString</span><span class="params">(@StringRes <span class="keyword">int</span> id)</span> <span class="keyword">throws</span> NotFoundException </span>&#123;</div><div class="line">    <span class="keyword">return</span> getText(id).toString();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@NonNull</span> <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getText</span><span class="params">(@StringRes <span class="keyword">int</span> id)</span> <span class="keyword">throws</span> NotFoundException </span>&#123;</div><div class="line">    CharSequence res = mResourcesImpl.getAssets().getResourceText(id);</div><div class="line">    <span class="keyword">if</span> (res != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> NotFoundException(<span class="string">"String resource ID #0x"</span> + Integer.toHexString(id));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="ResourcesImpl"><a href="#ResourcesImpl" class="headerlink" title="ResourcesImpl"></a><strong>ResourcesImpl</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@UnsupportedAppUsage</span></div><div class="line"><span class="function"><span class="keyword">public</span> AssetManager <span class="title">getAssets</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> mAssets;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="AssetManager"><a href="#AssetManager" class="headerlink" title="AssetManager"></a><strong>AssetManager</strong></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Nullable</span> <span class="function">CharSequence <span class="title">getResourceText</span><span class="params">(@StringRes <span class="keyword">int</span> resId)</span> </span>&#123;</div><div class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">        <span class="keyword">final</span> TypedValue outValue = mValue;</div><div class="line">        <span class="keyword">if</span> (getResourceValue(resId, <span class="number">0</span>, outValue, <span class="keyword">true</span>)) &#123;</div><div class="line">            <span class="keyword">return</span> outValue.coerceToString();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">getResourceValue</span><span class="params">(@AnyRes <span class="keyword">int</span> resId, <span class="keyword">int</span> densityDpi, @NonNull TypedValue outValue, <span class="keyword">boolean</span> resolveRefs)</span> </span>&#123;</div><div class="line">    Preconditions.checkNotNull(outValue, <span class="string">"outValue"</span>);</div><div class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">        ensureValidLocked();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> cookie = nativeGetResourceValue(mObject, resId, (<span class="keyword">short</span>) densityDpi, outValue, resolveRefs);</div><div class="line">        <span class="keyword">if</span> (cookie &lt;= <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        outValue.changingConfigurations = ActivityInfo.activityInfoConfigNativeToJava(outValue.changingConfigurations);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (outValue.type == TypedValue.TYPE_STRING) &#123;</div><div class="line">            outValue.string = mApkAssets[cookie - <span class="number">1</span>].getStringFromPool(outValue.data);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a><strong>效果</strong></h1><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E6%8D%A2%E8%82%A4/5.gif" alt=""></p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2020/08/13/app-换肤/">app 换肤</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2020年08月13日 - 09:08</p>
+  <p><span>最后更新:</span>2020年08月13日 - 09:08</p>
+  <p><span>原始链接:</span><a href="/2020/08/13/app-换肤/" title="app 换肤">http://www.weichao.io/2020/08/13/app-换肤/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2020/08/13/app-换肤/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/11/APK-文件加固/" rel="next" title="APK 文件加固">
+                <i class="fa fa-chevron-left"></i> APK 文件加固
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#换肤原理"><span class="nav-number">3.</span> <span class="nav-text">换肤原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资源"><span class="nav-number">4.</span> <span class="nav-text">资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">4.1.</span> <span class="nav-text">分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#assets"><span class="nav-number">4.1.1.</span> <span class="nav-text">assets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#res"><span class="nav-number">4.1.2.</span> <span class="nav-text">res</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源打包流程"><span class="nav-number">4.2.</span> <span class="nav-text">资源打包流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布局-XML-解析流程"><span class="nav-number">4.3.</span> <span class="nav-text">布局 XML 解析流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-Activity-中加载布局-XML-文件"><span class="nav-number">4.3.1.</span> <span class="nav-text">在 Activity 中加载布局 XML 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity：直接交给-Window-处理"><span class="nav-number">4.3.2.</span> <span class="nav-text">Activity：直接交给 Window 处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhoneWindow：创建-DecorView"><span class="nav-number">4.3.3.</span> <span class="nav-text">PhoneWindow：创建 DecorView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LayoutInflater-处理"><span class="nav-number">4.3.4.</span> <span class="nav-text">LayoutInflater 处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resources-初始化流程"><span class="nav-number">4.4.</span> <span class="nav-text">Resources 初始化流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ActivityThread：除了启动主线程-Looper，还创建了-ContextImpl-对象"><span class="nav-number">4.4.1.</span> <span class="nav-text">ActivityThread：除了启动主线程 Looper，还创建了 ContextImpl 对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContextImpl：通过-LoadedApk-获取-Resources，并绑定"><span class="nav-number">4.4.2.</span> <span class="nav-text">ContextImpl：通过 LoadedApk 获取 Resources，并绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LoadedApk：将获取-Resources-的工作转给-ResourcesManager"><span class="nav-number">4.4.3.</span> <span class="nav-text">LoadedApk：将获取 Resources 的工作转给 ResourcesManager</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResourcesManager：创建-ResourcesImpl-中的-AssetManager；创建-ResourcesImpl"><span class="nav-number">4.4.4.</span> <span class="nav-text">ResourcesManager：创建 ResourcesImpl 中的 AssetManager；创建 ResourcesImpl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AssetManager：将系统资源和用户资源合并"><span class="nav-number">4.4.5.</span> <span class="nav-text">AssetManager：将系统资源和用户资源合并</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源查找流程"><span class="nav-number">4.5.</span> <span class="nav-text">资源查找流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Context"><span class="nav-number">4.5.1.</span> <span class="nav-text">Context</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContextImpl"><span class="nav-number">4.5.2.</span> <span class="nav-text">ContextImpl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Resources"><span class="nav-number">4.5.3.</span> <span class="nav-text">Resources</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ResourcesImpl"><span class="nav-number">4.5.4.</span> <span class="nav-text">ResourcesImpl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AssetManager"><span class="nav-number">4.5.5.</span> <span class="nav-text">AssetManager</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#效果"><span class="nav-number">5.</span> <span class="nav-text">效果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 175.3k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
