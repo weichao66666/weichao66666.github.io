@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference 解读Android进程优先级ADJ算法 2020年了，Android后台保活还有戏吗？看我如何优雅的实现！ 深度剖析APP保活案例   源码keep_alive_demo  进程的优先级与回收机制ProcessList.java 1234private final int[] mOomAdj = new int[] &amp;#123;        FOREGROUND_APP_AD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="app 保活与拉活">
+<meta property="og:url" content="http://www.weichao.io/2020/08/19/app-保活与拉活/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference 解读Android进程优先级ADJ算法 2020年了，Android后台保活还有戏吗？看我如何优雅的实现！ 深度剖析APP保活案例   源码keep_alive_demo  进程的优先级与回收机制ProcessList.java 1234private final int[] mOomAdj = new int[] &amp;#123;        FOREGROUND_APP_AD">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/1.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/2.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/3.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/4.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/5.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/6.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/7.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/8.png">
+<meta property="og:updated_time" content="2020-08-19T08:59:23.742Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="app 保活与拉活">
+<meta name="twitter:description" content="Reference 解读Android进程优先级ADJ算法 2020年了，Android后台保活还有戏吗？看我如何优雅的实现！ 深度剖析APP保活案例   源码keep_alive_demo  进程的优先级与回收机制ProcessList.java 1234private final int[] mOomAdj = new int[] &amp;#123;        FOREGROUND_APP_AD">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2020/08/19/app-保活与拉活/"/>
+
+
+
+
+
+  <title>app 保活与拉活 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2020/08/19/app-保活与拉活/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">app 保活与拉活</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-08-19T16:53:04+08:00">
+                2020-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,555 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2020/08/19/app-保活与拉活/" class="leancloud_visitors" data-flag-title="app 保活与拉活">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="http://gityuan.com/2018/05/19/android-process-adj/" title="http://gityuan.com/2018/05/19/android-process-adj/" target="_blank" rel="external">解读Android进程优先级ADJ算法</a></li>
+<li><a href="https://juejin.im/post/6844904032809517070" title="https://juejin.im/post/6844904032809517070" target="_blank" rel="external">2020年了，Android后台保活还有戏吗？看我如何优雅的实现！</a></li>
+<li><a href="http://gityuan.com/2018/02/24/process-keep-forever/#%E5%9B%9B-%E6%80%BB%E7%BB%93" title="http://gityuan.com/2018/02/24/process-keep-forever/#%E5%9B%9B-%E6%80%BB%E7%BB%93" target="_blank" rel="external">深度剖析APP保活案例</a></li>
+</ul>
+<hr>
+<h1 id="源码"><a href="#源码" class="headerlink" title="源码"></a><strong>源码</strong></h1><p><a href="http://localhost:10086/0/keep_alive_demo.git" title="http://localhost:10086/0/keep_alive_demo.git" target="_blank" rel="external">keep_alive_demo</a></p>
+<hr>
+<h1 id="进程的优先级与回收机制"><a href="#进程的优先级与回收机制" class="headerlink" title="进程的优先级与回收机制"></a><strong>进程的优先级与回收机制</strong></h1><p><a href="http://androidos.net.cn/android/9.0.0_r8/xref/frameworks/base/services/core/java/com/android/server/am/ProcessList.java" title="http://androidos.net.cn/android/9.0.0_r8/xref/frameworks/base/services/core/java/com/android/server/am/ProcessList.java" target="_blank" rel="external">ProcessList.java</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span>[] mOomAdj = <span class="keyword">new</span> <span class="keyword">int</span>[] &#123;</div><div class="line">        FOREGROUND_APP_ADJ, VISIBLE_APP_ADJ, PERCEPTIBLE_APP_ADJ,</div><div class="line">        BACKUP_APP_ADJ, CACHED_APP_MIN_ADJ, CACHED_APP_MAX_ADJ</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>ADJ 级别</th>
+<th>取值（Android 7.0 以前的值）</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NATIVE_ADJ</td>
+<td>-1000（-17）</td>
+<td>native 进程（不被系统管理）</td>
+</tr>
+<tr>
+<td>SYSTEM_ADJ</td>
+<td>-900（-16）</td>
+<td>仅指 system_server 进程</td>
+</tr>
+<tr>
+<td>PERSISTENT_PROC_ADJ</td>
+<td>-800（-12）</td>
+<td>系统 persistent 进程，比如 telephony</td>
+</tr>
+<tr>
+<td>PERSISTENT_SERVICE_ADJ</td>
+<td>-700（-11）</td>
+<td>关联着系统或 persistent 进程</td>
+</tr>
+<tr>
+<td><code>FOREGROUND_APP_ADJ</code></td>
+<td>0（0）</td>
+<td>前台进程</td>
+</tr>
+<tr>
+<td><code>VISIBLE_APP_ADJ</code></td>
+<td>100（1）</td>
+<td>可见进程</td>
+</tr>
+<tr>
+<td><code>PERCEPTIBLE_APP_ADJ</code></td>
+<td>200（2）</td>
+<td>可感知进程，比如后台音乐播放</td>
+</tr>
+<tr>
+<td><code>BACKUP_APP_ADJ</code></td>
+<td>300（3）</td>
+<td>备份进程</td>
+</tr>
+<tr>
+<td>HEAVY_WEIGHT_APP_ADJ</td>
+<td>400（4）</td>
+<td>后台的重量级进程</td>
+</tr>
+<tr>
+<td>SERVICE_ADJ</td>
+<td>500（5）</td>
+<td>服务进程</td>
+</tr>
+<tr>
+<td>HOME_APP_ADJ</td>
+<td>600（6）</td>
+<td>Home 进程</td>
+</tr>
+<tr>
+<td>PREVIOUS_APP_ADJ</td>
+<td>700（7）</td>
+<td>上一个 app 的进程（往往通过按返回键）</td>
+</tr>
+<tr>
+<td>SERVICE_B_ADJ</td>
+<td>800（8）</td>
+<td>B List 中的 Service</td>
+</tr>
+<tr>
+<td><code>CACHED_APP_MIN_ADJ</code></td>
+<td>900（9）</td>
+<td>不可见进程的 ADJ 最小值</td>
+</tr>
+<tr>
+<td><code>CACHED_APP_MAX_ADJ</code></td>
+<td>906（15）</td>
+<td>不可见进程的 ADJ 最大值</td>
+</tr>
+<tr>
+<td>UNKNOWN_ADJ</td>
+<td>1001（16）</td>
+<td>一般指将要会缓存进程，无法获取确定值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="进程回收机制：Low-Memory-Killer"><a href="#进程回收机制：Low-Memory-Killer" class="headerlink" title="进程回收机制：Low Memory Killer"></a><strong>进程回收机制：Low Memory Killer</strong></h2><p>当系统剩余空闲内存低于某阈值（比如 147 MB），则从 ADJ 大于或等于相应阈值（比如 900）的进程中，杀死 ADJ 值最大的进程，如果存在多个 ADJ 相同的进程，则杀死内存最大的进程。</p>
+<h3 id="查看内存阈值"><a href="#查看内存阈值" class="headerlink" title="查看内存阈值"></a><strong>查看内存阈值</strong></h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /sys/module/lowmemorykiller/parameters/minfree</div></pre></td></tr></table></figure>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/1.png" alt=""><br>单位是 4KB（一页），所以对于该设备：</p>
+<ul>
+<li>前台进程：18432 * 4KB / 1024 = 72 MB</li>
+<li>可见进程：90 MB</li>
+<li>可感知进程：108 MB</li>
+<li>备份进程：126 MB</li>
+<li>不可见进程的 ADJ 最小值：216 MB</li>
+<li>不可见进程的 ADJ 最大值：315 MB</li>
+</ul>
+<h2 id="查看进程的优先级"><a href="#查看进程的优先级" class="headerlink" title="查看进程的优先级"></a><strong>查看进程的优先级</strong></h2><p>1、确定进程值，是 3107：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/2.png" alt=""></p>
+<p>2、查看进程的优先级：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /proc/<span class="number">3107</span>/oom_adj</div></pre></td></tr></table></figure></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/3.png" alt=""><br>启动 app 后，查看 app 进程的优先级是前台进程；<br>1、如果按返回键，是 8；<br>2、如果按 HOME 键，是 6；<br>3、锁屏不会改变优先级。</p>
+<h2 id="ADJ-算法"><a href="#ADJ-算法" class="headerlink" title="ADJ 算法"></a><strong>ADJ 算法</strong></h2><p><a href="http://androidos.net.cn/android/9.0.0_r8/xref/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java" title="http://androidos.net.cn/android/9.0.0_r8/xref/frameworks/base/services/core/java/com/android/server/am/ActivityManagerService.java" target="_blank" rel="external">ActivityManagerService.java</a></p>
+<ul>
+<li>updateOomAdjLocked：更新 ADJ，当目标进程为空，或者被杀则返回 false；否则返回 true；</li>
+<li>computeOomAdjLocked：计算 ADJ，返回计算后的 RawAdj 值；</li>
+<li>applyOomAdjLocked：使用 ADJ，当需要杀掉目标进程则返回 false；否则返回 true。</li>
+</ul>
+<hr>
+<h1 id="app-保活"><a href="#app-保活" class="headerlink" title="app 保活"></a><strong>app 保活</strong></h1><h2 id="提升进程的优先级"><a href="#提升进程的优先级" class="headerlink" title="提升进程的优先级"></a><strong>提升进程的优先级</strong></h2><p>操作流程：启动 app -&gt; 按 HOME 键回到桌面 -&gt; 锁屏 -&gt; 解锁</p>
+<p>默认进程优先级的变化：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/4.png" alt=""></p>
+<h3 id="1-像素法"><a href="#1-像素法" class="headerlink" title="1 像素法"></a><strong>1 像素法</strong></h3><p>使用 1 像素法后进程优先级的变化：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/5.png" alt=""></p>
+<p>原理：在 Application 里注册广播，监听锁屏和解锁的事件；当收到锁屏广播时启动一个 1 像素的页面，当收到解锁广播时关闭这个页面。<br>缺点：只在锁屏时有效。</p>
+<p>1、注册广播：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">        KeepAliveManager.getInstance().registerBroadcast(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KeepAliveReceiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"KeepReceiver"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">        String action = intent.getAction();</div><div class="line">        Log.e(TAG, <span class="string">"onReceive："</span> + action);</div><div class="line">        <span class="keyword">if</span> (TextUtils.equals(action, Intent.ACTION_SCREEN_OFF)) &#123;</div><div class="line">            KeepAliveManager.getInstance().startKeepAlive(context);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (TextUtils.equals(action, Intent.ACTION_SCREEN_ON)) &#123;</div><div class="line">            KeepAliveManager.getInstance().finishKeepAlive();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KeepAliveManager</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> KeepAliveManager sInstance;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> KeepAliveReceiver mKeepAliveReceiver;</div><div class="line">    <span class="keyword">private</span> WeakReference&lt;Activity&gt; mKeepAliveActivity;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">KeepAliveManager</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> KeepAliveManager <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (KeepAliveManager.class) &#123;</div><div class="line">                <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</div><div class="line">                    sInstance = <span class="keyword">new</span> KeepAliveManager();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sInstance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerBroadcast</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        IntentFilter filter = <span class="keyword">new</span> IntentFilter();</div><div class="line"></div><div class="line">        filter.addAction(Intent.ACTION_SCREEN_ON);</div><div class="line">        filter.addAction(Intent.ACTION_SCREEN_OFF);</div><div class="line"></div><div class="line">        mKeepAliveReceiver = <span class="keyword">new</span> KeepAliveReceiver();</div><div class="line">        context.registerReceiver(mKeepAliveReceiver, filter);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unregisterBroadcast</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mKeepAliveReceiver != <span class="keyword">null</span>) &#123;</div><div class="line">            context.unregisterReceiver(mKeepAliveReceiver);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startKeepAlive</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        Intent intent = <span class="keyword">new</span> Intent(context, KeepAliveActivity.class);</div><div class="line">        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</div><div class="line">        context.startActivity(intent);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finishKeepAlive</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mKeepAliveActivity != <span class="keyword">null</span>) &#123;</div><div class="line">            Activity activity = mKeepAliveActivity.get();</div><div class="line">            <span class="keyword">if</span> (activity != <span class="keyword">null</span>) &#123;</div><div class="line">                activity.finish();</div><div class="line">            &#125;</div><div class="line">            mKeepAliveActivity = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setActivity</span><span class="params">(KeepAliveActivity keep)</span> </span>&#123;</div><div class="line">        mKeepAliveActivity = <span class="keyword">new</span> WeakReference&lt;Activity&gt;(keep);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2、1 像素的页面：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KeepAliveActivity</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"KeepAliveActivity"</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        Log.d(TAG, <span class="string">"onCreate"</span>);</div><div class="line"></div><div class="line">        Window window = getWindow();</div><div class="line">        window.setGravity(Gravity.START | Gravity.TOP);</div><div class="line">        WindowManager.LayoutParams params = window.getAttributes();</div><div class="line">        params.width = <span class="number">1</span>;</div><div class="line">        params.height = <span class="number">1</span>;</div><div class="line">        params.x = <span class="number">0</span>;</div><div class="line">        params.y = <span class="number">0</span>;</div><div class="line">        window.setAttributes(params);</div><div class="line"></div><div class="line">        KeepAliveManager.getInstance().setActivity(<span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDestroy();</div><div class="line">        Log.d(TAG, <span class="string">"onDestroy"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="前台进程法"><a href="#前台进程法" class="headerlink" title="前台进程法"></a><strong>前台进程法</strong></h3><p>使用前台进程法后进程优先级的变化：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/6.png" alt=""></p>
+<p>原理：在 Application 里启动前台进程。<br>缺点：自 Android 8.0 开始会在通知栏显示消息。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ForegroundService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"ForegroundService"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SERVICE_ID = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">        Log.d(TAG, <span class="string">"ForegroundService 服务创建了"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.JELLY_BEAN_MR2) &#123;</div><div class="line">            startForeground(SERVICE_ID, <span class="keyword">new</span> Notification());</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.O) &#123;</div><div class="line">            startForeground(SERVICE_ID, <span class="keyword">new</span> Notification());</div><div class="line">            <span class="comment">// 删除通知栏消息</span></div><div class="line">            startService(<span class="keyword">new</span> Intent(<span class="keyword">this</span>, InnerService.class));</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);</div><div class="line">            NotificationChannel channel = <span class="keyword">new</span> NotificationChannel(<span class="string">"channel"</span>, <span class="string">"title"</span>, NotificationManager.IMPORTANCE_NONE);</div><div class="line">            <span class="keyword">if</span> (manager != <span class="keyword">null</span>) &#123;</div><div class="line">                manager.createNotificationChannel(channel);</div><div class="line">                Notification notification = <span class="keyword">new</span> NotificationCompat.Builder(<span class="keyword">this</span>, <span class="string">"channel"</span>).build();</div><div class="line">                startForeground(SERVICE_ID, notification);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>.onCreate();</div><div class="line">            Log.d(TAG, <span class="string">"InnerService 服务创建了"</span>);</div><div class="line"></div><div class="line">            startForeground(SERVICE_ID, <span class="keyword">new</span> Notification());</div><div class="line">            stopSelf();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="加入系统白名单"><a href="#加入系统白名单" class="headerlink" title="加入系统白名单"></a><strong>加入系统白名单</strong></h2><p>以华为为例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isHuawei</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (Build.BRAND == <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> Build.BRAND.toLowerCase().equals(<span class="string">"huawei"</span>) || Build.BRAND.toLowerCase().equals(<span class="string">"honor"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">goHuaweiSetting</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        showActivity(<span class="string">"com.huawei.systemmanager"</span>, <span class="string">"com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        showActivity(<span class="string">"com.huawei.systemmanager"</span>, <span class="string">"com.huawei.systemmanager.optimize.bootstart.BootStartActivity"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showActivity</span><span class="params">(String packageName, String activityDir)</span> </span>&#123;</div><div class="line">    Intent intent = <span class="keyword">new</span> Intent();</div><div class="line">    intent.setComponent(<span class="keyword">new</span> ComponentName(packageName, activityDir));</div><div class="line">    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</div><div class="line">    startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="app-拉活"><a href="#app-拉活" class="headerlink" title="app 拉活"></a><strong>app 拉活</strong></h1><h2 id="全家桶"><a href="#全家桶" class="headerlink" title="全家桶"></a><strong>全家桶</strong></h2><p>监听其他大厂的 app 发出的广播进行拉活。</p>
+<h2 id="账号同步"><a href="#账号同步" class="headerlink" title="账号同步"></a><strong>账号同步</strong></h2><p>原理：系统有自动同步账号数据的机制。<br>缺点：时间不确定。</p>
+<p>添加账号：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AccountHelper</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"AccountHelper"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACCOUNT_TYPE = <span class="string">"io.weichao.lib_keep_alive.account"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACCOUNT_NAME = <span class="string">"测试"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACCOUNT_PASSWORD = <span class="string">"111111"</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ACCOUNT_AUTHORITY = <span class="string">"io.weichao.lib_keep_alive.provider"</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addAccount</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        AccountManager accountManager = (AccountManager) context.getSystemService(Context.ACCOUNT_SERVICE);</div><div class="line">        <span class="comment">// 获得此类型的账户，需要增加权限：</span></div><div class="line">        <span class="comment">// &lt;uses-permission</span></div><div class="line">        <span class="comment">//        android:name="android.permission.GET_ACCOUNTS"</span></div><div class="line">        <span class="comment">//        android:maxSdkVersion="22" /&gt;</span></div><div class="line">        Account[] accounts = accountManager.getAccountsByType(ACCOUNT_TYPE);</div><div class="line">        <span class="keyword">if</span> (accounts.length &gt; <span class="number">0</span>) &#123;</div><div class="line">            Log.e(TAG, <span class="string">"账户已存在"</span>);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Account account = <span class="keyword">new</span> Account(ACCOUNT_NAME, ACCOUNT_TYPE);</div><div class="line">        <span class="comment">// 给这个账户类型添加一个账户，需要增加权限：</span></div><div class="line">        <span class="comment">// &lt;uses-permission</span></div><div class="line">        <span class="comment">//        android:name="android.permission.AUTHENTICATE_ACCOUNTS"</span></div><div class="line">        <span class="comment">//        android:maxSdkVersion="22" /&gt;</span></div><div class="line">        accountManager.addAccountExplicitly(account, ACCOUNT_PASSWORD, <span class="keyword">new</span> Bundle());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">autoSync</span><span class="params">()</span> </span>&#123;</div><div class="line">        Account account = <span class="keyword">new</span> Account(ACCOUNT_NAME, ACCOUNT_TYPE);</div><div class="line">        <span class="comment">// 以下 3 个需要增加权限：&lt;uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" /&gt;</span></div><div class="line">        <span class="comment">// 设置同步</span></div><div class="line">        ContentResolver.setIsSyncable(account, ACCOUNT_AUTHORITY, <span class="number">1</span>);</div><div class="line">        <span class="comment">// 自动同步</span></div><div class="line">        ContentResolver.setSyncAutomatically(account, ACCOUNT_AUTHORITY, <span class="keyword">true</span>);</div><div class="line">        <span class="comment">// 设置同步周期</span></div><div class="line">        ContentResolver.addPeriodicSync(account, ACCOUNT_AUTHORITY, <span class="keyword">new</span> Bundle(), <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"SyncService"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> SyncAdapter mSyncAdapter;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate();</div><div class="line">        mSyncAdapter = <span class="keyword">new</span> SyncAdapter(getApplicationContext(), <span class="keyword">true</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> mSyncAdapter.getSyncAdapterBinder();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SyncAdapter</span> <span class="keyword">extends</span> <span class="title">AbstractThreadedSyncAdapter</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SyncAdapter</span><span class="params">(Context context, <span class="keyword">boolean</span> autoInitialize)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>(context, autoInitialize);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPerformSync</span><span class="params">(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult)</span> </span>&#123;</div><div class="line">            Log.d(TAG, <span class="string">"同步账户数据--do something"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当用户主动同步或者系统自动同步账号数据时，会进行拉活：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/7.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/app-%E4%BF%9D%E6%B4%BB%E4%B8%8E%E6%8B%89%E6%B4%BB/8.png" alt=""></p>
+<h2 id="推送"><a href="#推送" class="headerlink" title="推送"></a><strong>推送</strong></h2><p>接入各个手机厂商的推送。</p>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2020/08/19/app-保活与拉活/">app 保活与拉活</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2020年08月19日 - 16:08</p>
+  <p><span>最后更新:</span>2020年08月19日 - 16:08</p>
+  <p><span>原始链接:</span><a href="/2020/08/19/app-保活与拉活/" title="app 保活与拉活">http://www.weichao.io/2020/08/19/app-保活与拉活/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2020/08/19/app-保活与拉活/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/08/18/组件化-WebView-命令模式/" rel="next" title="组件化 + WebView 命令模式">
+                <i class="fa fa-chevron-left"></i> 组件化 + WebView 命令模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源码"><span class="nav-number">2.</span> <span class="nav-text">源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#进程的优先级与回收机制"><span class="nav-number">3.</span> <span class="nav-text">进程的优先级与回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程回收机制：Low-Memory-Killer"><span class="nav-number">3.1.</span> <span class="nav-text">进程回收机制：Low Memory Killer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看内存阈值"><span class="nav-number">3.1.1.</span> <span class="nav-text">查看内存阈值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看进程的优先级"><span class="nav-number">3.2.</span> <span class="nav-text">查看进程的优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADJ-算法"><span class="nav-number">3.3.</span> <span class="nav-text">ADJ 算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#app-保活"><span class="nav-number">4.</span> <span class="nav-text">app 保活</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#提升进程的优先级"><span class="nav-number">4.1.</span> <span class="nav-text">提升进程的优先级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-像素法"><span class="nav-number">4.1.1.</span> <span class="nav-text">1 像素法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前台进程法"><span class="nav-number">4.1.2.</span> <span class="nav-text">前台进程法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加入系统白名单"><span class="nav-number">4.2.</span> <span class="nav-text">加入系统白名单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#app-拉活"><span class="nav-number">5.</span> <span class="nav-text">app 拉活</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全家桶"><span class="nav-number">5.1.</span> <span class="nav-text">全家桶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#账号同步"><span class="nav-number">5.2.</span> <span class="nav-text">账号同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推送"><span class="nav-number">5.3.</span> <span class="nav-text">推送</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 178.2k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
