@@ -1,0 +1,5158 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="魏超,weichao,android" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Reference FFmpeg FFMPEG 配置选项详细说明 FFmpeg编译4.1.4并移植到Android   下载 FFmpeg 源码1git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg  编写脚本文件查看文件目录 查看支持的命令1./configure --help  decoders    decoders            aa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NDK r21d + FFmpeg 4.2 编写脚本文件 &amp; 编译生成 Android 所需的库">
+<meta property="og:url" content="http://www.weichao.io/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/index.html">
+<meta property="og:site_name" content="『魏超』的 blog">
+<meta property="og:description" content="Reference FFmpeg FFMPEG 配置选项详细说明 FFmpeg编译4.1.4并移植到Android   下载 FFmpeg 源码1git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg  编写脚本文件查看文件目录 查看支持的命令1./configure --help  decoders    decoders            aa">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/1.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/2.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/3.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/4.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/5.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/6.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/7.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/8.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/9.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/10.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/11.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/12.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/13.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/14.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/15.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/16.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/17.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/18.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/19.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/20.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/21.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/22.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/23.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/24.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/31.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/32.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/33.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/34.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/35.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/36.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/37.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/38.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/39.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/40.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/41.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/42.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/43.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/44.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/45.png">
+<meta property="og:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/46.png">
+<meta property="og:updated_time" content="2020-09-21T19:49:16.662Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NDK r21d + FFmpeg 4.2 编写脚本文件 &amp; 编译生成 Android 所需的库">
+<meta name="twitter:description" content="Reference FFmpeg FFMPEG 配置选项详细说明 FFmpeg编译4.1.4并移植到Android   下载 FFmpeg 源码1git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg  编写脚本文件查看文件目录 查看支持的命令1./configure --help  decoders    decoders            aa">
+<meta name="twitter:image" content="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.weichao.io/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/"/>
+
+
+
+
+
+  <title>NDK r21d + FFmpeg 4.2 编写脚本文件 & 编译生成 Android 所需的库 | 『魏超』的 blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+	<img style="position: absolute; top: 0; right: 0; border: 0;" src="/images/wanted.png">
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">『魏超』的 blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.weichao.io/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魏超">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="『魏超』的 blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">NDK r21d + FFmpeg 4.2 编写脚本文件 & 编译生成 Android 所需的库</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-09-22T03:20:30+08:00">
+                2020-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,794 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  15 分钟
+                </span>
+              
+            </div>
+          
+
+          
+          
+             <span id="/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/" class="leancloud_visitors" data-flag-title="NDK r21d + FFmpeg 4.2 编写脚本文件 & 编译生成 Android 所需的库">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+				 <span> ℃</span>
+             </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><strong>Reference</strong></h1><ul>
+<li><a href="http://ffmpeg.org/" title="http://ffmpeg.org/" target="_blank" rel="external">FFmpeg</a></li>
+<li><a href="https://blog.csdn.net/z2066411585/article/details/81239446" title="https://blog.csdn.net/z2066411585/article/details/81239446" target="_blank" rel="external">FFMPEG 配置选项详细说明</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/76462890" title="https://zhuanlan.zhihu.com/p/76462890" target="_blank" rel="external">FFmpeg编译4.1.4并移植到Android</a></li>
+</ul>
+<hr>
+<h1 id="下载-FFmpeg-源码"><a href="#下载-FFmpeg-源码" class="headerlink" title="下载 FFmpeg 源码"></a><strong>下载 FFmpeg 源码</strong></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="编写脚本文件"><a href="#编写脚本文件" class="headerlink" title="编写脚本文件"></a><strong>编写脚本文件</strong></h1><h2 id="查看文件目录"><a href="#查看文件目录" class="headerlink" title="查看文件目录"></a><strong>查看文件目录</strong></h2><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/1.png" alt=""></p>
+<h2 id="查看支持的命令"><a href="#查看支持的命令" class="headerlink" title="查看支持的命令"></a><strong>查看支持的命令</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --help</div></pre></td></tr></table></figure>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/2.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/3.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/4.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/5.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/6.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/7.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/8.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/9.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/10.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/11.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/12.png" alt=""></p>
+<h3 id="decoders"><a href="#decoders" class="headerlink" title="decoders"></a><strong>decoders</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/13.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/14.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>decoders</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aac</td>
+<td>amrwb</td>
+<td>dst</td>
+<td>hnm4_video</td>
+<td>mp1</td>
+<td>pcm_f32le</td>
+<td>rv30</td>
+<td>vc1_v4l2m2m</td>
+</tr>
+<tr>
+<td>aac_at</td>
+<td>amv</td>
+<td>dvaudio</td>
+<td>hq_hqa</td>
+<td>mp1_at</td>
+<td>pcm_f64be</td>
+<td>rv40</td>
+<td>vc1image</td>
+</tr>
+<tr>
+<td>aac_fixed</td>
+<td>anm</td>
+<td>dvbsub</td>
+<td>hqx</td>
+<td>mp1float</td>
+<td>pcm_f64le</td>
+<td>s302m</td>
+<td>vcr1</td>
+</tr>
+<tr>
+<td>aac_latm</td>
+<td>ansi</td>
+<td>dvdsub</td>
+<td>huffyuv</td>
+<td>mp2</td>
+<td>pcm_lxf</td>
+<td>sami</td>
+<td>vmdaudio</td>
+</tr>
+<tr>
+<td>aasc</td>
+<td>ape</td>
+<td>dvvideo</td>
+<td>hymt</td>
+<td>mp2_at</td>
+<td>pcm_mulaw</td>
+<td>sanm</td>
+<td>vmdvideo</td>
+</tr>
+<tr>
+<td>ac3</td>
+<td>apng</td>
+<td>dxa</td>
+<td>iac</td>
+<td>mp2float</td>
+<td>pcm_mulaw_at</td>
+<td>sbc</td>
+<td>vmnc</td>
+</tr>
+<tr>
+<td>ac3_at</td>
+<td>aptx</td>
+<td>dxtory</td>
+<td>idcin</td>
+<td>mp3</td>
+<td>pcm_s16be</td>
+<td>scpr</td>
+<td>vorbis</td>
+</tr>
+<tr>
+<td>ac3_fixed</td>
+<td>aptx_hd</td>
+<td>dxv</td>
+<td>idf</td>
+<td>mp3_at</td>
+<td>pcm_s16be_planar</td>
+<td>screenpresso</td>
+<td>vp3</td>
+</tr>
+<tr>
+<td>acelp_kelvin</td>
+<td>arbc</td>
+<td>eac3</td>
+<td>iff_ilbm</td>
+<td>mp3adu</td>
+<td>pcm_s16le</td>
+<td>sdx2_dpcm</td>
+<td>vp4</td>
+</tr>
+<tr>
+<td>adpcm_4xm</td>
+<td>ass</td>
+<td>eac3_at</td>
+<td>ilbc</td>
+<td>mp3adufloat</td>
+<td>pcm_s16le_planar</td>
+<td>sgi</td>
+<td>vp5</td>
+</tr>
+<tr>
+<td>adpcm_adx</td>
+<td>asv1</td>
+<td>eacmv</td>
+<td>ilbc_at</td>
+<td>mp3float</td>
+<td>pcm_s24be</td>
+<td>sgirle</td>
+<td>vp6</td>
+</tr>
+<tr>
+<td>adpcm_afc</td>
+<td>asv2</td>
+<td>eamad</td>
+<td>imc</td>
+<td>mp3on4</td>
+<td>pcm_s24daud</td>
+<td>sheervideo</td>
+<td>vp6a</td>
+</tr>
+<tr>
+<td>adpcm_agm</td>
+<td>atrac1</td>
+<td>eatgq</td>
+<td>imm4</td>
+<td>mp3on4float</td>
+<td>pcm_s24le</td>
+<td>shorten</td>
+<td>vp6f</td>
+</tr>
+<tr>
+<td>adpcm_aica</td>
+<td>atrac3</td>
+<td>eatgv</td>
+<td>imm5</td>
+<td>mpc7</td>
+<td>pcm_s24le_planar</td>
+<td>sipr</td>
+<td>vp7</td>
+</tr>
+<tr>
+<td>adpcm_argo</td>
+<td>atrac3al</td>
+<td>eatqi</td>
+<td>indeo2</td>
+<td>mpc8</td>
+<td>pcm_s32be</td>
+<td>siren</td>
+<td>vp8</td>
+</tr>
+<tr>
+<td>adpcm_ct</td>
+<td>atrac3p</td>
+<td>eightbps</td>
+<td>indeo3</td>
+<td>mpeg1_cuvid</td>
+<td>pcm_s32le</td>
+<td>smackaud</td>
+<td>vp8_cuvid</td>
+</tr>
+<tr>
+<td>adpcm_dtk</td>
+<td>atrac3pal</td>
+<td>eightsvx_exp</td>
+<td>indeo4</td>
+<td>mpeg1_v4l2m2m</td>
+<td>pcm_s32le_planar</td>
+<td>smacker</td>
+<td>vp8_mediacodec</td>
+</tr>
+<tr>
+<td>adpcm_ea</td>
+<td>atrac9</td>
+<td>eightsvx_fib</td>
+<td>indeo5</td>
+<td>mpeg1video</td>
+<td>pcm_s64be</td>
+<td>smc</td>
+<td>vp8_qsv</td>
+</tr>
+<tr>
+<td>adpcm_ea_maxis_xa</td>
+<td>aura</td>
+<td>escape124</td>
+<td>interplay_acm</td>
+<td>mpeg2_crystalhd</td>
+<td>pcm_s64le</td>
+<td>smvjpeg</td>
+<td>vp8_rkmpp</td>
+</tr>
+<tr>
+<td>adpcm_ea_r1</td>
+<td>aura2</td>
+<td>escape130</td>
+<td>interplay_dpcm</td>
+<td>mpeg2_cuvid</td>
+<td>pcm_s8</td>
+<td>snow</td>
+<td>vp8_v4l2m2m</td>
+</tr>
+<tr>
+<td>adpcm_ea_r2</td>
+<td>av1</td>
+<td>evrc</td>
+<td>interplay_video</td>
+<td>mpeg2_mediacodec</td>
+<td>pcm_s8_planar</td>
+<td>sol_dpcm</td>
+<td>vp9</td>
+</tr>
+<tr>
+<td>adpcm_ea_r3</td>
+<td>avrn</td>
+<td>exr</td>
+<td>jacosub</td>
+<td>mpeg2_mmal</td>
+<td>pcm_u16be</td>
+<td>sonic</td>
+<td>vp9_cuvid</td>
+</tr>
+<tr>
+<td>adpcm_ea_xas</td>
+<td>avrp</td>
+<td>fastaudio</td>
+<td>jpeg2000</td>
+<td>mpeg2_qsv</td>
+<td>pcm_u16le</td>
+<td>sp5x</td>
+<td>vp9_mediacodec</td>
+</tr>
+<tr>
+<td>adpcm_g722</td>
+<td>avs</td>
+<td>ffv1</td>
+<td>jpegls</td>
+<td>mpeg2_v4l2m2m</td>
+<td>pcm_u24be</td>
+<td>speedhq</td>
+<td>vp9_qsv</td>
+</tr>
+<tr>
+<td>adpcm_g726</td>
+<td>avui</td>
+<td>ffvhuff</td>
+<td>jv</td>
+<td>mpeg2video</td>
+<td>pcm_u24le</td>
+<td>srgc</td>
+<td>vp9_rkmpp</td>
+</tr>
+<tr>
+<td>adpcm_g726le</td>
+<td>ayuv</td>
+<td>ffwavesynth</td>
+<td>kgv1</td>
+<td>mpeg4</td>
+<td>pcm_u32be</td>
+<td>srt</td>
+<td>vp9_v4l2m2m</td>
+</tr>
+<tr>
+<td>adpcm_ima_alp</td>
+<td>bethsoftvid</td>
+<td>fic</td>
+<td>kmvc</td>
+<td>mpeg4_crystalhd</td>
+<td>pcm_u32le</td>
+<td>ssa</td>
+<td>vplayer</td>
+</tr>
+<tr>
+<td>adpcm_ima_amv</td>
+<td>bfi</td>
+<td>fits</td>
+<td>lagarith</td>
+<td>mpeg4_cuvid</td>
+<td>pcm_u8</td>
+<td>stl</td>
+<td>vqa</td>
+</tr>
+<tr>
+<td>adpcm_ima_apc</td>
+<td>bink</td>
+<td>flac</td>
+<td>libaom_av1</td>
+<td>mpeg4_mediacodec</td>
+<td>pcm_vidc</td>
+<td>subrip</td>
+<td>wavpack</td>
+</tr>
+<tr>
+<td>adpcm_ima_apm</td>
+<td>binkaudio_dct</td>
+<td>flashsv</td>
+<td>libaribb24</td>
+<td>mpeg4_mmal</td>
+<td>pcx</td>
+<td>subviewer</td>
+<td>wcmv</td>
+</tr>
+<tr>
+<td>adpcm_ima_cunning</td>
+<td>binkaudio_rdft</td>
+<td>flashsv2</td>
+<td>libcelt</td>
+<td>mpeg4_v4l2m2m</td>
+<td>pfm</td>
+<td>subviewer1</td>
+<td>webp</td>
+</tr>
+<tr>
+<td>adpcm_ima_dat4</td>
+<td>bintext</td>
+<td>flic</td>
+<td>libcodec2</td>
+<td>mpegvideo</td>
+<td>pgm</td>
+<td>sunrast</td>
+<td>webvtt</td>
+</tr>
+<tr>
+<td>adpcm_ima_dk3</td>
+<td>bitpacked</td>
+<td>flv</td>
+<td>libdav1d</td>
+<td>mpl2</td>
+<td>pgmyuv</td>
+<td>svq1</td>
+<td>wmalossless</td>
+</tr>
+<tr>
+<td>adpcm_ima_dk4</td>
+<td>bmp</td>
+<td>fmvc</td>
+<td>libdavs2</td>
+<td>msa1</td>
+<td>pgssub</td>
+<td>svq3</td>
+<td>wmapro</td>
+</tr>
+<tr>
+<td>adpcm_ima_ea_eacs</td>
+<td>bmv_audio</td>
+<td>fourxm</td>
+<td>libfdk_aac</td>
+<td>mscc</td>
+<td>pgx</td>
+<td>tak</td>
+<td>wmav1</td>
+</tr>
+<tr>
+<td>adpcm_ima_ea_sead</td>
+<td>bmv_video</td>
+<td>fraps</td>
+<td>libgsm</td>
+<td>msmpeg4_crystalhd</td>
+<td>photocd</td>
+<td>targa</td>
+<td>wmav2</td>
+</tr>
+<tr>
+<td>adpcm_ima_iss</td>
+<td>brender_pix</td>
+<td>frwu</td>
+<td>libgsm_ms</td>
+<td>msmpeg4v1</td>
+<td>pictor</td>
+<td>targa_y216</td>
+<td>wmavoice</td>
+</tr>
+<tr>
+<td>adpcm_ima_moflex</td>
+<td>c93</td>
+<td>g2m</td>
+<td>libilbc</td>
+<td>msmpeg4v2</td>
+<td>pixlet</td>
+<td>tdsc</td>
+<td>wmv1</td>
+</tr>
+<tr>
+<td>adpcm_ima_mtf</td>
+<td>cavs</td>
+<td>g723_1</td>
+<td>libopencore_amrnb</td>
+<td>msmpeg4v3</td>
+<td>pjs</td>
+<td>text</td>
+<td>wmv2</td>
+</tr>
+<tr>
+<td>adpcm_ima_oki</td>
+<td>ccaption</td>
+<td>g729</td>
+<td>libopencore_amrwb</td>
+<td>msrle</td>
+<td>png</td>
+<td>theora</td>
+<td>wmv3</td>
+</tr>
+<tr>
+<td>adpcm_ima_qt</td>
+<td>cdgraphics</td>
+<td>gdv</td>
+<td>libopenh264</td>
+<td>mss1</td>
+<td>ppm</td>
+<td>thp</td>
+<td>wmv3_crystalhd</td>
+</tr>
+<tr>
+<td>adpcm_ima_qt_at</td>
+<td>cdtoons</td>
+<td>gif</td>
+<td>libopenjpeg</td>
+<td>mss2</td>
+<td>prores</td>
+<td>tiertexseqvideo</td>
+<td>wmv3image</td>
+</tr>
+<tr>
+<td>adpcm_ima_rad</td>
+<td>cdxl</td>
+<td>gremlin_dpcm</td>
+<td>libopus</td>
+<td>msvideo1</td>
+<td>prosumer</td>
+<td>tiff</td>
+<td>wnv1</td>
+</tr>
+<tr>
+<td>adpcm_ima_smjpeg</td>
+<td>cfhd</td>
+<td>gsm</td>
+<td>librsvg</td>
+<td>mszh</td>
+<td>psd</td>
+<td>tmv</td>
+<td>wrapped_avframe</td>
+</tr>
+<tr>
+<td>adpcm_ima_ssi</td>
+<td>cinepak</td>
+<td>gsm_ms</td>
+<td>libspeex</td>
+<td>mts2</td>
+<td>ptx</td>
+<td>truehd</td>
+<td>ws_snd1</td>
+</tr>
+<tr>
+<td>adpcm_ima_wav</td>
+<td>clearvideo</td>
+<td>gsm_ms_at</td>
+<td>libvorbis</td>
+<td>mv30</td>
+<td>qcelp</td>
+<td>truemotion1</td>
+<td>xan_dpcm</td>
+</tr>
+<tr>
+<td>adpcm_ima_ws</td>
+<td>cljr</td>
+<td>h261</td>
+<td>libvpx_vp8</td>
+<td>mvc1</td>
+<td>qdm2</td>
+<td>truemotion2</td>
+<td>xan_wc3</td>
+</tr>
+<tr>
+<td>adpcm_ms</td>
+<td>cllc</td>
+<td>h263</td>
+<td>libvpx_vp9</td>
+<td>mvc2</td>
+<td>qdm2_at</td>
+<td>truemotion2rt</td>
+<td>xan_wc4</td>
+</tr>
+<tr>
+<td>adpcm_mtaf</td>
+<td>comfortnoise</td>
+<td>h263_v4l2m2m</td>
+<td>libzvbi_teletext</td>
+<td>mvdv</td>
+<td>qdmc</td>
+<td>truespeech</td>
+<td>xbin</td>
+</tr>
+<tr>
+<td>adpcm_psx</td>
+<td>cook</td>
+<td>h263i</td>
+<td>loco</td>
+<td>mvha</td>
+<td>qdmc_at</td>
+<td>tscc</td>
+<td>xbm</td>
+</tr>
+<tr>
+<td>adpcm_sbpro_2</td>
+<td>cpia</td>
+<td>h263p</td>
+<td>lscr</td>
+<td>mwsc</td>
+<td>qdraw</td>
+<td>tscc2</td>
+<td>xface</td>
+</tr>
+<tr>
+<td>adpcm_sbpro_3</td>
+<td>cscd</td>
+<td>h264</td>
+<td>m101</td>
+<td>mxpeg</td>
+<td>qpeg</td>
+<td>tta</td>
+<td>xl</td>
+</tr>
+<tr>
+<td>adpcm_sbpro_4</td>
+<td>cyuv</td>
+<td>h264_crystalhd</td>
+<td>mace3</td>
+<td>nellymoser</td>
+<td>qtrle</td>
+<td>twinvq</td>
+<td>xma1</td>
+</tr>
+<tr>
+<td>adpcm_swf</td>
+<td>dca</td>
+<td>h264_cuvid</td>
+<td>mace6</td>
+<td>notchlc</td>
+<td>r10k</td>
+<td>txd</td>
+<td>xma2</td>
+</tr>
+<tr>
+<td>adpcm_thp</td>
+<td>dds</td>
+<td>h264_mediacodec</td>
+<td>magicyuv</td>
+<td>nuv</td>
+<td>r210</td>
+<td>ulti</td>
+<td>xpm</td>
+</tr>
+<tr>
+<td>adpcm_thp_le</td>
+<td>derf_dpcm</td>
+<td>h264_mmal</td>
+<td>mdec</td>
+<td>on2avc</td>
+<td>ra_144</td>
+<td>utvideo</td>
+<td>xsub</td>
+</tr>
+<tr>
+<td>adpcm_vima</td>
+<td>dfa</td>
+<td>h264_qsv</td>
+<td>metasound</td>
+<td>opus</td>
+<td>ra_288</td>
+<td>v210</td>
+<td>xwd</td>
+</tr>
+<tr>
+<td>adpcm_xa</td>
+<td>dirac</td>
+<td>h264_rkmpp</td>
+<td>microdvd</td>
+<td>paf_audio</td>
+<td>ralf</td>
+<td>v210x</td>
+<td>y41p</td>
+</tr>
+<tr>
+<td>adpcm_yamaha</td>
+<td>dnxhd</td>
+<td>h264_v4l2m2m</td>
+<td>mimic</td>
+<td>paf_video</td>
+<td>rasc</td>
+<td>v308</td>
+<td>ylc</td>
+</tr>
+<tr>
+<td>adpcm_zork</td>
+<td>dolby_e</td>
+<td>hap</td>
+<td>mjpeg</td>
+<td>pam</td>
+<td>rawvideo</td>
+<td>v408</td>
+<td>yop</td>
+</tr>
+<tr>
+<td>agm</td>
+<td>dpx</td>
+<td>hca</td>
+<td>mjpeg_cuvid</td>
+<td>pbm</td>
+<td>realtext</td>
+<td>v410</td>
+<td>yuv4</td>
+</tr>
+<tr>
+<td>aic</td>
+<td>dsd_lsbf</td>
+<td>hcom</td>
+<td>mjpeg_qsv</td>
+<td>pcm_alaw</td>
+<td>rl2</td>
+<td>vb</td>
+<td>zero12v</td>
+</tr>
+<tr>
+<td>alac</td>
+<td>dsd_lsbf_planar</td>
+<td>hevc</td>
+<td>mjpegb</td>
+<td>pcm_alaw_at</td>
+<td>roq</td>
+<td>vble</td>
+<td>zerocodec</td>
+</tr>
+<tr>
+<td>alac_at</td>
+<td>dsd_msbf</td>
+<td>hevc_cuvid</td>
+<td>mlp</td>
+<td>pcm_bluray</td>
+<td>roq_dpcm</td>
+<td>vc1</td>
+<td>zlib</td>
+</tr>
+<tr>
+<td>alias_pix</td>
+<td>dsd_msbf_planar</td>
+<td>hevc_mediacodec</td>
+<td>mmvideo</td>
+<td>pcm_dvd</td>
+<td>rpza</td>
+<td>vc1_crystalhd</td>
+<td>zmbv</td>
+</tr>
+<tr>
+<td>als</td>
+<td>dsicinaudio</td>
+<td>hevc_qsv</td>
+<td>mobiclip</td>
+<td>pcm_f16le</td>
+<td>rscc</td>
+<td>vc1_cuvid</td>
+</tr>
+<tr>
+<td>amr_nb_at</td>
+<td>dsicinvideo</td>
+<td>hevc_rkmpp</td>
+<td>motionpixels</td>
+<td>pcm_f24le</td>
+<td>rv10</td>
+<td>vc1_mmal</td>
+</tr>
+<tr>
+<td>amrnb</td>
+<td>dss_sp</td>
+<td>hevc_v4l2m2m</td>
+<td>movtext</td>
+<td>pcm_f32be</td>
+<td>rv20</td>
+<td>vc1_qsv</td>
+</tr>
+</tbody>
+</table>
+<h3 id="encoders"><a href="#encoders" class="headerlink" title="encoders"></a><strong>encoders</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/15.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>encoders</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a64multi</td>
+<td>asv2</td>
+<td>h264_amf</td>
+<td>libopenh264</td>
+<td>movtext</td>
+<td>pcm_mulaw_at</td>
+<td>prores</td>
+<td>utvideo</td>
+</tr>
+<tr>
+<td>a64multi5</td>
+<td>avrp</td>
+<td>h264_mf</td>
+<td>libopenjpeg</td>
+<td>mp2</td>
+<td>pcm_s16be</td>
+<td>prores_aw</td>
+<td>v210</td>
+</tr>
+<tr>
+<td>aac</td>
+<td>avui</td>
+<td>h264_nvenc</td>
+<td>libopus</td>
+<td>mp2fixed</td>
+<td>pcm_s16be_planar</td>
+<td>prores_ks</td>
+<td>v308</td>
+</tr>
+<tr>
+<td>aac_at</td>
+<td>ayuv</td>
+<td>h264_omx</td>
+<td>librav1e</td>
+<td>mp3_mf</td>
+<td>pcm_s16le</td>
+<td>qtrle</td>
+<td>v408</td>
+</tr>
+<tr>
+<td>aac_mf</td>
+<td>bmp</td>
+<td>h264_qsv</td>
+<td>libshine</td>
+<td>mpeg1video</td>
+<td>pcm_s16le_planar</td>
+<td>r10k</td>
+<td>v410</td>
+</tr>
+<tr>
+<td>ac3</td>
+<td>cfhd</td>
+<td>h264_v4l2m2m</td>
+<td>libspeex</td>
+<td>mpeg2_qsv</td>
+<td>pcm_s24be</td>
+<td>r210</td>
+<td>vc2</td>
+</tr>
+<tr>
+<td>ac3_fixed</td>
+<td>cinepak</td>
+<td>h264_vaapi</td>
+<td>libsvtav1</td>
+<td>mpeg2_vaapi</td>
+<td>pcm_s24daud</td>
+<td>ra_144</td>
+<td>vorbis</td>
+</tr>
+<tr>
+<td>ac3_mf</td>
+<td>cljr</td>
+<td>h264_videotoolbox</td>
+<td>libtheora</td>
+<td>mpeg2video</td>
+<td>pcm_s24le</td>
+<td>rawvideo</td>
+<td>vp8_v4l2m2m</td>
+</tr>
+<tr>
+<td>adpcm_adx</td>
+<td>comfortnoise</td>
+<td>hap</td>
+<td>libtwolame</td>
+<td>mpeg4</td>
+<td>pcm_s24le_planar</td>
+<td>roq</td>
+<td>vp8_vaapi</td>
+</tr>
+<tr>
+<td>adpcm_argo</td>
+<td>dca</td>
+<td>hevc_amf</td>
+<td>libvo_amrwbenc</td>
+<td>mpeg4_omx</td>
+<td>pcm_s32be</td>
+<td>roq_dpcm</td>
+<td>vp9_qsv</td>
+</tr>
+<tr>
+<td>adpcm_g722</td>
+<td>dnxhd</td>
+<td>hevc_mf</td>
+<td>libvorbis</td>
+<td>mpeg4_v4l2m2m</td>
+<td>pcm_s32le</td>
+<td>rpza</td>
+<td>vp9_vaapi</td>
+</tr>
+<tr>
+<td>adpcm_g726</td>
+<td>dpx</td>
+<td>hevc_nvenc</td>
+<td>libvpx_vp8</td>
+<td>msmpeg4v2</td>
+<td>pcm_s32le_planar</td>
+<td>rv10</td>
+<td>wavpack</td>
+</tr>
+<tr>
+<td>adpcm_g726le</td>
+<td>dvbsub</td>
+<td>hevc_qsv</td>
+<td>libvpx_vp9</td>
+<td>msmpeg4v3</td>
+<td>pcm_s64be</td>
+<td>rv20</td>
+<td>webvtt</td>
+</tr>
+<tr>
+<td>adpcm_ima_apm</td>
+<td>dvdsub</td>
+<td>hevc_v4l2m2m</td>
+<td>libwavpack</td>
+<td>msvideo1</td>
+<td>pcm_s64le</td>
+<td>s302m</td>
+<td>wmav1</td>
+</tr>
+<tr>
+<td>adpcm_ima_qt</td>
+<td>dvvideo</td>
+<td>hevc_vaapi</td>
+<td>libwebp</td>
+<td>nellymoser</td>
+<td>pcm_s8</td>
+<td>sbc</td>
+<td>wmav2</td>
+</tr>
+<tr>
+<td>adpcm_ima_ssi</td>
+<td>eac3</td>
+<td>hevc_videotoolbox</td>
+<td>libwebp_anim</td>
+<td>nvenc</td>
+<td>pcm_s8_planar</td>
+<td>sgi</td>
+<td>wmv1</td>
+</tr>
+<tr>
+<td>adpcm_ima_wav</td>
+<td>ffv1</td>
+<td>huffyuv</td>
+<td>libx262</td>
+<td>nvenc_h264</td>
+<td>pcm_u16be</td>
+<td>snow</td>
+<td>wmv2</td>
+</tr>
+<tr>
+<td>adpcm_ms</td>
+<td>ffvhuff</td>
+<td>ilbc_at</td>
+<td>libx264</td>
+<td>nvenc_hevc</td>
+<td>pcm_u16le</td>
+<td>sonic</td>
+<td>wrapped_avframe</td>
+</tr>
+<tr>
+<td>adpcm_swf</td>
+<td>fits</td>
+<td>jpeg2000</td>
+<td>libx264rgb</td>
+<td>opus</td>
+<td>pcm_u24be</td>
+<td>sonic_ls</td>
+<td>xbm</td>
+</tr>
+<tr>
+<td>adpcm_yamaha</td>
+<td>flac</td>
+<td>jpegls</td>
+<td>libx265</td>
+<td>pam</td>
+<td>pcm_u24le</td>
+<td>srt</td>
+<td>xface</td>
+</tr>
+<tr>
+<td>alac</td>
+<td>flashsv</td>
+<td>libaom_av1</td>
+<td>libxavs</td>
+<td>pbm</td>
+<td>pcm_u32be</td>
+<td>ssa</td>
+<td>xsub</td>
+</tr>
+<tr>
+<td>alac_at</td>
+<td>flashsv2</td>
+<td>libcodec2</td>
+<td>libxavs2</td>
+<td>pcm_alaw</td>
+<td>pcm_u32le</td>
+<td>subrip</td>
+<td>xwd</td>
+</tr>
+<tr>
+<td>alias_pix</td>
+<td>flv</td>
+<td>libfdk_aac</td>
+<td>libxvid</td>
+<td>pcm_alaw_at</td>
+<td>pcm_u8</td>
+<td>sunrast</td>
+<td>y41p</td>
+</tr>
+<tr>
+<td>amv</td>
+<td>g723_1</td>
+<td>libgsm</td>
+<td>ljpeg</td>
+<td>pcm_dvd</td>
+<td>pcm_vidc</td>
+<td>svq1</td>
+<td>yuv4</td>
+</tr>
+<tr>
+<td>apng</td>
+<td>gif</td>
+<td>libgsm_ms</td>
+<td>magicyuv</td>
+<td>pcm_f32be</td>
+<td>pcx</td>
+<td>targa</td>
+<td>zlib</td>
+</tr>
+<tr>
+<td>aptx</td>
+<td>h261</td>
+<td>libilbc</td>
+<td>mjpeg</td>
+<td>pcm_f32le</td>
+<td>pgm</td>
+<td>text</td>
+<td>zmbv</td>
+</tr>
+<tr>
+<td>aptx_hd</td>
+<td>h263</td>
+<td>libkvazaar</td>
+<td>mjpeg_qsv</td>
+<td>pcm_f64be</td>
+<td>pgmyuv</td>
+<td>tiff</td>
+</tr>
+<tr>
+<td>ass</td>
+<td>h263_v4l2m2m</td>
+<td>libmp3lame</td>
+<td>mjpeg_vaapi</td>
+<td>pcm_f64le</td>
+<td>png</td>
+<td>truehd</td>
+</tr>
+<tr>
+<td>asv1</td>
+<td>h263p</td>
+<td>libopencore_amrnb</td>
+<td>mlp</td>
+<td>pcm_mulaw</td>
+<td>ppm</td>
+<td>tta</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hardware-accelerators"><a href="#hardware-accelerators" class="headerlink" title="hardware accelerators"></a><strong>hardware accelerators</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/16.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>hardware accelerators</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>h263_vaapi</td>
+<td>h264_vdpau</td>
+<td>hevc_vdpau</td>
+<td>mpeg1_xvmc</td>
+<td>mpeg2_videotoolbox</td>
+<td>vc1_d3d11va2</td>
+<td>vp9_d3d11va</td>
+<td>wmv3_d3d11va2</td>
+</tr>
+<tr>
+<td>h263_videotoolbox</td>
+<td>h264_videotoolbox</td>
+<td>hevc_videotoolbox</td>
+<td>mpeg2_d3d11va</td>
+<td>mpeg2_xvmc</td>
+<td>vc1_dxva2</td>
+<td>vp9_d3d11va2</td>
+<td>wmv3_dxva2</td>
+</tr>
+<tr>
+<td>h264_d3d11va</td>
+<td>hevc_d3d11va</td>
+<td>mjpeg_nvdec</td>
+<td>mpeg2_d3d11va2</td>
+<td>mpeg4_nvdec</td>
+<td>vc1_nvdec</td>
+<td>vp9_dxva2</td>
+<td>wmv3_nvdec</td>
+</tr>
+<tr>
+<td>h264_d3d11va2</td>
+<td>hevc_d3d11va2</td>
+<td>mjpeg_vaapi</td>
+<td>mpeg2_dxva2</td>
+<td>mpeg4_vaapi</td>
+<td>vc1_vaapi</td>
+<td>vp9_nvdec</td>
+<td>wmv3_vaapi</td>
+</tr>
+<tr>
+<td>h264_dxva2</td>
+<td>hevc_dxva2</td>
+<td>mpeg1_nvdec</td>
+<td>mpeg2_nvdec</td>
+<td>mpeg4_vdpau</td>
+<td>vc1_vdpau</td>
+<td>vp9_vaapi</td>
+<td>wmv3_vdpau</td>
+</tr>
+<tr>
+<td>h264_nvdec</td>
+<td>hevc_nvdec</td>
+<td>mpeg1_vdpau</td>
+<td>mpeg2_vaapi</td>
+<td>mpeg4_videotoolbox</td>
+<td>vp8_nvdec</td>
+<td>vp9_vdpau</td>
+</tr>
+<tr>
+<td>h264_vaapi</td>
+<td>hevc_vaapi</td>
+<td>mpeg1_videotoolbox</td>
+<td>mpeg2_vdpau</td>
+<td>vc1_d3d11va</td>
+<td>vp8_vaapi</td>
+<td>wmv3_d3d11va</td>
+</tr>
+</tbody>
+</table>
+<h3 id="demuxers"><a href="#demuxers" class="headerlink" title="demuxers"></a><strong>demuxers</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/17.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>demuxers</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aa</td>
+<td>bfstm</td>
+<td>flac</td>
+<td>image_jpeg_pipe</td>
+<td>lxf</td>
+<td>obu</td>
+<td>rtp</td>
+<td>txd</td>
+</tr>
+<tr>
+<td>aac</td>
+<td>bink</td>
+<td>flic</td>
+<td>image_jpegls_pipe</td>
+<td>m4v</td>
+<td>ogg</td>
+<td>rtsp</td>
+<td>ty</td>
+</tr>
+<tr>
+<td>aax</td>
+<td>bintext</td>
+<td>flv</td>
+<td>image_pam_pipe</td>
+<td>matroska</td>
+<td>oma</td>
+<td>s337m</td>
+<td>v210</td>
+</tr>
+<tr>
+<td>ac3</td>
+<td>bit</td>
+<td>fourxm</td>
+<td>image_pbm_pipe</td>
+<td>mca</td>
+<td>paf</td>
+<td>sami</td>
+<td>v210x</td>
+</tr>
+<tr>
+<td>acm</td>
+<td>bmv</td>
+<td>frm</td>
+<td>image_pcx_pipe</td>
+<td>mcc</td>
+<td>pcm_alaw</td>
+<td>sap</td>
+<td>vag</td>
+</tr>
+<tr>
+<td>act</td>
+<td>boa</td>
+<td>fsb</td>
+<td>image_pgm_pipe</td>
+<td>mgsts</td>
+<td>pcm_f32be</td>
+<td>sbc</td>
+<td>vapoursynth</td>
+</tr>
+<tr>
+<td>adf</td>
+<td>brstm</td>
+<td>fwse</td>
+<td>image_pgmyuv_pipe</td>
+<td>microdvd</td>
+<td>pcm_f32le</td>
+<td>sbg</td>
+<td>vc1</td>
+</tr>
+<tr>
+<td>adp</td>
+<td>c93</td>
+<td>g722</td>
+<td>image_pgx_pipe</td>
+<td>mjpeg</td>
+<td>pcm_f64be</td>
+<td>scc</td>
+<td>vc1t</td>
+</tr>
+<tr>
+<td>ads</td>
+<td>caf</td>
+<td>g723_1</td>
+<td>image_photocd_pipe</td>
+<td>mjpeg_2000</td>
+<td>pcm_f64le</td>
+<td>sdp</td>
+<td>vividas</td>
+</tr>
+<tr>
+<td>adx</td>
+<td>cavsvideo</td>
+<td>g726</td>
+<td>image_pictor_pipe</td>
+<td>mlp</td>
+<td>pcm_mulaw</td>
+<td>sdr2</td>
+<td>vivo</td>
+</tr>
+<tr>
+<td>aea</td>
+<td>cdg</td>
+<td>g726le</td>
+<td>image_png_pipe</td>
+<td>mlv</td>
+<td>pcm_s16be</td>
+<td>sds</td>
+<td>vmd</td>
+</tr>
+<tr>
+<td>afc</td>
+<td>cdxl</td>
+<td>g729</td>
+<td>image_ppm_pipe</td>
+<td>mm</td>
+<td>pcm_s16le</td>
+<td>sdx</td>
+<td>vobsub</td>
+</tr>
+<tr>
+<td>aiff</td>
+<td>cine</td>
+<td>gdv</td>
+<td>image_psd_pipe</td>
+<td>mmf</td>
+<td>pcm_s24be</td>
+<td>segafilm</td>
+<td>voc</td>
+</tr>
+<tr>
+<td>aix</td>
+<td>codec2</td>
+<td>genh</td>
+<td>image_qdraw_pipe</td>
+<td>mods</td>
+<td>pcm_s24le</td>
+<td>ser</td>
+<td>vpk</td>
+</tr>
+<tr>
+<td>alp</td>
+<td>codec2raw</td>
+<td>gif</td>
+<td>image_sgi_pipe</td>
+<td>moflex</td>
+<td>pcm_s32be</td>
+<td>shorten</td>
+<td>vplayer</td>
+</tr>
+<tr>
+<td>amr</td>
+<td>concat</td>
+<td>gsm</td>
+<td>image_sunrast_pipe</td>
+<td>mov</td>
+<td>pcm_s32le</td>
+<td>siff</td>
+<td>vqf</td>
+</tr>
+<tr>
+<td>amrnb</td>
+<td>dash</td>
+<td>gxf</td>
+<td>image_svg_pipe</td>
+<td>mp3</td>
+<td>pcm_s8</td>
+<td>sln</td>
+<td>w64</td>
+</tr>
+<tr>
+<td>amrwb</td>
+<td>data</td>
+<td>h261</td>
+<td>image_tiff_pipe</td>
+<td>mpc</td>
+<td>pcm_u16be</td>
+<td>smacker</td>
+<td>wav</td>
+</tr>
+<tr>
+<td>anm</td>
+<td>daud</td>
+<td>h263</td>
+<td>image_webp_pipe</td>
+<td>mpc8</td>
+<td>pcm_u16le</td>
+<td>smjpeg</td>
+<td>wc3</td>
+</tr>
+<tr>
+<td>apc</td>
+<td>dcstr</td>
+<td>h264</td>
+<td>image_xpm_pipe</td>
+<td>mpegps</td>
+<td>pcm_u24be</td>
+<td>smush</td>
+<td>webm_dash_manifest</td>
+</tr>
+<tr>
+<td>ape</td>
+<td>derf</td>
+<td>hca</td>
+<td>image_xwd_pipe</td>
+<td>mpegts</td>
+<td>pcm_u24le</td>
+<td>sol</td>
+<td>webvtt</td>
+</tr>
+<tr>
+<td>apm</td>
+<td>dfa</td>
+<td>hcom</td>
+<td>ingenient</td>
+<td>mpegtsraw</td>
+<td>pcm_u32be</td>
+<td>sox</td>
+<td>wsaud</td>
+</tr>
+<tr>
+<td>apng</td>
+<td>dhav</td>
+<td>hevc</td>
+<td>ipmovie</td>
+<td>mpegvideo</td>
+<td>pcm_u32le</td>
+<td>spdif</td>
+<td>wsd</td>
+</tr>
+<tr>
+<td>aptx</td>
+<td>dirac</td>
+<td>hls</td>
+<td>ircam</td>
+<td>mpjpeg</td>
+<td>pcm_u8</td>
+<td>srt</td>
+<td>wsvqa</td>
+</tr>
+<tr>
+<td>aptx_hd</td>
+<td>dnxhd</td>
+<td>hnm</td>
+<td>iss</td>
+<td>mpl2</td>
+<td>pcm_vidc</td>
+<td>stl</td>
+<td>wtv</td>
+</tr>
+<tr>
+<td>aqtitle</td>
+<td>dsf</td>
+<td>ico</td>
+<td>iv8</td>
+<td>mpsub</td>
+<td>pjs</td>
+<td>str</td>
+<td>wv</td>
+</tr>
+<tr>
+<td>argo_asf</td>
+<td>dsicin</td>
+<td>idcin</td>
+<td>ivf</td>
+<td>msf</td>
+<td>pmp</td>
+<td>subviewer</td>
+<td>wve</td>
+</tr>
+<tr>
+<td>argo_brp</td>
+<td>dss</td>
+<td>idf</td>
+<td>ivr</td>
+<td>msnwc_tcp</td>
+<td>pp_bnk</td>
+<td>subviewer1</td>
+<td>xa</td>
+</tr>
+<tr>
+<td>asf</td>
+<td>dts</td>
+<td>iff</td>
+<td>jacosub</td>
+<td>mtaf</td>
+<td>pva</td>
+<td>sup</td>
+<td>xbin</td>
+</tr>
+<tr>
+<td>asf_o</td>
+<td>dtshd</td>
+<td>ifv</td>
+<td>jv</td>
+<td>mtv</td>
+<td>pvf</td>
+<td>svag</td>
+<td>xmv</td>
+</tr>
+<tr>
+<td>ass</td>
+<td>dv</td>
+<td>ilbc</td>
+<td>kux</td>
+<td>musx</td>
+<td>qcp</td>
+<td>svs</td>
+<td>xvag</td>
+</tr>
+<tr>
+<td>ast</td>
+<td>dvbsub</td>
+<td>image2</td>
+<td>kvag</td>
+<td>mv</td>
+<td>r3d</td>
+<td>swf</td>
+<td>xwma</td>
+</tr>
+<tr>
+<td>au</td>
+<td>dvbtxt</td>
+<td>image2_alias_pix</td>
+<td>libgme</td>
+<td>mvi</td>
+<td>rawvideo</td>
+<td>tak</td>
+<td>yop</td>
+</tr>
+<tr>
+<td>av1</td>
+<td>dxa</td>
+<td>image2_brender_pix</td>
+<td>libmodplug</td>
+<td>mxf</td>
+<td>realtext</td>
+<td>tedcaptions</td>
+<td>yuv4mpegpipe</td>
+</tr>
+<tr>
+<td>avi</td>
+<td>ea</td>
+<td>image2pipe</td>
+<td>libopenmpt</td>
+<td>mxg</td>
+<td>redspark</td>
+<td>thp</td>
+</tr>
+<tr>
+<td>avisynth</td>
+<td>ea_cdata</td>
+<td>image_bmp_pipe</td>
+<td>live_flv</td>
+<td>nc</td>
+<td>rl2</td>
+<td>threedostr</td>
+</tr>
+<tr>
+<td>avr</td>
+<td>eac3</td>
+<td>image_dds_pipe</td>
+<td>lmlm4</td>
+<td>nistsphere</td>
+<td>rm</td>
+<td>tiertexseq</td>
+</tr>
+<tr>
+<td>avs</td>
+<td>epaf</td>
+<td>image_dpx_pipe</td>
+<td>loas</td>
+<td>nsp</td>
+<td>roq</td>
+<td>tmv</td>
+</tr>
+<tr>
+<td>avs2</td>
+<td>ffmetadata</td>
+<td>image_exr_pipe</td>
+<td>lrc</td>
+<td>nsv</td>
+<td>rpl</td>
+<td>truehd</td>
+</tr>
+<tr>
+<td>bethsoftvid</td>
+<td>filmstrip</td>
+<td>image_gif_pipe</td>
+<td>luodat</td>
+<td>nut</td>
+<td>rsd</td>
+<td>tta</td>
+</tr>
+<tr>
+<td>bfi</td>
+<td>fits</td>
+<td>image_j2k_pipe</td>
+<td>lvf</td>
+<td>nuv</td>
+<td>rso</td>
+<td>tty</td>
+</tr>
+</tbody>
+</table>
+<h3 id="muxers"><a href="#muxers" class="headerlink" title="muxers"></a><strong>muxers</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/18.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>muxers</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a64</td>
+<td>cavsvideo</td>
+<td>framecrc</td>
+<td>ipod</td>
+<td>mpeg1system</td>
+<td>pcm_f32le</td>
+<td>rm</td>
+<td>swf</td>
+</tr>
+<tr>
+<td>ac3</td>
+<td>chromaprint</td>
+<td>framehash</td>
+<td>ircam</td>
+<td>mpeg1vcd</td>
+<td>pcm_f64be</td>
+<td>roq</td>
+<td>tee</td>
+</tr>
+<tr>
+<td>adts</td>
+<td>codec2</td>
+<td>framemd5</td>
+<td>ismv</td>
+<td>mpeg1video</td>
+<td>pcm_f64le</td>
+<td>rso</td>
+<td>tg2</td>
+</tr>
+<tr>
+<td>adx</td>
+<td>codec2raw</td>
+<td>g722</td>
+<td>ivf</td>
+<td>mpeg2dvd</td>
+<td>pcm_mulaw</td>
+<td>rtp</td>
+<td>tgp</td>
+</tr>
+<tr>
+<td>aiff</td>
+<td>crc</td>
+<td>g723_1</td>
+<td>jacosub</td>
+<td>mpeg2svcd</td>
+<td>pcm_s16be</td>
+<td>rtp_mpegts</td>
+<td>truehd</td>
+</tr>
+<tr>
+<td>amr</td>
+<td>dash</td>
+<td>g726</td>
+<td>kvag</td>
+<td>mpeg2video</td>
+<td>pcm_s16le</td>
+<td>rtsp</td>
+<td>tta</td>
+</tr>
+<tr>
+<td>apm</td>
+<td>data</td>
+<td>g726le</td>
+<td>latm</td>
+<td>mpeg2vob</td>
+<td>pcm_s24be</td>
+<td>sap</td>
+<td>uncodedframecrc</td>
+</tr>
+<tr>
+<td>apng</td>
+<td>daud</td>
+<td>gif</td>
+<td>lrc</td>
+<td>mpegts</td>
+<td>pcm_s24le</td>
+<td>sbc</td>
+<td>vc1</td>
+</tr>
+<tr>
+<td>aptx</td>
+<td>dirac</td>
+<td>gsm</td>
+<td>m4v</td>
+<td>mpjpeg</td>
+<td>pcm_s32be</td>
+<td>scc</td>
+<td>vc1t</td>
+</tr>
+<tr>
+<td>aptx_hd</td>
+<td>dnxhd</td>
+<td>gxf</td>
+<td>matroska</td>
+<td>mxf</td>
+<td>pcm_s32le</td>
+<td>segafilm</td>
+<td>voc</td>
+</tr>
+<tr>
+<td>argo_asf</td>
+<td>dts</td>
+<td>h261</td>
+<td>matroska_audio</td>
+<td>mxf_d10</td>
+<td>pcm_s8</td>
+<td>segment</td>
+<td>w64</td>
+</tr>
+<tr>
+<td>asf</td>
+<td>dv</td>
+<td>h263</td>
+<td>md5</td>
+<td>mxf_opatom</td>
+<td>pcm_u16be</td>
+<td>singlejpeg</td>
+<td>wav</td>
+</tr>
+<tr>
+<td>asf_stream</td>
+<td>eac3</td>
+<td>h264</td>
+<td>microdvd</td>
+<td>null</td>
+<td>pcm_u16le</td>
+<td>smjpeg</td>
+<td>webm</td>
+</tr>
+<tr>
+<td>ass</td>
+<td>f4v</td>
+<td>hash</td>
+<td>mjpeg</td>
+<td>nut</td>
+<td>pcm_u24be</td>
+<td>smoothstreaming</td>
+<td>webm_chunk</td>
+</tr>
+<tr>
+<td>ast</td>
+<td>ffmetadata</td>
+<td>hds</td>
+<td>mkvtimestamp_v2</td>
+<td>oga</td>
+<td>pcm_u24le</td>
+<td>sox</td>
+<td>webm_dash_manifest</td>
+</tr>
+<tr>
+<td>au</td>
+<td>fifo</td>
+<td>hevc</td>
+<td>mlp</td>
+<td>ogg</td>
+<td>pcm_u32be</td>
+<td>spdif</td>
+<td>webp</td>
+</tr>
+<tr>
+<td>avi</td>
+<td>fifo_test</td>
+<td>hls</td>
+<td>mmf</td>
+<td>ogv</td>
+<td>pcm_u32le</td>
+<td>spx</td>
+<td>webvtt</td>
+</tr>
+<tr>
+<td>avm2</td>
+<td>filmstrip</td>
+<td>ico</td>
+<td>mov</td>
+<td>oma</td>
+<td>pcm_u8</td>
+<td>srt</td>
+<td>wtv</td>
+</tr>
+<tr>
+<td>avs2</td>
+<td>fits</td>
+<td>ilbc</td>
+<td>mp2</td>
+<td>opus</td>
+<td>pcm_vidc</td>
+<td>stream_segment</td>
+<td>wv</td>
+</tr>
+<tr>
+<td>bit</td>
+<td>flac</td>
+<td>image2</td>
+<td>mp3</td>
+<td>pcm_alaw</td>
+<td>psp</td>
+<td>streamhash</td>
+<td>yuv4mpegpipe</td>
+</tr>
+<tr>
+<td>caf</td>
+<td>flv</td>
+<td>image2pipe</td>
+<td>mp4</td>
+<td>pcm_f32be</td>
+<td>rawvideo</td>
+<td>sup</td>
+</tr>
+</tbody>
+</table>
+<h3 id="parsers"><a href="#parsers" class="headerlink" title="parsers"></a><strong>parsers</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/19.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>parsers</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aac</td>
+<td>bmp</td>
+<td>dpx</td>
+<td>g723_1</td>
+<td>h264</td>
+<td>mpegaudio</td>
+<td>rv40</td>
+<td>vp3</td>
+</tr>
+<tr>
+<td>aac_latm</td>
+<td>cavsvideo</td>
+<td>dvaudio</td>
+<td>g729</td>
+<td>hevc</td>
+<td>mpegvideo</td>
+<td>sbc</td>
+<td>vp8</td>
+</tr>
+<tr>
+<td>ac3</td>
+<td>cook</td>
+<td>dvbsub</td>
+<td>gif</td>
+<td>jpeg2000</td>
+<td>opus</td>
+<td>sipr</td>
+<td>vp9</td>
+</tr>
+<tr>
+<td>adx</td>
+<td>dca</td>
+<td>dvd_nav</td>
+<td>gsm</td>
+<td>mjpeg</td>
+<td>png</td>
+<td>tak</td>
+<td>webp</td>
+</tr>
+<tr>
+<td>av1</td>
+<td>dirac</td>
+<td>dvdsub</td>
+<td>h261</td>
+<td>mlp</td>
+<td>pnm</td>
+<td>vc1</td>
+<td>xma</td>
+</tr>
+<tr>
+<td>avs2</td>
+<td>dnxhd</td>
+<td>flac</td>
+<td>h263</td>
+<td>mpeg4video</td>
+<td>rv30</td>
+<td>vorbis</td>
+</tr>
+</tbody>
+</table>
+<h3 id="protocols"><a href="#protocols" class="headerlink" title="protocols"></a><strong>protocols</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/20.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>protocols</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>async</td>
+<td>ffrtmpcrypt</td>
+<td>http</td>
+<td>librtmpe</td>
+<td>libssh</td>
+<td>prompeg</td>
+<td>rtmpts</td>
+<td>tee</td>
+</tr>
+<tr>
+<td>bluray</td>
+<td>ffrtmphttp</td>
+<td>httpproxy</td>
+<td>librtmps</td>
+<td>libzmq</td>
+<td>rtmp</td>
+<td>rtp</td>
+<td>tls</td>
+</tr>
+<tr>
+<td>cache</td>
+<td>file</td>
+<td>https</td>
+<td>librtmpt</td>
+<td>md5</td>
+<td>rtmpe</td>
+<td>sctp</td>
+<td>udp</td>
+</tr>
+<tr>
+<td>concat</td>
+<td>ftp</td>
+<td>icecast</td>
+<td>librtmpte</td>
+<td>mmsh</td>
+<td>rtmps</td>
+<td>srtp</td>
+<td>udplite</td>
+</tr>
+<tr>
+<td>crypto</td>
+<td>gopher</td>
+<td>libamqp</td>
+<td>libsmbclient</td>
+<td>mmst</td>
+<td>rtmpt</td>
+<td>subfile</td>
+<td>unix</td>
+</tr>
+<tr>
+<td>data</td>
+<td>hls</td>
+<td>librtmp</td>
+<td>libsrt</td>
+<td>pipe</td>
+<td>rtmpte</td>
+<td>tcp</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bitstream-filters"><a href="#bitstream-filters" class="headerlink" title="bitstream filters"></a><strong>bitstream filters</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/21.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>bitstream filters</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aac_adtstoasc</td>
+<td>dca_core</td>
+<td>h264_metadata</td>
+<td>hevc_mp4toannexb</td>
+<td>mp3_header_decompress</td>
+<td>opus_metadata</td>
+<td>trace_headers</td>
+<td>vp9_superframe_split</td>
+</tr>
+<tr>
+<td>av1_frame_merge</td>
+<td>dump_extradata</td>
+<td>h264_mp4toannexb</td>
+<td>imx_dump_header</td>
+<td>mpeg2_metadata</td>
+<td>pcm_rechunk</td>
+<td>truehd_core</td>
+</tr>
+<tr>
+<td>av1_frame_split</td>
+<td>eac3_core</td>
+<td>h264_redundant_pps</td>
+<td>mjpeg2jpeg</td>
+<td>mpeg4_unpack_bframes</td>
+<td>prores_metadata</td>
+<td>vp9_metadata</td>
+</tr>
+<tr>
+<td>av1_metadata</td>
+<td>extract_extradata</td>
+<td>hapqa_extract</td>
+<td>mjpega_dump_header</td>
+<td>noise</td>
+<td>remove_extradata</td>
+<td>vp9_raw_reorder</td>
+</tr>
+<tr>
+<td>chomp</td>
+<td>filter_units</td>
+<td>hevc_metadata</td>
+<td>mov2textsub</td>
+<td>null</td>
+<td>text2movsub</td>
+<td>vp9_superframe</td>
+</tr>
+</tbody>
+</table>
+<h3 id="input-devices"><a href="#input-devices" class="headerlink" title="input devices"></a><strong>input devices</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/22.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>input devices</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alsa</td>
+<td>bktr</td>
+<td>fbdev</td>
+<td>jack</td>
+<td>libcdio</td>
+<td>oss</td>
+<td>v4l2</td>
+</tr>
+<tr>
+<td>android_camera</td>
+<td>decklink</td>
+<td>gdigrab</td>
+<td>kmsgrab</td>
+<td>libdc1394</td>
+<td>pulse</td>
+<td>vfwcap</td>
+</tr>
+<tr>
+<td>avfoundation</td>
+<td>dshow</td>
+<td>iec61883</td>
+<td>lavfi</td>
+<td>openal</td>
+<td>sndio</td>
+<td>xcbgrab</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output-devices"><a href="#output-devices" class="headerlink" title="output devices"></a><strong>output devices</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/23.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>output devices</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>alsa</td>
+<td>caca</td>
+<td>fbdev</td>
+<td>oss</td>
+<td>sdl2</td>
+<td>v4l2</td>
+</tr>
+<tr>
+<td>audiotoolbox</td>
+<td>decklink</td>
+<td>opengl</td>
+<td>pulse</td>
+<td>sndio</td>
+<td>xv</td>
+</tr>
+</tbody>
+</table>
+<h3 id="filters"><a href="#filters" class="headerlink" title="filters"></a><strong>filters</strong></h3><p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/24.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>filters</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abench</td>
+<td>aresample</td>
+<td>colorhold</td>
+<td>elbg</td>
+<td>idet</td>
+<td>oscilloscope</td>
+<td>select</td>
+<td>testsrc2</td>
+</tr>
+<tr>
+<td>abitscope</td>
+<td>areverse</td>
+<td>colorkey</td>
+<td>entropy</td>
+<td>il</td>
+<td>overlay</td>
+<td>selectivecolor</td>
+<td>thistogram</td>
+</tr>
+<tr>
+<td>acompressor</td>
+<td>arnndn</td>
+<td>colorkey_opencl</td>
+<td>eq</td>
+<td>inflate</td>
+<td>overlay_cuda</td>
+<td>sendcmd</td>
+<td>threshold</td>
+</tr>
+<tr>
+<td>acontrast</td>
+<td>aselect</td>
+<td>colorlevels</td>
+<td>equalizer</td>
+<td>interlace</td>
+<td>overlay_opencl</td>
+<td>separatefields</td>
+<td>thumbnail</td>
+</tr>
+<tr>
+<td>acopy</td>
+<td>asendcmd</td>
+<td>colormatrix</td>
+<td>erosion</td>
+<td>interleave</td>
+<td>overlay_qsv</td>
+<td>setdar</td>
+<td>thumbnail_cuda</td>
+</tr>
+<tr>
+<td>acrossfade</td>
+<td>asetnsamples</td>
+<td>colorspace</td>
+<td>erosion_opencl</td>
+<td>join</td>
+<td>overlay_vulkan</td>
+<td>setfield</td>
+<td>tile</td>
+</tr>
+<tr>
+<td>acrossover</td>
+<td>asetpts</td>
+<td>compand</td>
+<td>extractplanes</td>
+<td>kerndeint</td>
+<td>owdenoise</td>
+<td>setparams</td>
+<td>tinterlace</td>
+</tr>
+<tr>
+<td>acrusher</td>
+<td>asetrate</td>
+<td>compensationdelay</td>
+<td>extrastereo</td>
+<td>ladspa</td>
+<td>pad</td>
+<td>setpts</td>
+<td>tlut2</td>
+</tr>
+<tr>
+<td>acue</td>
+<td>asettb</td>
+<td>concat</td>
+<td>fade</td>
+<td>lagfun</td>
+<td>pad_opencl</td>
+<td>setrange</td>
+<td>tmedian</td>
+</tr>
+<tr>
+<td>addroi</td>
+<td>ashowinfo</td>
+<td>convolution</td>
+<td>fftdnoiz</td>
+<td>lenscorrection</td>
+<td>pal100bars</td>
+<td>setsar</td>
+<td>tmix</td>
+</tr>
+<tr>
+<td>adeclick</td>
+<td>asidedata</td>
+<td>convolution_opencl</td>
+<td>fftfilt</td>
+<td>lensfun</td>
+<td>pal75bars</td>
+<td>settb</td>
+<td>tonemap</td>
+</tr>
+<tr>
+<td>adeclip</td>
+<td>asoftclip</td>
+<td>convolve</td>
+<td>field</td>
+<td>libvmaf</td>
+<td>palettegen</td>
+<td>sharpness_vaapi</td>
+<td>tonemap_opencl</td>
+</tr>
+<tr>
+<td>adelay</td>
+<td>asplit</td>
+<td>copy</td>
+<td>fieldhint</td>
+<td>life</td>
+<td>paletteuse</td>
+<td>showcqt</td>
+<td>tonemap_vaapi</td>
+</tr>
+<tr>
+<td>aderivative</td>
+<td>asr</td>
+<td>coreimage</td>
+<td>fieldmatch</td>
+<td>limiter</td>
+<td>pan</td>
+<td>showfreqs</td>
+<td>tpad</td>
+</tr>
+<tr>
+<td>adrawgraph</td>
+<td>ass</td>
+<td>coreimagesrc</td>
+<td>fieldorder</td>
+<td>loop</td>
+<td>perms</td>
+<td>showinfo</td>
+<td>transpose</td>
+</tr>
+<tr>
+<td>aecho</td>
+<td>astats</td>
+<td>cover_rect</td>
+<td>fifo</td>
+<td>loudnorm</td>
+<td>perspective</td>
+<td>showpalette</td>
+<td>transpose_npp</td>
+</tr>
+<tr>
+<td>aemphasis</td>
+<td>astreamselect</td>
+<td>crop</td>
+<td>fillborders</td>
+<td>lowpass</td>
+<td>phase</td>
+<td>showspatial</td>
+<td>transpose_opencl</td>
+</tr>
+<tr>
+<td>aeval</td>
+<td>asubboost</td>
+<td>cropdetect</td>
+<td>find_rect</td>
+<td>lowshelf</td>
+<td>photosensitivity</td>
+<td>showspectrum</td>
+<td>transpose_vaapi</td>
+</tr>
+<tr>
+<td>aevalsrc</td>
+<td>atadenoise</td>
+<td>crossfeed</td>
+<td>firequalizer</td>
+<td>lumakey</td>
+<td>pixdesctest</td>
+<td>showspectrumpic</td>
+<td>treble</td>
+</tr>
+<tr>
+<td>afade</td>
+<td>atempo</td>
+<td>crystalizer</td>
+<td>flanger</td>
+<td>lut</td>
+<td>pixscope</td>
+<td>showvolume</td>
+<td>tremolo</td>
+</tr>
+<tr>
+<td>afftdn</td>
+<td>atrim</td>
+<td>cue</td>
+<td>flite</td>
+<td>lut1d</td>
+<td>pp</td>
+<td>showwaves</td>
+<td>trim</td>
+</tr>
+<tr>
+<td>afftfilt</td>
+<td>avectorscope</td>
+<td>curves</td>
+<td>floodfill</td>
+<td>lut2</td>
+<td>pp7</td>
+<td>showwavespic</td>
+<td>unpremultiply</td>
+</tr>
+<tr>
+<td>afifo</td>
+<td>avgblur</td>
+<td>datascope</td>
+<td>format</td>
+<td>lut3d</td>
+<td>premultiply</td>
+<td>shuffleframes</td>
+<td>unsharp</td>
+</tr>
+<tr>
+<td>afir</td>
+<td>avgblur_opencl</td>
+<td>dblur</td>
+<td>fps</td>
+<td>lutrgb</td>
+<td>prewitt</td>
+<td>shuffleplanes</td>
+<td>unsharp_opencl</td>
+</tr>
+<tr>
+<td>afirsrc</td>
+<td>avgblur_vulkan</td>
+<td>dcshift</td>
+<td>framepack</td>
+<td>lutyuv</td>
+<td>prewitt_opencl</td>
+<td>sidechaincompress</td>
+<td>untile</td>
+</tr>
+<tr>
+<td>aformat</td>
+<td>axcorrelate</td>
+<td>dctdnoiz</td>
+<td>framerate</td>
+<td>lv2</td>
+<td>procamp_vaapi</td>
+<td>sidechaingate</td>
+<td>uspp</td>
+</tr>
+<tr>
+<td>agate</td>
+<td>azmq</td>
+<td>deband</td>
+<td>framestep</td>
+<td>mandelbrot</td>
+<td>program_opencl</td>
+<td>sidedata</td>
+<td>v360</td>
+</tr>
+<tr>
+<td>agraphmonitor</td>
+<td>bandpass</td>
+<td>deblock</td>
+<td>freezedetect</td>
+<td>maskedclamp</td>
+<td>pseudocolor</td>
+<td>sierpinski</td>
+<td>vaguedenoiser</td>
+</tr>
+<tr>
+<td>ahistogram</td>
+<td>bandreject</td>
+<td>decimate</td>
+<td>freezeframes</td>
+<td>maskedmax</td>
+<td>psnr</td>
+<td>signalstats</td>
+<td>vectorscope</td>
+</tr>
+<tr>
+<td>aiir</td>
+<td>bass</td>
+<td>deconvolve</td>
+<td>frei0r</td>
+<td>maskedmerge</td>
+<td>pullup</td>
+<td>signature</td>
+<td>vflip</td>
+</tr>
+<tr>
+<td>aintegral</td>
+<td>bbox</td>
+<td>dedot</td>
+<td>frei0r_src</td>
+<td>maskedmin</td>
+<td>qp</td>
+<td>silencedetect</td>
+<td>vfrdet</td>
+</tr>
+<tr>
+<td>ainterleave</td>
+<td>bench</td>
+<td>deesser</td>
+<td>fspp</td>
+<td>maskedthreshold</td>
+<td>random</td>
+<td>silenceremove</td>
+<td>vibrance</td>
+</tr>
+<tr>
+<td>alimiter</td>
+<td>bilateral</td>
+<td>deflate</td>
+<td>gblur</td>
+<td>maskfun</td>
+<td>readeia608</td>
+<td>sinc</td>
+<td>vibrato</td>
+</tr>
+<tr>
+<td>allpass</td>
+<td>biquad</td>
+<td>deflicker</td>
+<td>geq</td>
+<td>mcdeint</td>
+<td>readvitc</td>
+<td>sine</td>
+<td>vidstabdetect</td>
+</tr>
+<tr>
+<td>allrgb</td>
+<td>bitplanenoise</td>
+<td>deinterlace_qsv</td>
+<td>gradfun</td>
+<td>mcompand</td>
+<td>realtime</td>
+<td>smartblur</td>
+<td>vidstabtransform</td>
+</tr>
+<tr>
+<td>allyuv</td>
+<td>blackdetect</td>
+<td>deinterlace_vaapi</td>
+<td>gradients</td>
+<td>median</td>
+<td>remap</td>
+<td>smptebars</td>
+<td>vignette</td>
+</tr>
+<tr>
+<td>aloop</td>
+<td>blackframe</td>
+<td>dejudder</td>
+<td>graphmonitor</td>
+<td>mergeplanes</td>
+<td>removegrain</td>
+<td>smptehdbars</td>
+<td>vmafmotion</td>
+</tr>
+<tr>
+<td>alphaextract</td>
+<td>blend</td>
+<td>delogo</td>
+<td>greyedge</td>
+<td>mestimate</td>
+<td>removelogo</td>
+<td>sobel</td>
+<td>volume</td>
+</tr>
+<tr>
+<td>alphamerge</td>
+<td>bm3d</td>
+<td>denoise_vaapi</td>
+<td>haas</td>
+<td>metadata</td>
+<td>repeatfields</td>
+<td>sobel_opencl</td>
+<td>volumedetect</td>
+</tr>
+<tr>
+<td>amerge</td>
+<td>boxblur</td>
+<td>derain</td>
+<td>haldclut</td>
+<td>midequalizer</td>
+<td>replaygain</td>
+<td>sofalizer</td>
+<td>vpp_qsv</td>
+</tr>
+<tr>
+<td>ametadata</td>
+<td>boxblur_opencl</td>
+<td>deshake</td>
+<td>haldclutsrc</td>
+<td>minterpolate</td>
+<td>resample</td>
+<td>spectrumsynth</td>
+<td>vstack</td>
+</tr>
+<tr>
+<td>amix</td>
+<td>bs2b</td>
+<td>deshake_opencl</td>
+<td>hdcd</td>
+<td>mix</td>
+<td>reverse</td>
+<td>split</td>
+<td>w3fdif</td>
+</tr>
+<tr>
+<td>amovie</td>
+<td>bwdif</td>
+<td>despill</td>
+<td>headphone</td>
+<td>movie</td>
+<td>rgbashift</td>
+<td>spp</td>
+<td>waveform</td>
+</tr>
+<tr>
+<td>amplify</td>
+<td>cas</td>
+<td>detelecine</td>
+<td>hflip</td>
+<td>mpdecimate</td>
+<td>rgbtestsrc</td>
+<td>sr</td>
+<td>weave</td>
+</tr>
+<tr>
+<td>amultiply</td>
+<td>cellauto</td>
+<td>dilation</td>
+<td>highpass</td>
+<td>mptestsrc</td>
+<td>roberts</td>
+<td>ssim</td>
+<td>xbr</td>
+</tr>
+<tr>
+<td>anequalizer</td>
+<td>channelmap</td>
+<td>dilation_opencl</td>
+<td>highshelf</td>
+<td>negate</td>
+<td>roberts_opencl</td>
+<td>stereo3d</td>
+<td>xfade</td>
+</tr>
+<tr>
+<td>anlmdn</td>
+<td>channelsplit</td>
+<td>displace</td>
+<td>hilbert</td>
+<td>nlmeans</td>
+<td>rotate</td>
+<td>stereotools</td>
+<td>xfade_opencl</td>
+</tr>
+<tr>
+<td>anlms</td>
+<td>chorus</td>
+<td>dnn_processing</td>
+<td>histeq</td>
+<td>nlmeans_opencl</td>
+<td>rubberband</td>
+<td>stereowiden</td>
+<td>xmedian</td>
+</tr>
+<tr>
+<td>anoisesrc</td>
+<td>chromaber_vulkan</td>
+<td>doubleweave</td>
+<td>histogram</td>
+<td>nnedi</td>
+<td>sab</td>
+<td>streamselect</td>
+<td>xstack</td>
+</tr>
+<tr>
+<td>anull</td>
+<td>chromahold</td>
+<td>drawbox</td>
+<td>hqdn3d</td>
+<td>noformat</td>
+<td>scale</td>
+<td>subtitles</td>
+<td>yadif</td>
+</tr>
+<tr>
+<td>anullsink</td>
+<td>chromakey</td>
+<td>drawgraph</td>
+<td>hqx</td>
+<td>noise</td>
+<td>scale2ref</td>
+<td>super2xsai</td>
+<td>yadif_cuda</td>
+</tr>
+<tr>
+<td>anullsrc</td>
+<td>chromanr</td>
+<td>drawgrid</td>
+<td>hstack</td>
+<td>normalize</td>
+<td>scale_cuda</td>
+<td>superequalizer</td>
+<td>yaepblur</td>
+</tr>
+<tr>
+<td>apad</td>
+<td>chromashift</td>
+<td>drawtext</td>
+<td>hue</td>
+<td>null</td>
+<td>scale_npp</td>
+<td>surround</td>
+<td>yuvtestsrc</td>
+</tr>
+<tr>
+<td>aperms</td>
+<td>ciescope</td>
+<td>drmeter</td>
+<td>hwdownload</td>
+<td>nullsink</td>
+<td>scale_qsv</td>
+<td>swaprect</td>
+<td>zmq</td>
+</tr>
+<tr>
+<td>aphasemeter</td>
+<td>codecview</td>
+<td>dynaudnorm</td>
+<td>hwmap</td>
+<td>nullsrc</td>
+<td>scale_vaapi</td>
+<td>swapuv</td>
+<td>zoompan</td>
+</tr>
+<tr>
+<td>aphaser</td>
+<td>color</td>
+<td>earwax</td>
+<td>hwupload</td>
+<td>ocr</td>
+<td>scale_vulkan</td>
+<td>tblend</td>
+<td>zscale</td>
+</tr>
+<tr>
+<td>apulsator</td>
+<td>colorbalance</td>
+<td>ebur128</td>
+<td>hwupload_cuda</td>
+<td>ocv</td>
+<td>scdet</td>
+<td>telecine</td>
+</tr>
+<tr>
+<td>arealtime</td>
+<td>colorchannelmixer</td>
+<td>edgedetect</td>
+<td>hysteresis</td>
+<td>openclsrc</td>
+<td>scroll</td>
+<td>testsrc</td>
+</tr>
+</tbody>
+</table>
+<h2 id="部分命令说明"><a href="#部分命令说明" class="headerlink" title="部分命令说明"></a><strong>部分命令说明</strong></h2><table>
+<thead>
+<tr>
+<th>Standard options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–logfile=FILE</td>
+<td>记录测试并输出到文件 FILE</td>
+</tr>
+<tr>
+<td>–disable-logging</td>
+<td></td>
+</tr>
+<tr>
+<td>–fatal-warnings</td>
+<td></td>
+</tr>
+<tr>
+<td>–prefix=PREFIX</td>
+<td>安装程序到指定目录</td>
+</tr>
+<tr>
+<td>–bindir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–datadir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–docdir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–libdir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–shlibdir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–incdir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–mandir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–pkgconfigdir=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-rpath</td>
+<td></td>
+</tr>
+<tr>
+<td>–install-name-dir=DIR</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Licensing options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–enable-gpl</td>
+<td>只要这种修改文本在整体上或者其某个部分来源于遵循 GPL 的程序，该修改文本的整体就必须按照 GPL 流通，不仅该修改文本的源码必须向社会公开，而且对于这种修改文本的流通不准许附加修改者自己作出的限制。</td>
+</tr>
+<tr>
+<td>–enable-version3</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-nonfree</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Configuration options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-static</td>
+<td>不生成静态库（no）</td>
+</tr>
+<tr>
+<td>–enable-shared</td>
+<td>生成动态库（no）</td>
+</tr>
+<tr>
+<td>–enable-small</td>
+<td>针对 size 优化，而针对不是速度优化</td>
+</tr>
+<tr>
+<td>–disable-runtime-cpudetect</td>
+<td>禁止在运行时检测 CPU 适配性</td>
+</tr>
+<tr>
+<td>–enable-gray</td>
+<td>启用完全的 grayscale 支持</td>
+</tr>
+<tr>
+<td>–disable-swscale-alpha</td>
+<td>禁止 swscale 的 alpha 通道</td>
+</tr>
+<tr>
+<td>–disable-all</td>
+<td>禁止生成文件</td>
+</tr>
+<tr>
+<td>–disable-autodetect</td>
+<td>禁止自动检测外部的库（no）</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Program options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-programs</td>
+<td>不生成命令行程序</td>
+</tr>
+<tr>
+<td>–disable-ffmpeg</td>
+<td>不生成 ffmpeg</td>
+</tr>
+<tr>
+<td>–disable-ffplay</td>
+<td>不生成 ffplay</td>
+</tr>
+<tr>
+<td>–disable-ffprobe</td>
+<td>不生成 ffprobe</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Documentation options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-doc</td>
+<td>不生成文档</td>
+</tr>
+<tr>
+<td>–disable-htmlpages</td>
+<td>不生成 HTML 文档</td>
+</tr>
+<tr>
+<td>–disable-manpages</td>
+<td>不生成 man 文档</td>
+</tr>
+<tr>
+<td>–disable-podpages</td>
+<td>不生成 POD 文档</td>
+</tr>
+<tr>
+<td>–disable-txtpages</td>
+<td>不生成 text 文档</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Component options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-avdevice</td>
+<td>不生成 libavdevice</td>
+</tr>
+<tr>
+<td>–disable-avcodec</td>
+<td>不生成 libavcodec</td>
+</tr>
+<tr>
+<td>–disable-avformat</td>
+<td>不生成 libavformat</td>
+</tr>
+<tr>
+<td>–disable-swresample</td>
+<td>不生成 libswresample</td>
+</tr>
+<tr>
+<td>–disable-swscale</td>
+<td>不生成 libswscale</td>
+</tr>
+<tr>
+<td>–disable-postproc</td>
+<td>不生成 libpostproc</td>
+</tr>
+<tr>
+<td>–disable-avfilter</td>
+<td>不生成 libavfilter</td>
+</tr>
+<tr>
+<td>–enable-avresample</td>
+<td>生成 libavresample（已废弃）（no）</td>
+</tr>
+<tr>
+<td>–disable-pthreads</td>
+<td>禁止 pthreads</td>
+</tr>
+<tr>
+<td>–disable-w32threads</td>
+<td>禁止 win32 threads</td>
+</tr>
+<tr>
+<td>–disable-os2threads</td>
+<td>禁止 OS/2 threads</td>
+</tr>
+<tr>
+<td>–disable-network</td>
+<td>禁止网络支持</td>
+</tr>
+<tr>
+<td>–disable-dct</td>
+<td>禁止 DCT</td>
+</tr>
+<tr>
+<td>–disable-dwt</td>
+<td>禁止 DWT</td>
+</tr>
+<tr>
+<td>–disable-error-resilience</td>
+<td>禁止错误恢复</td>
+</tr>
+<tr>
+<td>–disable-lsp</td>
+<td>禁止 LSP</td>
+</tr>
+<tr>
+<td>–disable-lzo</td>
+<td>禁止 LZO 解码</td>
+</tr>
+<tr>
+<td>–disable-mdct</td>
+<td>禁止 MDCT</td>
+</tr>
+<tr>
+<td>–disable-rdft</td>
+<td>禁止 RDFT</td>
+</tr>
+<tr>
+<td>–disable-fft</td>
+<td>禁止 FFT</td>
+</tr>
+<tr>
+<td>–disable-faan</td>
+<td>禁止浮点 AAN（I）DCT</td>
+</tr>
+<tr>
+<td>–disable-pixelutils</td>
+<td>禁止 libavutil 中的 pixel util</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Individual component options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-everything</td>
+<td>禁止以下所有组件</td>
+</tr>
+<tr>
+<td>–disable-encoder=NAME</td>
+<td>禁止编码器 NAME</td>
+</tr>
+<tr>
+<td>–enable-encoder=NAME</td>
+<td>允许解码器 NAME</td>
+</tr>
+<tr>
+<td>–disable-encoders</td>
+<td>禁止所有编码器</td>
+</tr>
+<tr>
+<td>–disable-decoder=NAME</td>
+<td>禁止解码器 NAME</td>
+</tr>
+<tr>
+<td>–enable-decoder=NAME</td>
+<td>允许解码器 NAME</td>
+</tr>
+<tr>
+<td>–disable-decoders</td>
+<td>禁止所有解码器</td>
+</tr>
+<tr>
+<td>–disable-hwaccel=NAME</td>
+<td>禁止硬件加速 hwaccel</td>
+</tr>
+<tr>
+<td>–enable-hwaccel=NAME</td>
+<td>允许硬件加速 hwaccel</td>
+</tr>
+<tr>
+<td>–disable-hwaccels</td>
+<td>禁止所有硬件加速</td>
+</tr>
+<tr>
+<td>–disable-muxer=NAME</td>
+<td>禁止封装 NAME</td>
+</tr>
+<tr>
+<td>–enable-muxer=NAME</td>
+<td>允许封装 NAME</td>
+</tr>
+<tr>
+<td>–disable-muxers</td>
+<td>禁止所有封装</td>
+</tr>
+<tr>
+<td>–disable-demuxer=NAME</td>
+<td>禁止解封装 NAME</td>
+</tr>
+<tr>
+<td>–enable-demuxer=NAME</td>
+<td>允许解封装 NAME</td>
+</tr>
+<tr>
+<td>–disable-demuxers</td>
+<td>禁止所有解封装</td>
+</tr>
+<tr>
+<td>–enable-parser=NAME</td>
+<td>允许解析 NAME</td>
+</tr>
+<tr>
+<td>–disable-parser=NAME</td>
+<td>禁止解析 NAME</td>
+</tr>
+<tr>
+<td>–disable-parsers</td>
+<td>禁止所有解析 NAME</td>
+</tr>
+<tr>
+<td>–enable-bsf=NAME</td>
+<td>允许比特流过滤器 NAME</td>
+</tr>
+<tr>
+<td>–disable-bsf=NAME</td>
+<td>禁止比特流过滤器 NAME</td>
+</tr>
+<tr>
+<td>–disable-bsfs</td>
+<td>禁止所有比特流过滤器 NAME</td>
+</tr>
+<tr>
+<td>–enable-protocol=NAME</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-protocol=NAME</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-protocols</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-indev=NAME</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-indev=NAME</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-indevs</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-outdev=NAME</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-outdev=NAME</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-outdevs</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-devices</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-filter=NAME</td>
+<td>允许过滤器 NAME</td>
+</tr>
+<tr>
+<td>–disable-filter=NAME</td>
+<td>禁止过滤器 NAME</td>
+</tr>
+<tr>
+<td>–disable-filters</td>
+<td>禁止所有过滤器 NAME</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>External library support</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-alsa</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-appkit</td>
+<td>禁用 Apple AppKit 框架</td>
+</tr>
+<tr>
+<td>–disable-avfoundation</td>
+<td>禁用 Apple AVFoundation 框架</td>
+</tr>
+<tr>
+<td>–enable-avisynth</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-bzlib</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-coreimage</td>
+<td>禁用 Apple CoreImage 框架</td>
+</tr>
+<tr>
+<td>–enable-chromaprint</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-frei0r</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-gcrypt</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-gmp</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-gnutls</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-iconv</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-jni</td>
+<td>允许 JNI 支持（no）</td>
+</tr>
+<tr>
+<td>–enable-ladspa</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libaom</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libaribb24</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libass</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libbluray</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libbs2b</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libcaca</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libcelt</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libcdio</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libcodec2</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libdav1d</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libdavs2</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libdc1394</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libfdk-aac</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libflite</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libfontconfig</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libfreetype</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libfribidi</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libglslang</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libgme</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libgsm</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libiec61883</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libilbc</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libjack</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libklvanc</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libkvazaar</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-liblensfun</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libmodplug</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libmp3lame</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopencore-amrnb</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopencore-amrwb</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopencv</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopenh264</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopenjpeg</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopenmpt</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopenvino</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libopus</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libpulse</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-librabbitmq</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-librav1e</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-librsvg</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-librubberband</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-librtmp</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libshine</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libsmbclient</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libsnappy</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libsoxr</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libspeex</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libsrt</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libssh</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libsvtav1</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libtensorflow</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libtesseract</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libtheora</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libtls</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libtwolame</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libv4l2</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libvidstab</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libvmaf</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libvo-amrwbenc</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libvorbis</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libvpx</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libwavpack</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libwebp</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libx264</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libx265</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxavs</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxavs2</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxcb</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxcb-shm</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxcb-xfixes</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxcb-shape</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxvid</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libxml2</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libzimg</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libzmq</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libzvbi</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-lv2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-lzma</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-decklink</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-mbedtls</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-mediacodec</td>
+<td>支持 Android MediaCodec</td>
+</tr>
+<tr>
+<td>–enable-mediafoundation</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libmysofa</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-openal</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-opencl</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-opengl</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-openssl</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-pocketsphinx</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-sndio</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-schannel</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-sdl2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-securetransport</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-vapoursynth</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-vulkan</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-xlib</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-zlib</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>External library support</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-amf</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-audiotoolbox</td>
+<td>禁用 Apple AudioToolbox 代码</td>
+</tr>
+<tr>
+<td>–enable-cuda-nvcc</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-cuda-llvm</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-cuvid</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-d3d11va</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-dxva2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-ffnvcodec</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libdrm</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libmfx</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-libnpp</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-mmal</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-nvdec</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-nvenc</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-omx</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-omx-rpi</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-rkmpp</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-v4l2-m2m</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-vaapi</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-vdpau</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-videotoolbox</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Toolchain options</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–arch=ARCH</td>
+<td>架构</td>
+</tr>
+<tr>
+<td>–cpu=CPU</td>
+<td>最小 CPU</td>
+</tr>
+<tr>
+<td>–cross-prefix=PREFIX</td>
+<td>编译工具前缀 PREFIX</td>
+</tr>
+<tr>
+<td>–progs-suffix=SUFFIX</td>
+<td>程序名后缀 SUFFIX</td>
+</tr>
+<tr>
+<td>–enable-cross-compile</td>
+<td>使用交叉编译器</td>
+</tr>
+<tr>
+<td>–sysroot=PATH</td>
+<td>sysroot PATH</td>
+</tr>
+<tr>
+<td>–sysinclude=PATH</td>
+<td></td>
+</tr>
+<tr>
+<td>–target-os=OS</td>
+<td>target-os OS</td>
+</tr>
+<tr>
+<td>–target-exec=CMD</td>
+<td></td>
+</tr>
+<tr>
+<td>–target-path=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–target-samples=DIR</td>
+<td></td>
+</tr>
+<tr>
+<td>–tempprefix=PATH</td>
+<td></td>
+</tr>
+<tr>
+<td>–toolchain=NAME</td>
+<td>toolchain NAME</td>
+</tr>
+<tr>
+<td>–nm=NM</td>
+<td>nm NM</td>
+</tr>
+<tr>
+<td>–ar=AR</td>
+<td>ar AR</td>
+</tr>
+<tr>
+<td>–as=AS</td>
+<td>as AS</td>
+</tr>
+<tr>
+<td>–ln_s=LN_S</td>
+<td></td>
+</tr>
+<tr>
+<td>–strip=STRIP</td>
+<td>strip STRIP</td>
+</tr>
+<tr>
+<td>–windres=WINDRES</td>
+<td></td>
+</tr>
+<tr>
+<td>–x86asmexe=EXE</td>
+<td></td>
+</tr>
+<tr>
+<td>–cc=CC</td>
+<td>C 编译器 CC</td>
+</tr>
+<tr>
+<td>–cxx=CXX</td>
+<td>C++ 编译器 CXX</td>
+</tr>
+<tr>
+<td>–objcc=OCC</td>
+<td></td>
+</tr>
+<tr>
+<td>–dep-cc=DEPCC</td>
+<td></td>
+</tr>
+<tr>
+<td>–nvcc=NVCC</td>
+<td></td>
+</tr>
+<tr>
+<td>–ld=LD</td>
+<td>ld LD</td>
+</tr>
+<tr>
+<td>–pkg-config=PKGCONFIG</td>
+<td></td>
+</tr>
+<tr>
+<td>–pkg-config-flags=FLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–ranlib=RANLIB</td>
+<td>ranlib RANLIB</td>
+</tr>
+<tr>
+<td>–doxygen=DOXYGEN</td>
+<td></td>
+</tr>
+<tr>
+<td>–host-cc=HOSTCC</td>
+<td></td>
+</tr>
+<tr>
+<td>–host-cflags=HCFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–host-cppflags=HCPPFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–host-ld=HOSTLD</td>
+<td></td>
+</tr>
+<tr>
+<td>–host-ldflags=HLDFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–host-extralibs=HLIBS</td>
+<td></td>
+</tr>
+<tr>
+<td>–host-os=OS</td>
+<td></td>
+</tr>
+<tr>
+<td>–extra-cflags=ECFLAGS</td>
+<td>CFLAGS</td>
+</tr>
+<tr>
+<td>–extra-cxxflags=ECFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–extra-objcflags=FLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–extra-ldflags=ELDFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–extra-ldexeflags=ELDFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–extra-ldsoflags=ELDFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–extra-libs=ELIBS</td>
+<td></td>
+</tr>
+<tr>
+<td>–extra-version=STRING</td>
+<td></td>
+</tr>
+<tr>
+<td>–optflags=OPTFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–nvccflags=NVCCFLAGS</td>
+<td></td>
+</tr>
+<tr>
+<td>–build-suffix=SUFFIX</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-pic</td>
+<td>允许 PIC</td>
+</tr>
+<tr>
+<td>–enable-thumb</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-lto</td>
+<td></td>
+</tr>
+<tr>
+<td>–env=”ENV=override”</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Advanced options (experts only)</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–malloc-prefix=PREFIX</td>
+<td></td>
+</tr>
+<tr>
+<td>–custom-allocator=NAME</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-symver</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-hardcoded-tables</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-safe-bitstream-reader</td>
+<td></td>
+</tr>
+<tr>
+<td>–sws-max-filter-size=N</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Optimization options (experts only)</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-asm</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-altivec</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-vsx</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-power8</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-amd3dnow</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-amd3dnowext</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-mmx</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-mmxext</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-sse</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-sse2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-sse3</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-ssse3</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-sse4</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-sse42</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-avx</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-xop</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-fma3</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-fma4</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-avx2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-avx512</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-aesni</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-armv5te</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-armv6</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-armv6t2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-vfp</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-neon</td>
+<td>用 ARM 扩展的 neon 指令集可以很大的优化 FFmpeg 的解码功能</td>
+</tr>
+<tr>
+<td>–disable-inline-asm</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-x86asm</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-mipsdsp</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-mipsdspr2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-msa</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-msa2</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-mipsfpu</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-mmi</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-fast-unaligned</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Developer options (useful when working on FFmpeg itself)</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–disable-debug</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-debug=LEVEL</td>
+<td>设置调试级别 LEVEL</td>
+</tr>
+<tr>
+<td>–disable-optimizations</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-extra-warnings</td>
+<td>启用更多编译器警告</td>
+</tr>
+<tr>
+<td>–disable-stripping</td>
+<td></td>
+</tr>
+<tr>
+<td>–assert-level=level</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-memory-poisoning</td>
+<td></td>
+</tr>
+<tr>
+<td>–valgrind=VALGRIND</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-ftrapv</td>
+<td></td>
+</tr>
+<tr>
+<td>–samples=PATH</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-neon-clobber-test</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-xmm-clobber-test</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-random</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-random</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-random=LIST</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-random=LIST</td>
+<td></td>
+</tr>
+<tr>
+<td>–random-seed=VALUE</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-valgrind-backtrace</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-ossfuzz</td>
+<td></td>
+</tr>
+<tr>
+<td>–libfuzzer=PATH</td>
+<td></td>
+</tr>
+<tr>
+<td>–ignore-tests=TESTS</td>
+<td></td>
+</tr>
+<tr>
+<td>–enable-linux-perf</td>
+<td></td>
+</tr>
+<tr>
+<td>–disable-large-tests</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="编写脚本文件-1"><a href="#编写脚本文件-1" class="headerlink" title="编写脚本文件"></a><strong>编写脚本文件</strong></h2><p>1、创建文件（创建成 .txt 文件可以直接打开，但是 .sh 有文字颜色）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gedit build.sh</div></pre></td></tr></table></figure></p>
+<p>2、脚本文件：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>!/bin/sh</div><div class="line"></div><div class="line">NDK=/home/weichao/android-ndk-r21d</div><div class="line">TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64</div><div class="line">SYSROOT=$TOOLCHAIN/sysroot</div><div class="line">API=21</div><div class="line"></div><div class="line">function my_build</div><div class="line">&#123;</div><div class="line">echo "Compiling FFmpeg for $CPU..."</div><div class="line"></div><div class="line">./configure \</div><div class="line">\</div><div class="line">--logfile=$LOGFILE \</div><div class="line">--prefix=$PREFIX \</div><div class="line">\</div><div class="line">--enable-gpl \</div><div class="line">\</div><div class="line">--disable-static \</div><div class="line">--enable-shared \</div><div class="line">--disable-runtime-cpudetect \</div><div class="line">\</div><div class="line">--disable-programs \</div><div class="line">\</div><div class="line">--disable-doc \</div><div class="line">\</div><div class="line">--disable-avdevice \</div><div class="line">--disable-postproc \</div><div class="line">--disable-w32threads \</div><div class="line">--disable-os2threads \</div><div class="line">\</div><div class="line">--enable-decoder=h264_mediacodec \</div><div class="line">\</div><div class="line">--enable-jni \</div><div class="line">--enable-mediacodec \</div><div class="line">\</div><div class="line">--arch=$ARCH \</div><div class="line">--cpu=$CPU  \</div><div class="line">--cross-prefix=$CROSS_PREFIX \</div><div class="line">--enable-cross-compile \</div><div class="line">--sysroot=$SYSROOT \</div><div class="line">--target-os=android \</div><div class="line">--cc=$CC \</div><div class="line">--cxx=$CXX \</div><div class="line">--extra-cflags="$EXTRA_CFLAGS" \</div><div class="line">--enable-pic \</div><div class="line">\</div><div class="line">--enable-neon \</div><div class="line"></div><div class="line">make clean</div><div class="line">make -j8</div><div class="line">make install</div><div class="line"></div><div class="line">echo "The Compilation of FFmpeg for $CPU is completed."</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#</span>armeabi-v7a</div><div class="line">CPU=armv7-a</div><div class="line">ARCH=arm</div><div class="line">ANDROID_ARCH_ABI=armeabi</div><div class="line">LOGFILE=`pwd`/Android/log_armeabi-v7a.txt</div><div class="line">PREFIX=`pwd`/Android/armeabi-v7a</div><div class="line">CC=$TOOLCHAIN/bin/armv7a-linux-androideabi$API-clang</div><div class="line">CXX=$TOOLCHAIN/bin/armv7a-linux-androideabi$API-clang++</div><div class="line">EXTRA_CFLAGS="-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -Oz -DNDEBUG  -fPIC --gcc-toolchain=$TOOLCHAIN"</div><div class="line">CROSS_PREFIX=$TOOLCHAIN/bin/arm-linux-androideabi-</div><div class="line">my_build</div><div class="line"></div><div class="line"><span class="meta">#</span>arm64-v8a</div><div class="line">CPU=armv8-a</div><div class="line">ARCH=arm64</div><div class="line">ANDROID_ARCH_ABI=aarch64</div><div class="line">LOGFILE=`pwd`/Android/log_arm64-v8a.txt</div><div class="line">PREFIX=`pwd`/Android/arm64-v8a</div><div class="line">CC=$TOOLCHAIN/bin/aarch64-linux-android$API-clang</div><div class="line">CXX=$TOOLCHAIN/bin/aarch64-linux-android$API-clang++</div><div class="line">EXTRA_CFLAGS="-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC --target=aarch64-none-linux-android21 --gcc-toolchain=$TOOLCHAIN"</div><div class="line">CROSS_PREFIX=$TOOLCHAIN/bin/aarch64-linux-android-</div><div class="line">my_build</div><div class="line"></div><div class="line"><span class="meta">#</span>x86_64</div><div class="line">CPU=x86_64</div><div class="line">ARCH=x86_64</div><div class="line">LOGFILE=`pwd`/Android/log_x86_64.txt</div><div class="line">PREFIX=`pwd`/Android/x86_64</div><div class="line">CC=$TOOLCHAIN/bin/x86_64-linux-android$API-clang</div><div class="line">CXX=$TOOLCHAIN/bin/x86_64-linux-android$API-clang++</div><div class="line">EXTRA_CFLAGS="-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC --target=x86_64-none-linux-android21 --gcc-toolchain=$TOOLCHAIN"</div><div class="line">CROSS_PREFIX=$TOOLCHAIN/bin/x86_64-linux-android-</div><div class="line">my_build</div></pre></td></tr></table></figure></p>
+<p>3、x86 多一个配置参数，单独一个文件：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>!/bin/sh</div><div class="line"></div><div class="line">NDK=/home/weichao/android-ndk-r21d</div><div class="line">TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64</div><div class="line">SYSROOT=$TOOLCHAIN/sysroot</div><div class="line">API=21</div><div class="line"></div><div class="line">function my_build</div><div class="line">&#123;</div><div class="line">echo "Compiling FFmpeg for $CPU..."</div><div class="line"></div><div class="line">./configure \</div><div class="line">\</div><div class="line">--logfile=$LOGFILE \</div><div class="line">--prefix=$PREFIX \</div><div class="line">\</div><div class="line">--enable-gpl \</div><div class="line">\</div><div class="line">--disable-static \</div><div class="line">--enable-shared \</div><div class="line">--disable-runtime-cpudetect \</div><div class="line">\</div><div class="line">--disable-programs \</div><div class="line">\</div><div class="line">--disable-doc \</div><div class="line">\</div><div class="line">--disable-avdevice \</div><div class="line">--disable-postproc \</div><div class="line">--disable-w32threads \</div><div class="line">--disable-os2threads \</div><div class="line">\</div><div class="line">--enable-decoder=h264_mediacodec \</div><div class="line">\</div><div class="line">--enable-jni \</div><div class="line">--enable-mediacodec \</div><div class="line">\</div><div class="line">--arch=$ARCH \</div><div class="line">--cpu=$CPU  \</div><div class="line">--cross-prefix=$CROSS_PREFIX \</div><div class="line">--enable-cross-compile \</div><div class="line">--sysroot=$SYSROOT \</div><div class="line">--target-os=android \</div><div class="line">--cc=$CC \</div><div class="line">--cxx=$CXX \</div><div class="line">--extra-cflags="$EXTRA_CFLAGS" \</div><div class="line">--enable-pic \</div><div class="line">\</div><div class="line">--disable-asm \</div><div class="line">\</div><div class="line">--enable-neon \</div><div class="line"></div><div class="line">make clean</div><div class="line">make -j8</div><div class="line">make install</div><div class="line"></div><div class="line">echo "The Compilation of FFmpeg for $CPU is completed."</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#</span>x86</div><div class="line">CPU=i686</div><div class="line">ARCH=i686</div><div class="line">LOGFILE=`pwd`/Android/log_x86.txt</div><div class="line">PREFIX=`pwd`/Android/x86</div><div class="line">CC=$TOOLCHAIN/bin/i686-linux-android$API-clang</div><div class="line">CXX=$TOOLCHAIN/bin/i686-linux-android$API-clang++</div><div class="line">EXTRA_CFLAGS="-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -O2 -DNDEBUG  -fPIC --target=i686-none-linux-android21 --gcc-toolchain=$TOOLCHAIN"</div><div class="line">CROSS_PREFIX=$TOOLCHAIN/bin/i686-linux-android-</div><div class="line">my_build</div></pre></td></tr></table></figure></p>
+<h3 id="添加-Android-项目需要的-CFLAGS-的技巧"><a href="#添加-Android-项目需要的-CFLAGS-的技巧" class="headerlink" title="添加 Android 项目需要的 CFLAGS 的技巧"></a><strong>添加 Android 项目需要的 CFLAGS 的技巧</strong></h3><p>当 configure 不支持某个参数时，需要主动在 CFLAGS 中添加。</p>
+<p>1、新建 Android 的 C++ 项目</p>
+<p>2、build release 版本，生成 build.ninja、rules.ninja<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/31.png" alt=""></p>
+<p><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/32.png" alt=""></p>
+<p>3、使用 build.ninja 中的 FLAGS<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/33.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -march=armv7-a -mthumb -Wformat -Werror=format-security   -Oz -DNDEBUG  -fPIC</div></pre></td></tr></table></figure>
+<p>4、使用 rules.ninja 中的参数<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/34.png" alt=""></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/weichao/android-sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/weichao/android-sdk/ndk/21.3.6528147/toolchains/llvm/prebuilt/linux-x86_64/sysroot</div></pre></td></tr></table></figure>
+<p>调整路径，修改参数，去掉重复的参数：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">--target=armv7-none-linux-androideabi21 --gcc-toolchain=/home/weichao/android-ndk-r21d/toolchains/llvm/prebuilt/linux-x86_64</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="编译生成-Android-所需的库"><a href="#编译生成-Android-所需的库" class="headerlink" title="编译生成 Android 所需的库"></a><strong>编译生成 Android 所需的库</strong></h1><h2 id="给脚本文件设置权限"><a href="#给脚本文件设置权限" class="headerlink" title="给脚本文件设置权限"></a><strong>给脚本文件设置权限</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod +x build.sh</div></pre></td></tr></table></figure>
+<h2 id="执行脚本文件"><a href="#执行脚本文件" class="headerlink" title="执行脚本文件"></a><strong>执行脚本文件</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">. build.sh</div></pre></td></tr></table></figure>
+<h2 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a><strong>编译过程</strong></h2><p>先打印信息概览：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/35.png" alt=""><br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/36.png" alt=""></p>
+<p>编译完成后生成文件：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/37.png" alt=""></p>
+<hr>
+<h1 id="编译和使用时可能会遇到的问题"><a href="#编译和使用时可能会遇到的问题" class="headerlink" title="编译和使用时可能会遇到的问题"></a><strong>编译和使用时可能会遇到的问题</strong></h1><h2 id="not-found"><a href="#not-found" class="headerlink" title="not found"></a><strong>not found</strong></h2><p>1、WARNING: /home/weichao/android-ndk-r21d/toolchains/llvm/prebuilt/linux-x86_64/bin/arm-linux-androideabi-pkg-config not found, library detection may fail.<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/38.png" alt=""></p>
+<p>未发现有什么影响。</p>
+<p>2、java.lang.UnsatisfiedLinkError: dlopen failed: library “libclang_rt.ubsan_standalone-aarch64-android.so” not found<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/39.png" alt=""></p>
+<p>查看 log.txt，有相关信息：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/40.png" alt=""></p>
+<p>liblog.so 是在：/home/weichao/android-ndk-r21d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21/liblog.so</p>
+<p>2.1、（失败）按照 clang 的建议，启用 rpath，并设置 ldflags：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">EXTRA_LDFLAGS=<span class="string">"-Wl,-rpath=/home/weichao/android-ndk-r21d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21"</span></div></pre></td></tr></table></figure></p>
+<p>同时尝试修改 CMakeLists.txt：</p>
+<ul>
+<li><p>修改方式 1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">add_library(lib_log SHARED IMPORTED)</div><div class="line">set_target_properties(lib_log PROPERTIES IMPORTED_LOCATION /home/weichao/android-ndk-r21d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21/liblog.so)</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改方式 2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)</div><div class="line">set(CMAKE_INSTALL_RPATH &quot;/home/weichao/android-ndk-r21d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21&quot;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样是在 log.txt 中没有报错了，但是在 Android 中依然报错，原因可能是在 CMakeLists.txt 中的修改方式不对，没有链接上。</p>
+<p>2.2、找出是哪个配置导致的这个问题：</p>
+<ul>
+<li>–toolchain=clang-usan<br>  直接去掉这个配置就可以了。</li>
+</ul>
+<h2 id="unable-to-create-an-executable-file"><a href="#unable-to-create-an-executable-file" class="headerlink" title="unable to create an executable file"></a><strong>unable to create an executable file</strong></h2><p>1、/home/weichao/android-ndk-r21d/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android21-clang is unable to create an executable file.<br>C compiler test failed.<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/41.png" alt=""></p>
+<p>没有信息概览，很明显编译失败了。</p>
+<p>查看 log.txt，是 CPU 的值设置错误：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/42.png" alt=""></p>
+<p>arm64-v8a 的 CPU 的值应该为 armv8-a，修改后：<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/43.png" alt=""></p>
+<h2 id="dlopen-failed"><a href="#dlopen-failed" class="headerlink" title="dlopen failed"></a><strong>dlopen failed</strong></h2><p>1、java.lang.UnsatisfiedLinkError: dlopen failed: cannot locate symbol “ff_parse_a53_cc” referenced by “/data/app/io.weichao.bwk-D1NGyDX98F4V4LoBM5Qlvg==/lib/arm64/libavcodec.so”…<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/44.png" alt=""></p>
+<ul>
+<li>–disable-everything<br>  很明显是裁减导致的库没有加入 libavcodec.so，关闭 disable everything，验证可以解决这个问题。</li>
+</ul>
+<p>应该是播放 MP4 文件时缺少解封装、解码器等，由于功能还在增加中，暂时先关闭 disable everything，以解决这个问题。</p>
+<h2 id="requires-more-registers-than-available"><a href="#requires-more-registers-than-available" class="headerlink" title="requires more registers than available"></a><strong>requires more registers than available</strong></h2><p>1、In file included from libswscale/x86/rgb2rgb.c:102:<br>libswscale/x86/rgb2rgb_template.c:1666:13: error: inline assembly requires more registers than available<br>            “mov                        %4, %%”FF_REG_a”\n\t”<br>            ^<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/45.png" alt=""></p>
+<p>参考<a href="https://blog.k-res.net/archives/2521.html" title="https://blog.k-res.net/archives/2521.html" target="_blank" rel="external">解决Android NDK编译FFmpeg 4.2.2的x86 cpu版时的问题</a></p>
+<p>将 <code>libavutil/x86/asm.h:75</code> 中的<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAVE_7REGS (ARCH_X86_64 || (HAVE_EBX_AVAILABLE &amp;amp;&amp;amp; HAVE_EBP_AVAILABLE))</span></div></pre></td></tr></table></figure></p>
+<p>修改为<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">define</span> HAVE_7REGS (ARCH_X86_64)</span></div></pre></td></tr></table></figure></p>
+<h2 id="has-text-relocations"><a href="#has-text-relocations" class="headerlink" title="has text relocations"></a><strong>has text relocations</strong></h2><p>1、E/linker: “/data/app/io.weichao.module_player-Eq7EWqLlZw91dj1uZMG3YA==/lib/x86/libavcodec.so” has text relocations<br><img src="https://weichao-io-1257283924.cos.ap-beijing.myqcloud.com/qldownload/NDK%20r21d%20%2B%20FFmpeg%204.2%20%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%20%26%20%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20Android%20%E6%89%80%E9%9C%80%E7%9A%84%E5%BA%93/46.png" alt=""></p>
+<p>参考<a href="https://blog.csdn.net/marco_0631/article/details/73292199?locationNum=5&amp;fps=1" title="https://blog.csdn.net/marco_0631/article/details/73292199?locationNum=5&amp;fps=1" target="_blank" rel="external">ffmpeg安卓x86平台编译错误</a></p>
+<p>设置：</p>
+<ul>
+<li>–disable-asm</li>
+</ul>
+<hr>
+
+      
+    </div>
+	
+	<div>
+	  
+		
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/">NDK r21d + FFmpeg 4.2 编写脚本文件 & 编译生成 Android 所需的库</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 魏超 的个人博客">魏超</a></p>
+  <p><span>发布时间:</span>2020年09月22日 - 03:09</p>
+  <p><span>最后更新:</span>2020年09月22日 - 03:09</p>
+  <p><span>原始链接:</span><a href="/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/" title="NDK r21d + FFmpeg 4.2 编写脚本文件 & 编译生成 Android 所需的库">http://www.weichao.io/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://www.weichao.io/2020/09/22/NDK-r21d-FFmpeg-4-2-编写脚本文件-编译生成-Android-所需的库/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+	
+	<div>
+	  
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">---------------------本文结束---------------------</div>
+    
+</div>
+	  
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/18/NDK-r21d-x264-编写脚本文件-编译生成-Android-所需的库/" rel="next" title="NDK r21d + x264 编写脚本文件 & 编译生成 Android 所需的库">
+                <i class="fa fa-chevron-left"></i> NDK r21d + x264 编写脚本文件 & 编译生成 Android 所需的库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yOTY2Ny82MjM1"></div>
+    
+  </div>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="魏超" />
+          <p class="site-author-name" itemprop="name">魏超</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weichao66666" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jsxfedu.com/" target="_blank" title="北京京师讯飞教育科技有限公司">
+                  
+                    <i class="fa fa-fw fa-building"></i>
+                  
+                  北京京师讯飞教育科技有限公司
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载-FFmpeg-源码"><span class="nav-number">2.</span> <span class="nav-text">下载 FFmpeg 源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编写脚本文件"><span class="nav-number">3.</span> <span class="nav-text">编写脚本文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看文件目录"><span class="nav-number">3.1.</span> <span class="nav-text">查看文件目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看支持的命令"><span class="nav-number">3.2.</span> <span class="nav-text">查看支持的命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#decoders"><span class="nav-number">3.2.1.</span> <span class="nav-text">decoders</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#encoders"><span class="nav-number">3.2.2.</span> <span class="nav-text">encoders</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hardware-accelerators"><span class="nav-number">3.2.3.</span> <span class="nav-text">hardware accelerators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#demuxers"><span class="nav-number">3.2.4.</span> <span class="nav-text">demuxers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#muxers"><span class="nav-number">3.2.5.</span> <span class="nav-text">muxers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parsers"><span class="nav-number">3.2.6.</span> <span class="nav-text">parsers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#protocols"><span class="nav-number">3.2.7.</span> <span class="nav-text">protocols</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bitstream-filters"><span class="nav-number">3.2.8.</span> <span class="nav-text">bitstream filters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#input-devices"><span class="nav-number">3.2.9.</span> <span class="nav-text">input devices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#output-devices"><span class="nav-number">3.2.10.</span> <span class="nav-text">output devices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#filters"><span class="nav-number">3.2.11.</span> <span class="nav-text">filters</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部分命令说明"><span class="nav-number">3.3.</span> <span class="nav-text">部分命令说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写脚本文件-1"><span class="nav-number">3.4.</span> <span class="nav-text">编写脚本文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加-Android-项目需要的-CFLAGS-的技巧"><span class="nav-number">3.4.1.</span> <span class="nav-text">添加 Android 项目需要的 CFLAGS 的技巧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译生成-Android-所需的库"><span class="nav-number">4.</span> <span class="nav-text">编译生成 Android 所需的库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#给脚本文件设置权限"><span class="nav-number">4.1.</span> <span class="nav-text">给脚本文件设置权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行脚本文件"><span class="nav-number">4.2.</span> <span class="nav-text">执行脚本文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译过程"><span class="nav-number">4.3.</span> <span class="nav-text">编译过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编译和使用时可能会遇到的问题"><span class="nav-number">5.</span> <span class="nav-text">编译和使用时可能会遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#not-found"><span class="nav-number">5.1.</span> <span class="nav-text">not found</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unable-to-create-an-executable-file"><span class="nav-number">5.2.</span> <span class="nav-text">unable to create an executable file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dlopen-failed"><span class="nav-number">5.3.</span> <span class="nav-text">dlopen failed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requires-more-registers-than-available"><span class="nav-number">5.4.</span> <span class="nav-text">requires more registers than available</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#has-text-relocations"><span class="nav-number">5.5.</span> <span class="nav-text">has text relocations</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">魏超</span>
+</div>
+
+<!--在网站底部加上访问量-->
+<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv">
+	本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+</span>
+
+<!--网站底部字数统计-->
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">本站总字数 182.5k 字 </span>
+</div>
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("tcrb9doXO1TJ1AjcOG6cyo6V-gzGzoHsz", "ntQmtcVgiBuYcDtx6pHTRJUv");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
